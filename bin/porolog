@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+#
+#   bin/porolog   - Executable
+#
+#     Luis Esteban  19 April 2019
+#       created
+#
+
+require 'porolog'
+
+puts 'Sample Porolog Program'

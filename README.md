@@ -3,6 +3,7 @@
 Plain Old Ruby Objects Prolog
 
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)
+[![Build Status](https://travis-ci.com/wizardofosmium/porolog.svg?branch=master)](https://travis-ci.com/wizardofosmium/porolog)
 
 ## Introduction
 
@@ -11,6 +12,8 @@ logic queries can be called within a regular Ruby program.  The goal was not to
 implement a Prolog interpreter that is just implement in Ruby, but rather that
 a logic engine could be embedded in a larger program.
 
+The need that this gem aims to meet is to have a Ruby program interact with a Prolog
+program using native Ruby objects (POROs); hence the name Porolog.
 The goal was to implement a minimal logic engine in the style of Prolog where
 Ruby objects could be passed in and Ruby objects were passed back.
 
@@ -90,7 +93,9 @@ class Numbers
 end
 ```
 
-### Scope Usage
+### Scope and Predicate Usage
+
+A Predicate represents a Prolog predicate.  They form the basis for rules and queries.
 
 The Scope class enables you to have multiple logic programs embedded in the same
 Ruby program.  A Scope object defines a scope for the predicates of a logic programme.
@@ -153,6 +158,7 @@ or
 
 ```bash
 rake scope_test
+rake predicate_test
 ```
 
 ## Author

@@ -8,7 +8,6 @@
 # -- Working Files --
 *.gem
 /.yardoc
-Gemfile.lock
 
 # -- Draft Files --
 /OLD/

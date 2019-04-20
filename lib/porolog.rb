@@ -7,9 +7,16 @@
 
 module Porolog
 
-  VERSION      = '0.0.2'
-  VERSION_DATE = '2019-04-20'
+  # The most recent version of the Porolog gem.
+  VERSION      = '0.0.3'
+  # The most recent date of when the VERSION changed.
+  VERSION_DATE = '2019-04-21'
   
+  # A convenience method to create a Predicate, along with a method
+  # that returns an Arguments based on the arguments provided to
+  # the method.
+  # @param names [Array<#to_sym>] names of the Predicates to create.
+  # @return [Porolog::Predicate|Array<Porolog::Predicate>] Predicate or Predicates created
   def predicate(*names)
     names = [names].flatten
     

@@ -7,6 +7,7 @@
 
 module Porolog
 
+  # Error class to enable rescuing or detecting any Porolog error.
   class PorologError < RuntimeError ; end
 
 end

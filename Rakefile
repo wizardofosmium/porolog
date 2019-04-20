@@ -5,6 +5,7 @@
 #
 
 require 'rake/testtask'
+require 'yard'
 
 
 # -- Run All Tests Task --
@@ -25,6 +26,11 @@ Dir['test/porolog/*_test.rb'].each do |test_file|
   end
 end
 
+# -- Documentation Task --
+YARD::Rake::YardocTask.new('doc') do |task|
+  task.stats_options = ['--list-undoc']
+end
+
 # -- Tasks --
 task default: :test
 
@@ -33,6 +39,7 @@ task :help do
   puts <<-EOF
     Porolog is a Ruby library.
     See README.md for more information.
+    See doc/index.html for documentation.
     Run
       rake -T
     for other tasks.

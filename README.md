@@ -1,5 +1,7 @@
 # porolog
 
+<img src="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9" width="240" height="120" align="right" />
+
 Plain Old Ruby Objects Prolog
 
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)

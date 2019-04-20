@@ -1,5 +1,7 @@
 # porolog
 
+<img src="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9" width="240" height="120" align="right" />
+
 Plain Old Ruby Objects Prolog
 
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)
@@ -20,7 +22,7 @@ Ruby objects could be passed in and Ruby objects were passed back.
 ## Dependencies
 
 The aim of `porolog` is to provide a logic engine with a minimal footprint.
-Thus `porolog` has no dependencies.
+The only dependency is Yard for documentation.
 
 ## Installation
 

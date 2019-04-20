@@ -7,6 +7,7 @@
 
 # -- Working Files --
 *.gem
+/.yardoc
 
 # -- Draft Files --
 /OLD/

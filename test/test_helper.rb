@@ -12,10 +12,17 @@ include Porolog
 
 def reset
   Scope.reset
+  Predicate.reset
 end
 
 def assert_scope(scope, name, predicates)
   assert_instance_of  Scope,            scope
   assert_equal        name,             scope.name
   assert_equal        predicates,       scope.predicates
+end
+
+def assert_predicate(predicate, name, rules)
+  assert_instance_of  Predicate,        predicate
+  assert_equal        name,             predicate.name
+  assert_equal        rules,            predicate.rules
 end

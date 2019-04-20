@@ -54,8 +54,7 @@ module Porolog
     end
     
     def []=(name,predicate)
-      # TODO: Uncomment when Porolog::Predicate has been added.
-      #raise NotPredicateError.new("#{predicate.inspect} is not a Predicate") unless predicate.is_a?(Predicate)
+      raise NotPredicateError.new("#{predicate.inspect} is not a Predicate") unless predicate.is_a?(Predicate)
       @predicates[name.to_sym] = predicate
     end
     

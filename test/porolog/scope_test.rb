@@ -23,7 +23,7 @@ describe 'Porolog' do
     end
     
     it 'should allow predicates with the same name to coexist in different scopes' do
-      skip 'until Predicate added'
+      skip 'until Arguments added'
       
       prime = prime1 = Predicate.new :prime, :first
 
@@ -82,8 +82,6 @@ describe 'Porolog' do
     describe '.reset' do
       
       it 'should clear all scopes' do
-        skip 'until Predicate added'
-        
         delta = Predicate.new :delta
         
         Scope.new :alpha
@@ -111,8 +109,6 @@ describe 'Porolog' do
       end
       
       it 'should clear all scopes and start with a default scope when reset' do
-        skip 'until Predicate added'
-        
         test_predicate0  = Predicate.new 'test_predicate0'
         test_predicate11 = Predicate.new 'test_predicate11', :scope1
         test_predicate12 = Predicate.new 'test_predicate12', :scope1
@@ -201,8 +197,6 @@ describe 'Porolog' do
     describe '#predicates' do
       
       it 'should provide access to all the predicates of a scope' do
-        skip 'until Predicate added'
-        
         test_predicate1 = Predicate.new 'test_predicate1', :test
         test_predicate2 = Predicate.new 'test_predicate2', :test
         
@@ -215,8 +209,6 @@ describe 'Porolog' do
     describe '#[]' do
       
       it 'should provide access to a predicate of a scope by its name' do
-        skip 'until Predicate added'
-        
         test_predicate3 = Predicate.new 'test_predicate3', :test
         test_predicate4 = Predicate.new 'test_predicate4', :test
         
@@ -236,8 +228,6 @@ describe 'Porolog' do
     describe '#[]=' do
       
       it 'should raise an error when trying to put anthing but a Predicate in a Scope' do
-        skip 'until Predicate added'
-        
         error = assert_raises(Porolog::Scope::NotPredicateError){
           scope = Scope.new :scope
           
@@ -247,8 +237,6 @@ describe 'Porolog' do
       end
       
       it 'should allow an existing predicate to be assigned to a scope' do
-        skip 'until Predicate added'
-        
         test_predicate = Predicate.new 'test_predicate', :test
         
         scope = Scope.new :scope

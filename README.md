@@ -22,7 +22,7 @@ Ruby objects could be passed in and Ruby objects were passed back.
 ## Dependencies
 
 The aim of `porolog` is to provide a logic engine with a minimal footprint.
-Thus `porolog` has no dependencies.
+The only dependency is Yard for documentation.
 
 ## Installation
 

@@ -8,9 +8,9 @@
 module Porolog
 
   # The most recent version of the Porolog gem.
-  VERSION      = '0.0.4'
+  VERSION      = '0.0.5'
   # The most recent date of when the VERSION changed.
-  VERSION_DATE = '2019-04-21'
+  VERSION_DATE = '2019-04-23'
   
   # A convenience method to create a Predicate, along with a method
   # that returns an Arguments based on the arguments provided to
@@ -41,3 +41,4 @@ require_relative 'porolog/error'
 require_relative 'porolog/scope'
 require_relative 'porolog/predicate'
 require_relative 'porolog/arguments'
+require_relative 'porolog/rule'

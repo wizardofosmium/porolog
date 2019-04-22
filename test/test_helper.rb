@@ -27,6 +27,7 @@ def reset
   Scope.reset
   Predicate.reset
   Arguments.reset
+  Rule.reset
 end
 
 def assert_Scope(scope, name, predicates)
@@ -45,4 +46,11 @@ def assert_Arguments(arguments, predicate, args)
   assert_instance_of  Arguments,        arguments
   assert_equal        predicate,        arguments.predicate.name
   assert_equal        args,             arguments.arguments
+end
+
+def assert_Rule(rule, predicate, arguments, definition)
+  assert_instance_of  Rule,             rule
+  assert_equal        predicate,        rule.arguments.predicate.name
+  assert_equal        arguments,        rule.arguments.arguments
+  assert_equal        definition,       rule.definition
 end

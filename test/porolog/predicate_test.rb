@@ -258,8 +258,6 @@ describe 'Porolog' do
       end
     
       it 'should add new facts to a predicate' do
-        skip 'until Rule added'
-        
         alpha = Predicate.new 'alpha'
         
         alpha.('p','q').fact!
@@ -269,12 +267,10 @@ describe 'Porolog' do
         assert_equal    '  alpha("p","q"):- true',          alpha.rules.first.inspect
         assert_equal    'alpha:-  alpha("p","q"):- true',   alpha.inspect
         
-        assert_predicate  alpha, :alpha, [alpha.rules.first]
+        assert_Predicate  alpha, :alpha, [alpha.rules.first]
       end
       
       it 'should add new falicies to a predicate' do
-        skip 'until Rule added'
-        
         alpha = Predicate.new 'alpha'
         
         alpha.('p','q').falicy!
@@ -284,7 +280,7 @@ describe 'Porolog' do
         assert_equal    '  alpha("p","q"):- false',         alpha.rules.first.inspect
         assert_equal    'alpha:-  alpha("p","q"):- false',  alpha.inspect
         
-        assert_predicate  alpha, :alpha, [alpha.rules.first]
+        assert_Predicate  alpha, :alpha, [alpha.rules.first]
       end
       
     end
@@ -298,8 +294,6 @@ describe 'Porolog' do
       end
       
       it 'should return a summary of the predicate with rules' do
-        skip 'until Rule added'
-        
         alpha = Predicate.new 'alpha'
         
         alpha.(:x,:y) << [
@@ -316,8 +310,6 @@ describe 'Porolog' do
     describe '#<<' do
       
       it 'should add new rules to a predicate' do
-        skip 'until Rule added'
-        
         alpha = Predicate.new 'alpha'
         
         alpha.(:P,:Q) << [
@@ -333,8 +325,8 @@ describe 'Porolog' do
         assert_instance_of  Array,                          alpha.rules.first.definition
         assert_equal        2,                              alpha.rules.first.definition.size
         
-        assert_arguments    alpha.rules.first.definition[0],  :alpha, [:P,:Q]
-        assert_arguments    alpha.rules.first.definition[1],  :alpha, [:Q,:P]
+        assert_Arguments    alpha.rules.first.definition[0],  :alpha, [:P,:Q]
+        assert_Arguments    alpha.rules.first.definition[1],  :alpha, [:Q,:P]
         
         assert_equal    '  alpha(:P,:Q):- [alpha(:P,:Q), alpha(:Q,:P)]',        alpha.rules.first.inspect
         assert_equal    [
@@ -343,7 +335,7 @@ describe 'Porolog' do
           '  alpha(:P,:Q):- [alpha(:P,:P), alpha(:Q,:Q)]',
         ].join("\n"),                                                           alpha.inspect
         
-        assert_predicate  alpha, :alpha, [alpha.rules.first,alpha.rules.second]
+        assert_Predicate  alpha, :alpha, [alpha.rules[0],alpha.rules[1]]
       end
       
     end

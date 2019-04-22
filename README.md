@@ -7,7 +7,7 @@ Plain Old Ruby Objects Prolog (WORK IN PROGRESS)
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)
 [![Build Status](https://travis-ci.com/wizardofosmium/porolog.svg?branch=master)](https://travis-ci.com/wizardofosmium/porolog)
 ![Status](https://img.shields.io/badge/status-work%20in%20progress-orange.svg)
-[![Coverage](https://wizardofosmium.github.io/porolog/coverage/badge.svg)](https://github.com/wizardofosmium/porolog)
+[![Coverage](https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg)](https://github.com/wizardofosmium/porolog)
 
 ## Introduction
 
@@ -164,6 +164,7 @@ or
 rake scope_test
 rake predicate_test
 rake arguments_test
+rake rule_test
 ```
 
 ## Author

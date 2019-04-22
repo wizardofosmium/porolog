@@ -8,5 +8,10 @@
 source 'https://rubygems.org'
 
 gem 'rake'
-gem 'minitest'
 gem 'yard'
+
+group :test do
+  gem 'minitest'
+  gem 'simplecov', require: false, group: :test
+  gem 'simplecov-shields-badge', require: false
+end

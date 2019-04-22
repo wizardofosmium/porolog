@@ -96,10 +96,11 @@ module Porolog
     end
     
     # Add a Rule to the Predicate.
-    # @param rule [Object] the name (or otherwise object) used to register a scope.
-    # @return [Array<Porolog::Rule>] the Predicate's rule.
+    # @param rule [Object] a rule to add to the Predicate.
+    # @return [Porolog::Predicate] the Predicate.
     def <<(rule)
       @rules << rule
+      self
     end
     
     # A pretty print String of the Predicate.

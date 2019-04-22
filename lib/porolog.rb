@@ -8,7 +8,7 @@
 module Porolog
 
   # The most recent version of the Porolog gem.
-  VERSION      = '0.0.3'
+  VERSION      = '0.0.4'
   # The most recent date of when the VERSION changed.
   VERSION_DATE = '2019-04-21'
   
@@ -16,7 +16,8 @@ module Porolog
   # that returns an Arguments based on the arguments provided to
   # the method.
   # @param names [Array<#to_sym>] names of the Predicates to create.
-  # @return [Porolog::Predicate|Array<Porolog::Predicate>] Predicate or Predicates created
+  # @return [Porolog::Predicate] Predicate created if only one name is provided
+  # @return [Array<Porolog::Predicate>] Predicates created if multiple names are provided
   def predicate(*names)
     names = [names].flatten
     
@@ -39,3 +40,4 @@ end
 require_relative 'porolog/error'
 require_relative 'porolog/scope'
 require_relative 'porolog/predicate'
+require_relative 'porolog/arguments'

@@ -152,6 +152,22 @@ describe 'Porolog' do
       
     end
     
+    describe '.builtin' do
+      
+      it 'should incremently return Predicates' do
+        iota1 = Predicate.builtin :iota
+        zeta1 = Predicate.builtin :zeta
+        iota2 = Predicate.builtin :iota
+        zeta2 = Predicate.builtin :zeta
+        
+        assert_Predicate  iota1, :_iota_1, []
+        assert_Predicate  zeta1, :_zeta_1, []
+        assert_Predicate  iota2, :_iota_2, []
+        assert_Predicate  zeta2, :_zeta_2, []
+      end
+      
+    end
+    
     describe '#initialize' do
     
       it 'can create predicates in different scopes' do
@@ -196,8 +212,6 @@ describe 'Porolog' do
     describe '#call' do
     
       it 'should create an Arguments when "called"' do
-        skip 'until Arguments added'
-        
         p = Predicate.new :p
         
         arguments = p.(1,2,3)
@@ -212,8 +226,6 @@ describe 'Porolog' do
     describe '#arguments' do
     
       it 'should provide a convenience method to create an Arguments' do
-        skip 'until Arguments added'
-        
         p = Predicate.new :p
         
         arguments = p.arguments(1,2,3)
@@ -246,7 +258,7 @@ describe 'Porolog' do
       end
     
       it 'should add new facts to a predicate' do
-        skip 'until Arguments added'
+        skip 'until Rule added'
         
         alpha = Predicate.new 'alpha'
         
@@ -261,7 +273,7 @@ describe 'Porolog' do
       end
       
       it 'should add new falicies to a predicate' do
-        skip 'until Arguments added'
+        skip 'until Rule added'
         
         alpha = Predicate.new 'alpha'
         
@@ -280,16 +292,22 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should return a summary of the predicate' do
-        skip 'until Arguments added'
+        alpha = Predicate.new 'alpha'
+        
+        assert_equal    'alpha:-',  alpha.inspect
+      end
+      
+      it 'should return a summary of the predicate with rules' do
+        skip 'until Rule added'
         
         alpha = Predicate.new 'alpha'
-        assert_equal    'alpha:-',  alpha.inspect
         
         alpha.(:x,:y) << [
           alpha.(:x,:y),
           alpha.(:y,:x),
           :CUT
         ]
+        
         assert_equal    'alpha:-  alpha(:x,:y):- [alpha(:x,:y), alpha(:y,:x), :CUT]',  alpha.inspect
       end
       
@@ -298,7 +316,7 @@ describe 'Porolog' do
     describe '#<<' do
       
       it 'should add new rules to a predicate' do
-        skip 'until Arguments added'
+        skip 'until Rule added'
         
         alpha = Predicate.new 'alpha'
         

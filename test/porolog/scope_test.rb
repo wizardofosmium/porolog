@@ -19,11 +19,11 @@ describe 'Porolog' do
       assert_equal        1,            Scope.scopes.size
       assert_equal        [:default],   Scope.scopes
       
-      assert_scope        Scope[:default], :default, []
+      assert_Scope        Scope[:default], :default, []
     end
     
     it 'should allow predicates with the same name to coexist in different scopes' do
-      skip 'until Arguments added'
+      skip 'until Rule added'
       
       prime = prime1 = Predicate.new :prime, :first
 
@@ -41,9 +41,9 @@ describe 'Porolog' do
       prime.('pump D').fact!
 
       assert_equal        [:default,:first,:second],          Scope.scopes
-      assert_scope        Scope[:default],  :default, []
-      assert_scope        Scope[:first],    :first,   [prime1]
-      assert_scope        Scope[:second],   :second,  [prime2]
+      assert_Scope        Scope[:default],  :default, []
+      assert_Scope        Scope[:first],    :first,   [prime1]
+      assert_Scope        Scope[:second],   :second,  [prime2]
       
       assert_equal        :prime,     prime1.name
       assert_equal        :prime,     prime2.name
@@ -91,17 +91,17 @@ describe 'Porolog' do
         assert_equal        4,                                    Scope.scopes.size
         assert_equal        [:default, :alpha, :bravo, :carly],   Scope.scopes
         
-        assert_scope        Scope[:default],  :default, [delta]
-        assert_scope        Scope[:alpha],    :alpha,   []
-        assert_scope        Scope[:bravo],    :bravo,   []
-        assert_scope        Scope[:carly],    :carly,   []
+        assert_Scope        Scope[:default],  :default, [delta]
+        assert_Scope        Scope[:alpha],    :alpha,   []
+        assert_Scope        Scope[:bravo],    :bravo,   []
+        assert_Scope        Scope[:carly],    :carly,   []
         
         Scope.reset
         
         assert_equal        1,                                    Scope.scopes.size
         assert_equal        [:default],                           Scope.scopes
         
-        assert_scope        Scope[:default], :default, []
+        assert_Scope        Scope[:default], :default, []
         
         assert_nil                                                Scope[:alpha]
         assert_nil                                                Scope[:bravo]
@@ -246,9 +246,9 @@ describe 'Porolog' do
         assert_equal        3,                                    Scope.scopes.size
         assert_equal        [:default, :test, :scope],            Scope.scopes
         
-        assert_scope        Scope[:default],                      :default, []
-        assert_scope        Scope[:test],                         :test,    [test_predicate]
-        assert_scope        Scope[:scope],                        :scope,   [test_predicate]
+        assert_Scope        Scope[:default],                      :default, []
+        assert_Scope        Scope[:test],                         :test,    [test_predicate]
+        assert_Scope        Scope[:scope],                        :scope,   [test_predicate]
       end
       
     end

@@ -2,10 +2,12 @@
 
 <img src="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9" width="240" height="120" align="right" />
 
-Plain Old Ruby Objects Prolog
+Plain Old Ruby Objects Prolog (WORK IN PROGRESS)
 
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)
 [![Build Status](https://travis-ci.com/wizardofosmium/porolog.svg?branch=master)](https://travis-ci.com/wizardofosmium/porolog)
+![Status](https://img.shields.io/badge/status-work%20in%20progress-orange.svg)
+[![Coverage](https://wizardofosmium.github.io/porolog/coverage/badge.svg)](https://github.com/wizardofosmium/porolog)
 
 ## Introduction
 
@@ -22,7 +24,7 @@ Ruby objects could be passed in and Ruby objects were passed back.
 ## Dependencies
 
 The aim of `porolog` is to provide a logic engine with a minimal footprint.
-The only dependency is Yard for documentation.
+The only extra dependency is Yard for documentation.
 
 ## Installation
 
@@ -161,6 +163,7 @@ or
 ```bash
 rake scope_test
 rake predicate_test
+rake arguments_test
 ```
 
 ## Author

@@ -566,7 +566,8 @@ programs interfering with each other.</p>
 83
 84
 85
-86</pre>
+86
+87</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 16</span>
@@ -581,7 +582,7 @@ programs interfering with each other.</p>
   <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:name</span>
   
   <span class='comment'># Creates a new Scope unless it already exists.
-</span>  <span class='comment'># @param name [Object] the name (or otherwise object) used to register a scope.
+</span>  <span class='comment'># @param name [Symbol, Object] the name (or otherwise object) used to register a scope.
 </span>  <span class='comment'># @return [Porolog::Scope] new or existing Scope.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
     <span class='cvar'>@@scopes</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -613,7 +614,8 @@ programs interfering with each other.</p>
   <span class='kw'>end</span>
   
   <span class='comment'># Returns the names of all registered Scopes.
-</span>  <span class='comment'># @return [Array&lt;Symbol&gt;,Array&lt;Object&gt;] the names.
+</span>  <span class='comment'># @return [Array&lt;Symbol&gt;] the names if scopes are named as Symbols (the intended case).
+</span>  <span class='comment'># @return [Array&lt;Object&gt;] the names if the names are not actually Symbols.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_scopes'>scopes</span>
     <span class='cvar'>@@scopes</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
   <span class='kw'>end</span>
@@ -759,7 +761,7 @@ programs interfering with each other.</p>
         <span class='name'>name</span>
       
       
-        <span class='type'>(<tt>Object</tt>)</span>
+        <span class='type'>(<tt>Symbol</tt>, <tt>Object</tt>)</span>
       
       
       
@@ -898,13 +900,27 @@ programs interfering with each other.</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>Array&lt;Object&gt;</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>the names.</p>
+<p>the names if scopes are named as Symbols (the intended case).</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Object&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the names if the names are not actually Symbols.</p>
 </div>
       
     </li>
@@ -917,12 +933,12 @@ programs interfering with each other.</p>
       <pre class="lines">
 
 
-59
 60
-61</pre>
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_scopes'>scopes</span>
   <span class='cvar'>@@scopes</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
@@ -1002,12 +1018,12 @@ programs interfering with each other.</p>
       <pre class="lines">
 
 
-66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='ivar'>@predicates</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
@@ -1115,13 +1131,13 @@ programs interfering with each other.</p>
       <pre class="lines">
 
 
-75
 76
 77
-78</pre>
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='op'>[]=</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Scope/NotPredicateError.html" title="Porolog::Scope::NotPredicateError (class)">NotPredicateError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#new-class_method" title="Porolog::Scope.new (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a Predicate</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Predicate.html" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='rparen'>)</span>
@@ -1176,12 +1192,12 @@ programs interfering with each other.</p>
       <pre class="lines">
 
 
-82
 83
-84</pre>
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/scope.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_predicates'>predicates</span>
   <span class='ivar'>@predicates</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
@@ -1196,7 +1212,7 @@ programs interfering with each other.</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Apr 21 08:30:00 2019 by
+  Generated on Mon Apr 22 16:27:40 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.3.4).
 </div>

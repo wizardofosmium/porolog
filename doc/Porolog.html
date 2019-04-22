@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/porolog.rb<span class="defines">,<br />
-  lib/porolog/error.rb,<br /> lib/porolog/scope.rb,<br /> lib/porolog/predicate.rb</span>
+  lib/porolog/error.rb,<br /> lib/porolog/scope.rb,<br /> lib/porolog/arguments.rb,<br /> lib/porolog/predicate.rb</span>
 </dd>
   </dl>
   
@@ -92,8 +92,7 @@
 Predicate</p>
 
 <pre class="code ruby"><code class="ruby">Luis Esteban   2 May 2018
-  created
-</code></pre>
+  created</code></pre>
 
 
   </div>
@@ -107,7 +106,7 @@ Predicate</p>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Porolog/PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span>, <span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Predicate</a></span>, <span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Porolog/Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span>, <span class='object_link'><a href="Porolog/PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span>, <span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Predicate</a></span>, <span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span>
     
   
 </p>
@@ -134,7 +133,7 @@ Predicate</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.3</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.4</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
         <dt id="VERSION_DATE-constant" class="">VERSION_DATE =
           <div class="docstring">
@@ -172,7 +171,7 @@ Predicate</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#predicate-instance_method" title="#predicate (instance method)">#<strong>predicate</strong>(*names)  &#x21d2; Porolog::Predicate|Array&lt;Porolog::Predicate&gt; </a>
+      <a href="#predicate-instance_method" title="#predicate (instance method)">#<strong>predicate</strong>(*names)  &#x21d2; Porolog::Predicate<sup>+</sup> </a>
     
 
     
@@ -206,7 +205,7 @@ returns an Arguments based on the arguments provided to the method.</p>
       <div class="method_details first">
   <h3 class="signature first" id="predicate-instance_method">
   
-    #<strong>predicate</strong>(*names)  &#x21d2; <tt><span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>|Array&lt;<span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>&gt;</tt> 
+    #<strong>predicate</strong>(*names)  &#x21d2; <tt><span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span></tt><sup>+</sup> 
   
 
   
@@ -249,13 +248,27 @@ returns an Arguments based on the arguments provided to the method.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>|Array&lt;<span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span></tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>Predicate or Predicates created</p>
+<p>Predicate created if only one name is provided</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Predicates created if multiple names are provided</p>
 </div>
       
     </li>
@@ -268,7 +281,6 @@ returns an Arguments based on the arguments provided to the method.</p>
       <pre class="lines">
 
 
-20
 21
 22
 23
@@ -283,10 +295,11 @@ returns an Arguments based on the arguments provided to the method.</p>
 32
 33
 34
-35</pre>
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_names'>names</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_names'>names</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_names'>names</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -314,7 +327,7 @@ returns an Arguments based on the arguments provided to the method.</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Apr 21 08:30:00 2019 by
+  Generated on Mon Apr 22 16:27:39 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.3.4).
 </div>

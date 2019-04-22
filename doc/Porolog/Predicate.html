@@ -374,7 +374,7 @@ provided (creating the new scope if necessary).</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#<<-instance_method" title="#&lt;&lt; (instance method)">#<strong>&lt;&lt;</strong>(rule)  &#x21d2; Array&lt;Porolog::Rule&gt; </a>
+      <a href="#<<-instance_method" title="#&lt;&lt; (instance method)">#<strong>&lt;&lt;</strong>(rule)  &#x21d2; Porolog::Predicate </a>
     
 
     
@@ -751,7 +751,8 @@ defaults to the name of the current scope</p>
 129
 130
 131
-132</pre>
+132
+133</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 18</span>
@@ -828,19 +829,20 @@ defaults to the name of the current scope</p>
 </span>  <span class='comment'># * p.(x,y,z)
 </span>  <span class='comment'># @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'>Arguments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Create Arguments for the Predicate.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'>Arguments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Add a Rule to the Predicate.
-</span>  <span class='comment'># @param rule [Object] the name (or otherwise object) used to register a scope.
-</span>  <span class='comment'># @return [Array&lt;Porolog::Rule&gt;] the Predicate&#39;s rule.
+</span>  <span class='comment'># @param rule [Object] a rule to add to the Predicate.
+</span>  <span class='comment'># @return [Porolog::Predicate] the Predicate.
 </span>  <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
     <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rule'>rule</span>
+    <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A pretty print String of the Predicate.
@@ -1018,7 +1020,8 @@ defaults to the name of the current scope</p>
 129
 130
 131
-132</pre>
+132
+133</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 18</span>
@@ -1095,19 +1098,20 @@ defaults to the name of the current scope</p>
 </span>  <span class='comment'># * p.(x,y,z)
 </span>  <span class='comment'># @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'>Arguments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Create Arguments for the Predicate.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'>Arguments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Add a Rule to the Predicate.
-</span>  <span class='comment'># @param rule [Object] the name (or otherwise object) used to register a scope.
-</span>  <span class='comment'># @return [Array&lt;Porolog::Rule&gt;] the Predicate&#39;s rule.
+</span>  <span class='comment'># @param rule [Object] a rule to add to the Predicate.
+</span>  <span class='comment'># @return [Porolog::Predicate] the Predicate.
 </span>  <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
     <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rule'>rule</span>
+    <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A pretty print String of the Predicate.
@@ -1293,15 +1297,15 @@ defaults to the name of the current scope</p>
       <pre class="lines">
 
 
-125
 126
 127
 128
 129
-130</pre>
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_builtin'>builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
@@ -1621,7 +1625,7 @@ provided (creating the new scope if necessary).</p>
       <div class="method_details first">
   <h3 class="signature first" id="<<-instance_method">
   
-    #<strong>&lt;&lt;</strong>(rule)  &#x21d2; <tt>Array&lt;Porolog::Rule&gt;</tt> 
+    #<strong>&lt;&lt;</strong>(rule)  &#x21d2; <tt><span class='object_link'><a href="" title="Porolog::Predicate (class)">Porolog::Predicate</a></span></tt> 
   
 
   
@@ -1650,7 +1654,7 @@ provided (creating the new scope if necessary).</p>
       
         &mdash;
         <div class='inline'>
-<p>the name (or otherwise object) used to register a scope.</p>
+<p>a rule to add to the Predicate.</p>
 </div>
       
     </li>
@@ -1663,13 +1667,13 @@ provided (creating the new scope if necessary).</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;Porolog::Rule&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Porolog::Predicate (class)">Porolog::Predicate</a></span></tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>the Predicate&#39;s rule.</p>
+<p>the Predicate.</p>
 </div>
       
     </li>
@@ -1684,13 +1688,15 @@ provided (creating the new scope if necessary).</p>
 
 101
 102
-103</pre>
+103
+104</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
   <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rule'>rule</span>
+  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1731,7 +1737,7 @@ provided (creating the new scope if necessary).</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='const'>Arguments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1741,7 +1747,7 @@ provided (creating the new scope if necessary).</p>
       <div class="method_details ">
   <h3 class="signature " id="call-instance_method">
   
-    #<strong>call</strong>(*args)  &#x21d2; <tt>Porolog::Arguments</tt> 
+    #<strong>call</strong>(*args)  &#x21d2; <tt><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Porolog::Arguments</a></span></tt> 
   
 
   
@@ -1766,7 +1772,7 @@ provided (creating the new scope if necessary).</p>
     <li>
       
       
-        <span class='type'>(<tt>Porolog::Arguments</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Porolog::Arguments</a></span></tt>)</span>
       
       
       
@@ -1793,7 +1799,7 @@ provided (creating the new scope if necessary).</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='const'>Arguments</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1844,7 +1850,6 @@ provided (creating the new scope if necessary).</p>
       <pre class="lines">
 
 
-107
 108
 109
 110
@@ -1857,10 +1862,11 @@ provided (creating the new scope if necessary).</p>
 117
 118
 119
-120</pre>
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 108</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='id identifier rubyid_lines'>lines</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1886,7 +1892,7 @@ provided (creating the new scope if necessary).</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Apr 21 08:30:00 2019 by
+  Generated on Mon Apr 22 16:27:40 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.3.4).
 </div>

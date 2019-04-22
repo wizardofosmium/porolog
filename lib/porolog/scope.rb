@@ -23,7 +23,7 @@ module Porolog
     attr_reader :name
     
     # Creates a new Scope unless it already exists.
-    # @param name [Object] the name (or otherwise object) used to register a scope.
+    # @param name [Symbol, Object] the name (or otherwise object) used to register a scope.
     # @return [Porolog::Scope] new or existing Scope.
     def self.new(name)
       @@scopes[name] || super
@@ -55,7 +55,8 @@ module Porolog
     end
     
     # Returns the names of all registered Scopes.
-    # @return [Array<Symbol>,Array<Object>] the names.
+    # @return [Array<Symbol>] the names if scopes are named as Symbols (the intended case).
+    # @return [Array<Object>] the names if the names are not actually Symbols.
     def self.scopes
       @@scopes.keys
     end

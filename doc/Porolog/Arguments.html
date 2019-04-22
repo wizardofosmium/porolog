@@ -997,28 +997,28 @@ Predicate.</p>
   <span class='comment'># Creates a fact rule that states that these arguments satisfy the Predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_fact!'>fact!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Creates a fact rule that states that these arguments do not satisfy the Predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_falicy!'>falicy!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Creates a fact rule that states that these arguments satisfy the Predicate and terminates solving the predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_cut_fact!'>cut_fact!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Creates a fact rule that states that these arguments do not satisfy the Predicate and terminates solving the predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_cut_falicy!'>cut_falicy!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
@@ -1026,7 +1026,7 @@ Predicate.</p>
 </span>  <span class='comment'># @param definition [Array&lt;Object&gt;, Object] the Rule definition for these Arguments
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
@@ -1034,7 +1034,7 @@ Predicate.</p>
 </span>  <span class='comment'># @param block the block to evaluate
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_evaluates'>evaluates</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
@@ -1340,28 +1340,28 @@ Predicate.</p>
   <span class='comment'># Creates a fact rule that states that these arguments satisfy the Predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_fact!'>fact!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Creates a fact rule that states that these arguments do not satisfy the Predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_falicy!'>falicy!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Creates a fact rule that states that these arguments satisfy the Predicate and terminates solving the predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_cut_fact!'>cut_fact!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Creates a fact rule that states that these arguments do not satisfy the Predicate and terminates solving the predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_cut_falicy!'>cut_falicy!</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rbracket'>]</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
@@ -1369,7 +1369,7 @@ Predicate.</p>
 </span>  <span class='comment'># @param definition [Array&lt;Object&gt;, Object] the Rule definition for these Arguments
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
@@ -1377,7 +1377,7 @@ Predicate.</p>
 </span>  <span class='comment'># @param block the block to evaluate
 </span>  <span class='comment'># @return [Porolog::Arguments] the Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_evaluates'>evaluates</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
     <span class='kw'>self</span>
   <span class='kw'>end</span>
   
@@ -1657,7 +1657,7 @@ Predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
-  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
+  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_definition'>definition</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1800,7 +1800,7 @@ and terminates solving the predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cut_fact!'>cut_fact!</span>
-  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1862,7 +1862,7 @@ Predicate and terminates solving the predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cut_falicy!'>cut_falicy!</span>
-  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='symbol'>:CUT</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2030,7 +2030,7 @@ Predicate and terminates solving the predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_evaluates'>evaluates</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2091,7 +2091,7 @@ Predicate and terminates solving the predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fact!'>fact!</span>
-  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2153,7 +2153,7 @@ Predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_falicy!'>falicy!</span>
-  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'>Rule</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='ivar'>@predicate</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="Rule.html" title="Porolog::Rule (class)">Rule</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Rule.html#initialize-instance_method" title="Porolog::Rule#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2749,7 +2749,7 @@ coords = xs.zip(ys)</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Mon Apr 22 16:27:40 2019 by
+  Generated on Tue Apr 23 07:52:08 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.3.4).
 </div>

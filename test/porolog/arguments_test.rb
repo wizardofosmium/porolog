@@ -156,8 +156,6 @@ describe 'Porolog' do
     describe '#fact!' do
       
       it 'should create a fact for its predicate' do
-        skip 'until Rule added'
-        
         predicate1 = Predicate.new :predicate1
         arguments1 = predicate1.(1,'a',0.1)
         
@@ -171,8 +169,6 @@ describe 'Porolog' do
     describe '#falicy!' do
       
       it 'should create a falicy for its predicate' do
-        skip 'until Rule added'
-        
         predicate1 = Predicate.new :predicate1
         arguments1 = predicate1.(1,'a',0.1)
         
@@ -186,14 +182,12 @@ describe 'Porolog' do
     describe '#cut_fact!' do
       
       it 'should create a fact for its predicate and terminate solving the goal' do
-        skip 'until Rule added'
-        
         predicate1 = Predicate.new :predicate1
         arguments1 = predicate1.(1,'a',0.1)
         
         arguments1.cut_fact!
         
-        assert_equal '[  predicate1(1,"a",0.1):- ! true]', predicate1.rules.inspect
+        assert_equal '[  predicate1(1,"a",0.1):- [:CUT, true]]', predicate1.rules.inspect
       end
       
     end
@@ -201,14 +195,12 @@ describe 'Porolog' do
     describe '#cut_falicy!' do
       
       it 'should create a falicy for its predicate and terminate solving the goal' do
-        skip 'until Rule added'
-        
         predicate1 = Predicate.new :predicate1
         arguments1 = predicate1.(1,'a',0.1)
         
         arguments1.cut_falicy!
         
-        assert_equal '[  predicate1(1,"a",0.1):- ! false]', predicate1.rules.inspect
+        assert_equal '[  predicate1(1,"a",0.1):- [:CUT, false]]', predicate1.rules.inspect
       end
       
     end
@@ -216,8 +208,6 @@ describe 'Porolog' do
     describe '#<<' do
       
       it 'should create a rule for its predicate' do
-        skip 'until Rule added'
-        
         predicate1 = Predicate.new :predicate1
         arguments1 = predicate1.(1,'a',0.1)
         
@@ -233,8 +223,6 @@ describe 'Porolog' do
     describe '#evaluates' do
       
       it 'should add a block as a rule to its predicate' do
-        skip 'until Rule added'
-        
         predicate1 = Predicate.new :predicate1
         arguments1 = predicate1.(1,'a',0.1)
         
@@ -315,7 +303,7 @@ describe 'Porolog' do
     describe '#solutions' do
       
       it 'should memoize solutions' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         # TODO: it 'should memoize solutions' do
       end
       
@@ -324,7 +312,7 @@ describe 'Porolog' do
     describe '#solve' do
       
       it 'should unify and solve a simple predicate' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         alpha = Predicate.new :alpha
         args1 = Arguments.new alpha, [1,2]
@@ -338,7 +326,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a simple predicate with multiple solutions' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :alpha
         
@@ -354,7 +342,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a simple predicate with multiple solutions involving a head and tail' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :alpha
         
@@ -370,7 +358,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a basic predicate' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :likes
 
@@ -394,7 +382,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a deeper predicate' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :male, :female, :parent
 
@@ -485,7 +473,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a predicate involving a head and tail' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :alpha, :beta, :gamma
         
@@ -528,7 +516,7 @@ describe 'Porolog' do
       end
       
       it 'should pass on instantiations between goals' do
-        skip 'until Rule added'
+        skip 'until StandardPredicates added'
         
         predicate :passon, :copy
 
@@ -635,7 +623,7 @@ describe 'Porolog' do
       end
       
       it 'should solve a peeling off predicate' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :size
 
@@ -707,7 +695,7 @@ describe 'Porolog' do
     describe '#solve_for' do
       
       it 'should solve a predicate for specified variables' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :alpha
         
@@ -719,7 +707,7 @@ describe 'Porolog' do
       end
       
       it 'should solve a predicate with multiple solutions for specified variables' do
-        skip 'until Rule added'
+        skip 'until Goal added'
         
         predicate :alpha
         

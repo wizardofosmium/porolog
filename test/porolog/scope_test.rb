@@ -23,7 +23,7 @@ describe 'Porolog' do
     end
     
     it 'should allow predicates with the same name to coexist in different scopes' do
-      skip 'until Goal added'
+      skip 'until CoreExt added'
       
       prime = prime1 = Predicate.new :prime, :first
 

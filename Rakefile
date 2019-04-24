@@ -45,3 +45,8 @@ task :help do
     for other tasks.
   EOF
 end
+
+desc 'Show TODOs'
+task :todo do
+  puts `egrep -r "TODO|TECH-DEBT" * | egrep -v "coverage/|doc/|Show TODOs"`
+end

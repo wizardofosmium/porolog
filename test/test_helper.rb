@@ -17,6 +17,8 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
 
 # -- Testing --
 require 'minitest/autorun'
+require 'mocha/minitest'
+require 'spy/integration'
 require 'porolog'
 
 include Porolog
@@ -28,6 +30,7 @@ def reset
   Predicate.reset
   Arguments.reset
   Rule.reset
+  Goal.reset
 end
 
 def assert_Scope(scope, name, predicates)
@@ -53,4 +56,26 @@ def assert_Rule(rule, predicate, arguments, definition)
   assert_equal        predicate,        rule.arguments.predicate.name
   assert_equal        arguments,        rule.arguments.arguments
   assert_equal        definition,       rule.definition
+end
+
+def assert_Goal(goal, predicate, arguments)#, definition)
+  assert_instance_of  Goal,             goal
+  assert_equal        predicate,        goal.arguments.predicate.name
+  assert_equal        arguments,        goal.arguments.arguments
+  # TODO: add definition
+  #assert_equal        definition,       goal.definition
+end
+
+def assert_Goal_variables(goal, hash, str)
+  assert_instance_of  Goal,             goal
+  assert_equal        hash,             goal.variables
+  # TODO: add inspect_variables
+  #assert_equal        str,              goal.inspect_variables
+end
+
+
+def new_goal(predicate_name, *arguments_list)
+  predicate = Predicate.new(predicate_name)
+  arguments = predicate.arguments(*arguments_list)
+  arguments.goal
 end

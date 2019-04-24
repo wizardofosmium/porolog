@@ -115,7 +115,7 @@ module Porolog
     
     # Returns memoized solutions
     # @param number [Integer] the maximum number of solutions to find (nil means find all)
-    # @return [Array<Hash>] the solutions found (memoized)
+    # @return [Array<Hash{Symbol => Object}>] the solutions found (memoized)
     def solutions(number = nil)
       @solutions ||= solve(number)
       @solutions
@@ -123,7 +123,7 @@ module Porolog
     
     # Solves the Arguments
     # @param number_of_solutions [Integer] the maximum number of solutions to find (nil means find all)
-    # @return [Array<Hash>] the solutions found
+    # @return [Array<Hash{Symbol => Object}>] the solutions found
     def solve(number_of_solutions = nil)
       @solutions = goal.solve(number_of_solutions)
     end
@@ -155,9 +155,10 @@ module Porolog
     # @return [Porolog::Arguments] the duplicated Arguments
     def dup(goal)
       arguments_dup = arguments.dup
-      (0...arguments_dup.size).each do |i|
-        arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)
-      end
+      # TODO: Uncomment when HeadTail added
+      #(0...arguments_dup.size).each do |i|
+      #  arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)
+      #end
       self.class.new @predicate, arguments_dup
     end
     

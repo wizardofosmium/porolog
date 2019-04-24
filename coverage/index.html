@@ -5,7 +5,7 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <script src='./assets/0.10.2/application.js' type='text/javascript'></script>    
     <link href='./assets/0.10.2/application.css' media='screen, projection, print' rel='stylesheet' type='text/css'>
-    <link rel="shortcut icon" type="image/png" href="./assets/0.10.2/favicon_green.png" />
+    <link rel="shortcut icon" type="image/png" href="./assets/0.10.2/favicon_yellow.png" />
     <link rel="icon" type="image/png" href="./assets/0.10.2/favicon.png" />
   </head>
   
@@ -14,27 +14,27 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2019-04-23T08:00:28+10:00">2019-04-23T08:00:28+10:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2019-04-24T20:17:05+10:00">2019-04-24T20:17:05+10:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">93.9%</span></span>
+    (<span class="covered_percent"><span class="yellow">84.93%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         6.57
+         6.81
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
-    <b>10</b> files in total.
-    <b>574</b> relevant lines. 
-    <span class="green"><b>539</b> lines covered</span> and
-    <span class="red"><b>35</b> lines missed </span>
+    <b>12</b> files in total.
+    <b>843</b> relevant lines. 
+    <span class="green"><b>716</b> lines covered</span> and
+    <span class="red"><b>127</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -53,21 +53,21 @@
       <tr>
         <td class="strong"><a href="#41affffe2a6da2bfd1b3f757b857bf2b62747784" class="src_link" title="lib/porolog.rb">lib/porolog.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>44</td>
-        <td>18</td>
-        <td>18</td>
+        <td>45</td>
+        <td>19</td>
+        <td>19</td>
         <td>0</td>
-        <td>3.7</td>
+        <td>3.6</td>
       </tr>
       
       <tr>
         <td class="strong"><a href="#9025830706c26c7c9aeb091802592d13103e9a4a" class="src_link" title="lib/porolog/arguments.rb">lib/porolog/arguments.rb</a></td>
-        <td class="red strong">75.86 %</td>
-        <td>173</td>
-        <td>58</td>
-        <td>44</td>
-        <td>14</td>
-        <td>7.7</td>
+        <td class="yellow strong">83.93 %</td>
+        <td>174</td>
+        <td>56</td>
+        <td>47</td>
+        <td>9</td>
+        <td>11.9</td>
       </tr>
       
       <tr>
@@ -81,13 +81,23 @@
       </tr>
       
       <tr>
+        <td class="strong"><a href="#401ee06f6089cd52cd5e304b1a64688e2ff7a95f" class="src_link" title="lib/porolog/goal.rb">lib/porolog/goal.rb</a></td>
+        <td class="red strong">56.94 %</td>
+        <td>172</td>
+        <td>72</td>
+        <td>41</td>
+        <td>31</td>
+        <td>13.6</td>
+      </tr>
+      
+      <tr>
         <td class="strong"><a href="#6a9b9f605540e91937c2e20600638e425bfd765f" class="src_link" title="lib/porolog/predicate.rb">lib/porolog/predicate.rb</a></td>
         <td class="green strong">100.0 %</td>
         <td>135</td>
         <td>47</td>
         <td>47</td>
         <td>0</td>
-        <td>29.4</td>
+        <td>36.3</td>
       </tr>
       
       <tr>
@@ -97,7 +107,7 @@
         <td>15</td>
         <td>15</td>
         <td>0</td>
-        <td>17.7</td>
+        <td>20.9</td>
       </tr>
       
       <tr>
@@ -107,7 +117,17 @@
         <td>26</td>
         <td>26</td>
         <td>0</td>
-        <td>45.7</td>
+        <td>55.0</td>
+      </tr>
+      
+      <tr>
+        <td class="strong"><a href="#8e03f55aad5a0e4807f98988a10d608025119e33" class="src_link" title="test/porolog/goal_test.rb">test/porolog/goal_test.rb</a></td>
+        <td class="red strong">66.67 %</td>
+        <td>392</td>
+        <td>198</td>
+        <td>132</td>
+        <td>66</td>
+        <td>0.8</td>
       </tr>
       
       <tr>
@@ -171,8 +191,8 @@
     <h3>lib/porolog.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>18</b> relevant lines. 
-      <span class="green"><b>18</b> lines covered</span> and
+      <b>19</b> relevant lines. 
+      <span class="green"><b>19</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -243,7 +263,7 @@
         <li class="covered" data-hits="1" data-linenumber="11">
           <span class="hits">1</span>
           
-          <code class="ruby">  VERSION      = &#39;0.0.5&#39;</code>
+          <code class="ruby">  VERSION      = &#39;0.0.6&#39;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="12">
@@ -255,7 +275,7 @@
         <li class="covered" data-hits="1" data-linenumber="13">
           <span class="hits">1</span>
           
-          <code class="ruby">  VERSION_DATE = &#39;2019-04-23&#39;</code>
+          <code class="ruby">  VERSION_DATE = &#39;2019-04-24&#39;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="14">
@@ -444,6 +464,12 @@
           <code class="ruby">require_relative &#39;porolog/rule&#39;</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="45">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;porolog/goal&#39;</code>
+        </li>
+      
     </ol>
   </pre>
 </div>
@@ -452,11 +478,11 @@
         <div class="source_table" id="9025830706c26c7c9aeb091802592d13103e9a4a">
   <div class="header">
     <h3>lib/porolog/arguments.rb</h3>
-    <h4><span class="red">75.86 %</span> covered</h4>
+    <h4><span class="yellow">83.93 %</span> covered</h4>
     <div>
-      <b>58</b> relevant lines. 
-      <span class="green"><b>44</b> lines covered</span> and
-      <span class="red"><b>14</b> lines missed.</span>
+      <b>56</b> relevant lines. 
+      <span class="green"><b>47</b> lines covered</span> and
+      <span class="red"><b>9</b> lines missed.</span>
     </div>
   </div>
   
@@ -613,14 +639,14 @@
           <code class="ruby">    def self.reset</code>
         </li>
       
-        <li class="covered" data-hits="86" data-linenumber="26">
-          <span class="hits">86</span>
+        <li class="covered" data-hits="110" data-linenumber="26">
+          <span class="hits">110</span>
           
           <code class="ruby">      @@arguments = []</code>
         </li>
       
-        <li class="covered" data-hits="86" data-linenumber="27">
-          <span class="hits">86</span>
+        <li class="covered" data-hits="110" data-linenumber="27">
+          <span class="hits">110</span>
           
           <code class="ruby">      true</code>
         </li>
@@ -673,20 +699,20 @@
           <code class="ruby">    def initialize(predicate, arguments)</code>
         </li>
       
-        <li class="covered" data-hits="53" data-linenumber="36">
-          <span class="hits">53</span>
+        <li class="covered" data-hits="93" data-linenumber="36">
+          <span class="hits">93</span>
           
           <code class="ruby">      @predicate = predicate</code>
         </li>
       
-        <li class="covered" data-hits="53" data-linenumber="37">
-          <span class="hits">53</span>
+        <li class="covered" data-hits="93" data-linenumber="37">
+          <span class="hits">93</span>
           
           <code class="ruby">      @arguments = arguments</code>
         </li>
       
-        <li class="covered" data-hits="53" data-linenumber="38">
-          <span class="hits">53</span>
+        <li class="covered" data-hits="93" data-linenumber="38">
+          <span class="hits">93</span>
           
           <code class="ruby">      @@arguments &lt;&lt; self</code>
         </li>
@@ -1135,8 +1161,8 @@
           <code class="ruby">    def goal(calling_goal = nil)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="113">
-          
+        <li class="covered" data-hits="11" data-linenumber="113">
+          <span class="hits">11</span>
           
           <code class="ruby">      Goal.new(self, calling_goal)</code>
         </li>
@@ -1168,7 +1194,7 @@
         <li class="never" data-hits="" data-linenumber="118">
           
           
-          <code class="ruby">    # @return [Array&lt;Hash&gt;] the solutions found (memoized)</code>
+          <code class="ruby">    # @return [Array&lt;Hash{Symbol =&gt; Object}&gt;] the solutions found (memoized)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="119">
@@ -1216,7 +1242,7 @@
         <li class="never" data-hits="" data-linenumber="126">
           
           
-          <code class="ruby">    # @return [Array&lt;Hash&gt;] the solutions found</code>
+          <code class="ruby">    # @return [Array&lt;Hash{Symbol =&gt; Object}&gt;] the solutions found</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="127">
@@ -1399,103 +1425,109 @@
           <code class="ruby">    def dup(goal)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="157">
-          
+        <li class="covered" data-hits="21" data-linenumber="157">
+          <span class="hits">21</span>
           
           <code class="ruby">      arguments_dup = arguments.dup</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="158">
+        <li class="never" data-hits="" data-linenumber="158">
           
           
-          <code class="ruby">      (0...arguments_dup.size).each do |i|</code>
+          <code class="ruby">      # TODO: Uncomment when HeadTail added</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="159">
+        <li class="never" data-hits="" data-linenumber="159">
           
           
-          <code class="ruby">        arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)</code>
+          <code class="ruby">      #(0...arguments_dup.size).each do |i|</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="160">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">      #  arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="161">
+        <li class="never" data-hits="" data-linenumber="161">
           
+          
+          <code class="ruby">      #end</code>
+        </li>
+      
+        <li class="covered" data-hits="21" data-linenumber="162">
+          <span class="hits">21</span>
           
           <code class="ruby">      self.class.new @predicate, arguments_dup</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="162">
-          
-          
-          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="163">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="164">
           
           
-          <code class="ruby">    # @param other [Porolog::Arguments] arguments for comparison</code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="165">
           
           
+          <code class="ruby">    # @param other [Porolog::Arguments] arguments for comparison</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="166">
+          
+          
           <code class="ruby">    # @return [Boolean] whether the Arguments match</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="166">
+        <li class="covered" data-hits="1" data-linenumber="167">
           <span class="hits">1</span>
           
           <code class="ruby">    def ==(other)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="167">
+        <li class="never" data-hits="" data-linenumber="168">
           
           
           <code class="ruby">      @predicate == other.predicate &amp;&amp;</code>
         </li>
       
-        <li class="covered" data-hits="16" data-linenumber="168">
-          <span class="hits">16</span>
+        <li class="covered" data-hits="17" data-linenumber="169">
+          <span class="hits">17</span>
           
           <code class="ruby">      @arguments == other.arguments</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="169">
-          
-          
-          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="170">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="171">
           
           
-          <code class="ruby">  end</code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="172">
           
           
-          <code class="ruby">  </code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="173">
+          
+          
+          <code class="ruby">  </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="174">
           
           
           <code class="ruby">end</code>
@@ -1593,6 +1625,1057 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="13">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+
+      
+        <div class="source_table" id="401ee06f6089cd52cd5e304b1a64688e2ff7a95f">
+  <div class="header">
+    <h3>lib/porolog/goal.rb</h3>
+    <h4><span class="red">56.94 %</span> covered</h4>
+    <div>
+      <b>72</b> relevant lines. 
+      <span class="green"><b>41</b> lines covered</span> and
+      <span class="red"><b>31</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="never" data-hits="" data-linenumber="1">
+          
+          
+          <code class="ruby">#</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="2">
+          
+          
+          <code class="ruby">#   lib/porolog/goal.rb      - Plain Old Ruby Objects Prolog Engine -- Goal</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="3">
+          
+          
+          <code class="ruby">#</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="4">
+          
+          
+          <code class="ruby">#     Luis Esteban   2 May 2018</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="5">
+          
+          
+          <code class="ruby">#       created</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="6">
+          
+          
+          <code class="ruby">#</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="8">
+          <span class="hits">1</span>
+          
+          <code class="ruby">module Porolog</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="9">
+          
+          
+          <code class="ruby">  </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="10">
+          
+          
+          <code class="ruby">  # A Porolog::Goal finds solutions for specific Arguments of a Predicate.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="11">
+          
+          
+          <code class="ruby">  # @author Luis Esteban</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="12">
+          
+          
+          <code class="ruby">  # @!attribute calling_goal</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="13">
+          
+          
+          <code class="ruby">  #   @return [Porolog::Goal] The parent goal if this goal is a subgoal.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="14">
+          
+          
+          <code class="ruby">  # @!attribute arguments</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="15">
+          
+          
+          <code class="ruby">  #   @return [Porolog::Arguments] The specific Arguments this goal is trying to solve.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="16">
+          
+          
+          <code class="ruby">  # @!attribute terminate</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="17">
+          
+          
+          <code class="ruby">  #   @return [Boolean] Whether this Goal is to terminate.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="18">
+          
+          
+          <code class="ruby">  # @!attribute index</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="19">
+          
+          
+          <code class="ruby">  #   @return [Integer, NilClass] Solution index for builtin predicates.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="20">
+          
+          
+          <code class="ruby">  # @!attribute result</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="21">
+          
+          
+          <code class="ruby">  #   @return [Boolean] Whether any result has been found.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="22">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  class Goal</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="23">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="24">
+          
+          
+          <code class="ruby">    # Error class for rescuing or detecting any Goal error.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="25">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    class GoalError        &lt; PorologError ; end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="26">
+          
+          
+          <code class="ruby">    # Error class indicating an unexpected type of Rule definition.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="27">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    class DefinitionError  &lt; GoalError    ; end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="28">
+          
+          
+          <code class="ruby">    # Error class indicating a non-Variable was attempted to be instantiated.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="29">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    class NotVariableError &lt; GoalError    ; end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="30">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="31">
+          
+          
+          <code class="ruby">    # Clears all goals and ensures they are deleted.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="32">
+          
+          
+          <code class="ruby">    # @return [true]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="33">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def self.reset</code>
+        </li>
+      
+        <li class="covered" data-hits="112" data-linenumber="34">
+          <span class="hits">112</span>
+          
+          <code class="ruby">      @@goals ||= []</code>
+        </li>
+      
+        <li class="covered" data-hits="112" data-linenumber="35">
+          <span class="hits">112</span>
+          
+          <code class="ruby">      goals = @@goals</code>
+        </li>
+      
+        <li class="covered" data-hits="112" data-linenumber="36">
+          <span class="hits">112</span>
+          
+          <code class="ruby">      @@goals = []</code>
+        </li>
+      
+        <li class="covered" data-hits="112" data-linenumber="37">
+          <span class="hits">112</span>
+          
+          <code class="ruby">      goals.map(&amp;:deleted?)</code>
+        </li>
+      
+        <li class="covered" data-hits="112" data-linenumber="38">
+          <span class="hits">112</span>
+          
+          <code class="ruby">      @@cache = {}</code>
+        </li>
+      
+        <li class="covered" data-hits="112" data-linenumber="39">
+          <span class="hits">112</span>
+          
+          <code class="ruby">      true</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="40">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="42">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="43">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="44">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    attr_accessor :calling_goal, :arguments, :terminate, :index, :result</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="45">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="46">
+          
+          
+          <code class="ruby">    # Initializes and registers the Goal.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="47">
+          
+          
+          <code class="ruby">    # @param arguments [Porolog::Arguments] the Predicate Arguments that this Goal is to solve.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="48">
+          
+          
+          <code class="ruby">    # @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="49">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def initialize(arguments, calling_goal = nil)</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="50">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @arguments    = arguments</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="51">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @terminate    = false</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="52">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @calling_goal = calling_goal</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="53">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @variables    = {}</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="54">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @result       = false</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="55">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="56">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @arguments = @arguments.dup(self) if @arguments.is_a?(Arguments)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="57">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="58">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      @@goals &lt;&lt; self</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="59">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="60">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
+          <code class="ruby">    # A convenience method for testing/debugging.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
+          
+          
+          <code class="ruby">    # @return [Array&lt;Porolog::Goal&gt;]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="63">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def self.goals</code>
+        </li>
+      
+        <li class="covered" data-hits="10" data-linenumber="64">
+          <span class="hits">10</span>
+          
+          <code class="ruby">      @@goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="65">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="66">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="67">
+          
+          
+          <code class="ruby">    # @return [Boolean] whether the Goal has been deleted (memoized)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="68">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="32" data-linenumber="69">
+          <span class="hits">32</span>
+          
+          <code class="ruby">      @deleted ||= check_deleted</code>
+        </li>
+      
+        <li class="covered" data-hits="32" data-linenumber="70">
+          <span class="hits">32</span>
+          
+          <code class="ruby">      @deleted</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="71">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="72">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="73">
+          
+          
+          <code class="ruby">    # Determines whether the Goal has been deleted and removes its Variables if it has</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="74">
+          
+          
+          <code class="ruby">    # @return [Boolean] whether the Goal has been deleted</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="75">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def check_deleted</code>
+        </li>
+      
+        <li class="covered" data-hits="22" data-linenumber="76">
+          <span class="hits">22</span>
+          
+          <code class="ruby">      if @@goals.include?(self)</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="77">
+          <span class="hits">5</span>
+          
+          <code class="ruby">        false</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="78">
+          
+          
+          <code class="ruby">      else</code>
+        </li>
+      
+        <li class="covered" data-hits="17" data-linenumber="79">
+          <span class="hits">17</span>
+          
+          <code class="ruby">        @variables.delete_if do |name,variable|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="80">
+          
+          
+          <code class="ruby">          variable.remove</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="81">
+          
+          
+          <code class="ruby">          true</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="82">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="17" data-linenumber="83">
+          <span class="hits">17</span>
+          
+          <code class="ruby">        true</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="84">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="85">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="86">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="87">
+          
+          
+          <code class="ruby">    # @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="88">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def variables</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="89">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      @variables.keys.each_with_object({}){|variable,variable_list|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="90">
+          
+          
+          <code class="ruby">        next if self.variable(variable).internal?</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="91">
+          
+          
+          <code class="ruby">        variable_list[variable] = self.value_of(variable)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="92">
+          
+          
+          <code class="ruby">      }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="93">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="94">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="95">
+          
+          
+          <code class="ruby">    # Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="96">
+          
+          
+          <code class="ruby">    # @param name [Object] name of variable or variable</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="97">
+          
+          
+          <code class="ruby">    # @return [Porolog::Variable, Object] a variable of the goal or the original parameter</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="98">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def variable(name)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="99">
+          
+          
+          <code class="ruby">      unless name.is_a?(Symbol) || name.is_a?(Variable)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="100">
+          
+          
+          <code class="ruby">        # -- Return parameter if it is not a variable --</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="101">
+          
+          
+          <code class="ruby">        return name</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="102">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="103">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="104">
+          
+          
+          <code class="ruby">      if name.is_a?(Variable)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="105">
+          
+          
+          <code class="ruby">        variable = name</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="106">
+          
+          
+          <code class="ruby">        @variables[variable.name] = variable if variable.goal == self</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="107">
+          
+          
+          <code class="ruby">        return variable</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="108">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="109">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="110">
+          
+          
+          <code class="ruby">      @variables[name] ||= (name.is_a?(Variable) &amp;&amp; name || Variable.new(name, self))</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="111">
+          
+          
+          <code class="ruby">      @variables[name]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="112">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="113">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="114">
+          
+          
+          <code class="ruby">    # Returns the value of the indicated variable or value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="115">
+          
+          
+          <code class="ruby">    # @param name [Symbol, Object] name of the variable or value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="116">
+          
+          
+          <code class="ruby">    # @param _index [Object] index is not used, it is for polymorphic compatibility with other classes</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="117">
+          
+          
+          <code class="ruby">    # @param visited [Array] used to avoid infinite recursion</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="118">
+          
+          
+          <code class="ruby">    # @return [Object] the value</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="119">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def value_of(name, _index = nil, visited = [])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="120">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      if name.is_a?(Symbol)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="121">
+          
+          
+          <code class="ruby">        variable = @variables[name]</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="122">
+          
+          
+          <code class="ruby">        value    = variable &amp;&amp; variable.value(visited) || self.variable(name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="123">
+          
+          
+          <code class="ruby">      else</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="124">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        value = name</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="125">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="126">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="127">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      if value.respond_to?(:value)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="128">
+          
+          
+          <code class="ruby">        begin</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="129">
+          
+          
+          <code class="ruby">          value = value.value(visited)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="130">
+          
+          
+          <code class="ruby">        rescue</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="131">
+          
+          
+          <code class="ruby">          return value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="132">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="133">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="134">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="135">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="136">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="137">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="138">
+          
+          
+          <code class="ruby">    # Finds all possible solutions to the Predicate for the specific Arguments.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="139">
+          
+          
+          <code class="ruby">    # @param number_of_solutions [Integer] if provided, the search is stopped once the number of solutions has been found</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="140">
+          
+          
+          <code class="ruby">    # @return [Array&lt;Hash{Symbol =&gt; Object}&gt;]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="141">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def solve(number_of_solutions = nil)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="142">
+          
+          
+          <code class="ruby">      solutions = []</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="143">
+          
+          
+          <code class="ruby">      variables = @arguments.variables</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="144">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="145">
+          
+          
+          <code class="ruby">      external_variables = variables.reject{|variable|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="146">
+          
+          
+          <code class="ruby">        self.variable(variable).internal?</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="147">
+          
+          
+          <code class="ruby">      }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="148">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="149">
+          
+          
+          <code class="ruby">      satisfy do |goal|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="150">
+          
+          
+          <code class="ruby">        @result = true</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="151">
+          
+          
+          <code class="ruby">        solution = {}</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="152">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="153">
+          
+          
+          <code class="ruby">        external_variables.each{|variable|</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="154">
+          
+          
+          <code class="ruby">          solution[variable.to_sym] = goal.value_of(variable)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="155">
+          
+          
+          <code class="ruby">        }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="156">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="157">
+          
+          
+          <code class="ruby">        solutions &lt;&lt; solution</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="158">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="159">
+          
+          
+          <code class="ruby">        if number_of_solutions &amp;&amp; solutions.length &gt;= number_of_solutions</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="160">
+          
+          
+          <code class="ruby">          @solutions = solutions</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="161">
+          
+          
+          <code class="ruby">          return @solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="162">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="163">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="164">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="165">
+          
+          
+          <code class="ruby">      # TODO: Delete all descendent goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="166">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="167">
+          
+          
+          <code class="ruby">      @solutions = solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="168">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="169">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="170">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="171">
+          
+          
+          <code class="ruby">  </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="172">
           
           
           <code class="ruby">end</code>
@@ -1803,14 +2886,14 @@
           <code class="ruby">    def self.scope(scope_name = nil)</code>
         </li>
       
-        <li class="covered" data-hits="263" data-linenumber="32">
-          <span class="hits">263</span>
+        <li class="covered" data-hits="325" data-linenumber="32">
+          <span class="hits">325</span>
           
           <code class="ruby">      if scope_name</code>
         </li>
       
-        <li class="covered" data-hits="92" data-linenumber="33">
-          <span class="hits">92</span>
+        <li class="covered" data-hits="116" data-linenumber="33">
+          <span class="hits">116</span>
           
           <code class="ruby">        @@current_scope = Scope[scope_name] || Scope.new(scope_name)</code>
         </li>
@@ -1821,8 +2904,8 @@
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="171" data-linenumber="35">
-          <span class="hits">171</span>
+        <li class="covered" data-hits="209" data-linenumber="35">
+          <span class="hits">209</span>
           
           <code class="ruby">        @@current_scope</code>
         </li>
@@ -1923,14 +3006,14 @@
           <code class="ruby">    def self.reset</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="52">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="109" data-linenumber="52">
+          <span class="hits">109</span>
           
           <code class="ruby">      scope(:default)</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="53">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="109" data-linenumber="53">
+          <span class="hits">109</span>
           
           <code class="ruby">      @builtin_predicate_ids = {}</code>
         </li>
@@ -2025,14 +3108,14 @@
           <code class="ruby">    def initialize(name, scope_name = Predicate.scope.name)</code>
         </li>
       
-        <li class="covered" data-hits="82" data-linenumber="69">
-          <span class="hits">82</span>
+        <li class="covered" data-hits="101" data-linenumber="69">
+          <span class="hits">101</span>
           
           <code class="ruby">      @name  = name.to_sym</code>
         </li>
       
-        <li class="covered" data-hits="82" data-linenumber="70">
-          <span class="hits">82</span>
+        <li class="covered" data-hits="101" data-linenumber="70">
+          <span class="hits">101</span>
           
           <code class="ruby">      @rules = []</code>
         </li>
@@ -2043,8 +3126,8 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="82" data-linenumber="72">
-          <span class="hits">82</span>
+        <li class="covered" data-hits="101" data-linenumber="72">
+          <span class="hits">101</span>
           
           <code class="ruby">      raise NameError.new(&quot;Cannot name a predicate &#39;predicate&#39;&quot;) if @name == :predicate</code>
         </li>
@@ -2055,14 +3138,14 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="78" data-linenumber="74">
-          <span class="hits">78</span>
+        <li class="covered" data-hits="97" data-linenumber="74">
+          <span class="hits">97</span>
           
           <code class="ruby">      scope = Scope[scope_name] || Scope.new(scope_name)</code>
         </li>
       
-        <li class="covered" data-hits="78" data-linenumber="75">
-          <span class="hits">78</span>
+        <li class="covered" data-hits="97" data-linenumber="75">
+          <span class="hits">97</span>
           
           <code class="ruby">      scope[@name] = self</code>
         </li>
@@ -2097,14 +3180,14 @@
           <code class="ruby">    def self.new(*args)</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="81">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="104" data-linenumber="81">
+          <span class="hits">104</span>
           
           <code class="ruby">      name, _ = *args</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="82">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="104" data-linenumber="82">
+          <span class="hits">104</span>
           
           <code class="ruby">      scope[name.to_sym] || super</code>
         </li>
@@ -2151,8 +3234,8 @@
           <code class="ruby">    def call(*args)</code>
         </li>
       
-        <li class="covered" data-hits="25" data-linenumber="90">
-          <span class="hits">25</span>
+        <li class="covered" data-hits="33" data-linenumber="90">
+          <span class="hits">33</span>
           
           <code class="ruby">      Arguments.new(self,args)</code>
         </li>
@@ -2181,8 +3264,8 @@
           <code class="ruby">    def arguments(*args)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="95">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="12" data-linenumber="95">
+          <span class="hits">12</span>
           
           <code class="ruby">      Arguments.new(self,args)</code>
         </li>
@@ -2578,14 +3661,14 @@
           <code class="ruby">    def self.reset</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="23">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="109" data-linenumber="23">
+          <span class="hits">109</span>
           
           <code class="ruby">      @@rules = []</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="24">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="109" data-linenumber="24">
+          <span class="hits">109</span>
           
           <code class="ruby">      true</code>
         </li>
@@ -2939,8 +4022,8 @@
           <code class="ruby">    def self.new(name)</code>
         </li>
       
-        <li class="covered" data-hits="121" data-linenumber="29">
-          <span class="hits">121</span>
+        <li class="covered" data-hits="145" data-linenumber="29">
+          <span class="hits">145</span>
           
           <code class="ruby">      @@scopes[name] || super</code>
         </li>
@@ -2975,14 +4058,14 @@
           <code class="ruby">    def initialize(name)</code>
         </li>
       
-        <li class="covered" data-hits="118" data-linenumber="35">
-          <span class="hits">118</span>
+        <li class="covered" data-hits="142" data-linenumber="35">
+          <span class="hits">142</span>
           
           <code class="ruby">      @name       = name</code>
         </li>
       
-        <li class="covered" data-hits="118" data-linenumber="36">
-          <span class="hits">118</span>
+        <li class="covered" data-hits="142" data-linenumber="36">
+          <span class="hits">142</span>
           
           <code class="ruby">      @predicates = {}</code>
         </li>
@@ -2993,8 +4076,8 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="118" data-linenumber="38">
-          <span class="hits">118</span>
+        <li class="covered" data-hits="142" data-linenumber="38">
+          <span class="hits">142</span>
           
           <code class="ruby">      @@scopes[@name] = self</code>
         </li>
@@ -3029,14 +4112,14 @@
           <code class="ruby">    def self.reset</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="44">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="109" data-linenumber="44">
+          <span class="hits">109</span>
           
           <code class="ruby">      @@scopes = {}</code>
         </li>
       
-        <li class="covered" data-hits="85" data-linenumber="45">
-          <span class="hits">85</span>
+        <li class="covered" data-hits="109" data-linenumber="45">
+          <span class="hits">109</span>
           
           <code class="ruby">      new(:default)</code>
         </li>
@@ -3089,8 +4172,8 @@
           <code class="ruby">    def self.[](name)</code>
         </li>
       
-        <li class="covered" data-hits="225" data-linenumber="54">
-          <span class="hits">225</span>
+        <li class="covered" data-hits="268" data-linenumber="54">
+          <span class="hits">268</span>
           
           <code class="ruby">      @@scopes[name]</code>
         </li>
@@ -3173,8 +4256,8 @@
           <code class="ruby">    def [](name)</code>
         </li>
       
-        <li class="covered" data-hits="90" data-linenumber="68">
-          <span class="hits">90</span>
+        <li class="covered" data-hits="109" data-linenumber="68">
+          <span class="hits">109</span>
           
           <code class="ruby">      @predicates[name.to_sym]</code>
         </li>
@@ -3227,14 +4310,14 @@
           <code class="ruby">    def []=(name,predicate)</code>
         </li>
       
-        <li class="covered" data-hits="80" data-linenumber="77">
-          <span class="hits">80</span>
+        <li class="covered" data-hits="99" data-linenumber="77">
+          <span class="hits">99</span>
           
           <code class="ruby">      raise NotPredicateError.new(&quot;#{predicate.inspect} is not a Predicate&quot;) unless predicate.is_a?(Predicate)</code>
         </li>
       
-        <li class="covered" data-hits="79" data-linenumber="78">
-          <span class="hits">79</span>
+        <li class="covered" data-hits="98" data-linenumber="78">
+          <span class="hits">98</span>
           
           <code class="ruby">      @predicates[name.to_sym] = predicate</code>
         </li>
@@ -3300,6 +4383,2377 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="89">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+    </ol>
+  </pre>
+</div>
+
+      
+        <div class="source_table" id="8e03f55aad5a0e4807f98988a10d608025119e33">
+  <div class="header">
+    <h3>test/porolog/goal_test.rb</h3>
+    <h4><span class="red">66.67 %</span> covered</h4>
+    <div>
+      <b>198</b> relevant lines. 
+      <span class="green"><b>132</b> lines covered</span> and
+      <span class="red"><b>66</b> lines missed.</span>
+    </div>
+  </div>
+  
+  <pre>
+    <ol>
+      
+        <li class="never" data-hits="" data-linenumber="1">
+          
+          
+          <code class="ruby">#</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="2">
+          
+          
+          <code class="ruby">#   test/porolog/goal_test.rb     - Test Suite for Porolog::Goal</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="3">
+          
+          
+          <code class="ruby">#</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="4">
+          
+          
+          <code class="ruby">#     Luis Esteban      2 May 2018</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="5">
+          
+          
+          <code class="ruby">#       created</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="6">
+          
+          
+          <code class="ruby">#</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="7">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="8">
+          <span class="hits">1</span>
+          
+          <code class="ruby">require_relative &#39;../test_helper&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="9">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="10">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="11">
+          <span class="hits">1</span>
+          
+          <code class="ruby">describe &#39;Porolog&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="12">
+          
+          
+          <code class="ruby">  </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="13">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  before(:all) do</code>
+        </li>
+      
+        <li class="covered" data-hits="24" data-linenumber="14">
+          <span class="hits">24</span>
+          
+          <code class="ruby">    reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="15">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="16">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="17">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  describe &#39;Goal&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="18">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="19">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;.reset&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="20">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="21">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should clear all goals&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="22">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :predicate1, :a</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="23">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :predicate2, :a, :b</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="24">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :predicate3, :a, :b, :c</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="25">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="26">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  3,  Goal.goals.size</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="27">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="28">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        Goal.reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="29">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="30">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_empty      Goal.goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="31">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="32">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="33">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should call check_deleted for each goal&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="34">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        Goal.any_instance.expects(:check_deleted).with().returns(false).times(5)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="35">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="36">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :p, :x, :y</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="37">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :q, :a</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="38">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :r, :a, :b, :c</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="39">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="40">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        Goal.reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="42">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :j, 1</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="43">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        new_goal :k, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="44">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="45">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        Goal.reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="46">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="47">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="48">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should clear the goal cache&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="49">
+          
+          
+          <code class="ruby">        # TECH-CREDIT: Probably not going to use a cache; we&#39;ll see ...</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="50">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="51">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="52">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="53">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="54">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;.goals&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="55">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="56">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should return all registered goals&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="57">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  0,  Goal.goals.size</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="58">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="59">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal1 = new_goal :predicate1, :a</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="60">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="61">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  1,                      Goal.goals.size</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="62">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  [goal1],                Goal.goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="64">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal2 = new_goal :predicate2, :a, :b</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="65">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="66">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  2,                      Goal.goals.size</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="67">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  [goal1,goal2],          Goal.goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="68">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="69">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal3 = new_goal :predicate3, :a, :b, :c</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="70">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="71">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  3,                      Goal.goals.size</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="72">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  [goal1,goal2,goal3],    Goal.goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="73">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="74">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="75">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="76">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="77">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;.new&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="78">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="79">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should create a new Goal&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="80">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal = Goal.new nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="81">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="82">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_instance_of  Goal,   goal</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="83">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="84">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="85">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="86">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="87">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#initialize&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="88">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="89">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should initialize calling_goal&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="90">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="91">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="92">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="93">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal1 = Goal.new args</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="94">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal2 = Goal.new args, goal1</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="95">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="96">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_nil              goal1.calling_goal</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="97">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  goal1,    goal2.calling_goal</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="98">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="99">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_Goal   goal1,    :p, [:x,:y]</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="100">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_Goal   goal2,    :p, [:x,:y]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="101">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="102">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="103">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should initialize arguments&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="104">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="105">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="106">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="107">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal = Goal.new args, nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="108">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="109">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  args,     goal.arguments</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="110">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="111">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="112">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should initialize terminate&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="113">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="114">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="115">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="116">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal = Goal.new args, nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="117">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="118">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  false,    goal.terminate</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="119">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="120">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="121">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should initialize variables&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="122">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="123">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="124">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="125">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal = Goal.new args, nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="126">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="127">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_Goal_variables   goal, {}, &#39;&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="128">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="129">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="130">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should register the goal as undeleted&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="131">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="132">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="133">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="134">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal1 = Goal.new args, nil</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="135">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal2 = Goal.new args, goal1</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="136">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="137">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  [goal1,goal2],    Goal.goals</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="138">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="139">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="140">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="141">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="142">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#deleted?&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="143">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="144">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should return the deleted state of a goal&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="145">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="146">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="147">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="148">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal = Goal.new args</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="149">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="150">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        refute    goal.deleted?, &#39;goal should not be deleted&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="151">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="152">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        Goal.reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="153">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="154">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert    goal.deleted?, &#39;goal should be deleted&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="155">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="156">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="157">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should memoize the deleted state of a goal&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="158">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="159">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="160">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="161">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        goal = Goal.new args</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="162">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="163">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        check_deleted_spy = Spy.on(goal, :check_deleted).and_call_through</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="164">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="165">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        refute    goal.deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="166">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        refute    goal.deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="167">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        refute    goal.deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="168">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        refute    goal.deleted?</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="169">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="170">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        Goal.reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="171">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="172">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert    goal.deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="173">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert    goal.deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="174">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert    goal.deleted?</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="175">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert    goal.deleted?</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="176">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="177">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal    5,    check_deleted_spy.calls.size</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="178">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="179">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="180">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="181">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="182">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#check_deleted&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="183">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="184">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should return false when the goal is not deleted and keep variables intact&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="185">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until Variable added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="186">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="187">
+          
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="188">
+          
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="189">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="190">
+          
+          
+          <code class="ruby">        goal = Goal.new args</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="191">
+          
+          
+          <code class="ruby">        goal.variable(:x)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="192">
+          
+          
+          <code class="ruby">        goal.variable(:y)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="193">
+          
+          
+          <code class="ruby">        goal.variable(:z)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="194">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="195">
+          
+          
+          <code class="ruby">        variable_remove_spy = Spy.on_instance_method(Variable, :remove)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="196">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="197">
+          
+          
+          <code class="ruby">        refute  goal.check_deleted</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="198">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="199">
+          
+          
+          <code class="ruby">        assert_equal    0,    variable_remove_spy.calls.size</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="200">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="201">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="202">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should return true when the goal is deleted and remove all variables&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="203">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until Variable added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="204">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="205">
+          
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="206">
+          
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="207">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="208">
+          
+          
+          <code class="ruby">        goal = Goal.new args</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="209">
+          
+          
+          <code class="ruby">        goal.variable(:x)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="210">
+          
+          
+          <code class="ruby">        goal.variable(:y)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="211">
+          
+          
+          <code class="ruby">        goal.variable(:z)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="212">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="213">
+          
+          
+          <code class="ruby">        variable_remove_spy = Spy.on_instance_method(Variable, :remove)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="214">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="215">
+          
+          
+          <code class="ruby">        Goal.reset</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="216">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="217">
+          
+          
+          <code class="ruby">        assert  goal.check_deleted</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="218">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="219">
+          
+          
+          <code class="ruby">        assert_equal    3,    variable_remove_spy.calls.size</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="220">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="221">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="222">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="223">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="224">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#variables&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="225">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="226">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should return a Hash of variables and their values&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="227">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until Variable added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="228">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="229">
+          
+          
+          <code class="ruby">        pred = Predicate.new :p</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="230">
+          
+          
+          <code class="ruby">        args = pred.(:x,:y)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="231">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="232">
+          
+          
+          <code class="ruby">        goal = Goal.new args</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="233">
+          
+          
+          <code class="ruby">        goal.variable(:x)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="234">
+          
+          
+          <code class="ruby">        goal.variable(:y)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="235">
+          
+          
+          <code class="ruby">        goal.variable(:z)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="236">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="237">
+          
+          
+          <code class="ruby">        variables = goal.variables</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="238">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="239">
+          
+          
+          <code class="ruby">        assert_instance_of      Hash, variables</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="240">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="241">
+          
+          
+          <code class="ruby">        assert_Goal             goal, :p, [:x,:y]</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="242">
+          
+          
+          <code class="ruby">        assert_Goal_variables   goal, { x: nil, y: nil, z: nil }, &#39;&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="243">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="244">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="245">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="246">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="247">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#variable&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="248">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="249">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      let(:pred) { Predicate.new :p }</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="250">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      let(:args) { pred.(:x,:y) }</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="251">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      let(:goal) { Goal.new args }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="252">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="253">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should return a non-variable as is&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="254">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until Variable added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="255">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="256">
+          
+          
+          <code class="ruby">        assert_equal    4.132,    goal.variable(4.132)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="257">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="258">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="259">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should create and find a variable from a Symbol or Variable&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="260">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until Variable added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="261">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="262">
+          
+          
+          <code class="ruby">        refute    goal.variables.key?(:v), &#39;:v should not be a variable&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="263">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="264">
+          
+          
+          <code class="ruby">        variable1 = goal.variable :v</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="265">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="266">
+          
+          
+          <code class="ruby">        assert    goal.variables.key?(:v), &#39;:v should be a variable&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="267">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="268">
+          
+          
+          <code class="ruby">        variable2 = goal.variable :v</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="269">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="270">
+          
+          
+          <code class="ruby">        assert    goal.variables.key?(:v), &#39;:v should be a variable&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="271">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="272">
+          
+          
+          <code class="ruby">        variable3 = goal.variable variable2</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="273">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="274">
+          
+          
+          <code class="ruby">        assert_equal    variable1, variable2</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="275">
+          
+          
+          <code class="ruby">        assert_equal    variable2, variable3</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="276">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="277">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="278">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="279">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="280">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#value_of&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="281">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="282">
+          <span class="hits">2</span>
+          
+          <code class="ruby">      let(:pred) { Predicate.new :p }</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="283">
+          <span class="hits">2</span>
+          
+          <code class="ruby">      let(:args) { pred.(:x,:y) }</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="284">
+          <span class="hits">2</span>
+          
+          <code class="ruby">      let(:goal) { Goal.new args }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="285">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="286">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      describe &#39;when name is a Symbol&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="287">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        let(:variable_name) { :cymbal }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="288">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="289">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        it &#39;should create the Variable&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="290">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          skip &#39;until Variable added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="291">
+          
+          
+          <code class="ruby">          </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="292">
+          
+          
+          <code class="ruby">          refute        goal.variables.key?(variable_name), &quot;#{variable_name} should not exist&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="293">
+          
+          
+          <code class="ruby">          </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="294">
+          
+          
+          <code class="ruby">          assert_nil    goal.value_of(variable_name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="295">
+          
+          
+          <code class="ruby">          </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="296">
+          
+          
+          <code class="ruby">          assert        goal.variables.key?(variable_name), &quot;#{variable_name} should exist&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="297">
+          
+          
+          <code class="ruby">          </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="298">
+          
+          
+          <code class="ruby">          variable       = goal.variable(variable_name)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="299">
+          
+          
+          <code class="ruby">          variable.value = 44.5</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="300">
+          
+          
+          <code class="ruby">          </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="301">
+          
+          
+          <code class="ruby">          assert_equal      44.5,   goal.value_of(variable_name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="302">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="303">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="304">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="305">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="306">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      describe &#39;when name is not a Symbol&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="307">
+          <span class="hits">2</span>
+          
+          <code class="ruby">        let(:variable_name) { 99.28 }</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="308">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="309">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        it &#39;should return the name as the value&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="310">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          assert_equal    99.28,    goal.value_of(variable_name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="311">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="312">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="313">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="314">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="315">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="316">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="317">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    describe &#39;#solve&#39; do</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="318">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="319">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should find no solutions for a goal with no rules&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="320">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until CoreExt added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="321">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="322">
+          
+          
+          <code class="ruby">        goal1 = new_goal :p, :x, :y</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="323">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="324">
+          
+          
+          <code class="ruby">        solutions = goal1.solve</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="325">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="326">
+          
+          
+          <code class="ruby">        assert_equal  [], solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="327">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="328">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="329">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should solve a fact&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="330">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until CoreExt added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="331">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="332">
+          
+          
+          <code class="ruby">        predicate :fact</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="333">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="334">
+          
+          
+          <code class="ruby">        fact(42).fact!</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="335">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="336">
+          
+          
+          <code class="ruby">        solutions = fact(42).solve</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="337">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="338">
+          
+          
+          <code class="ruby">        assert_equal  [{}],  solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="339">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="340">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="341">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should not solve a falicy&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="342">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until CoreExt added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="343">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="344">
+          
+          
+          <code class="ruby">        predicate :fact</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="345">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="346">
+          
+          
+          <code class="ruby">        fact(42).falicy!</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="347">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="348">
+          
+          
+          <code class="ruby">        solutions = fact(42).solve</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="349">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="350">
+          
+          
+          <code class="ruby">        assert_equal  [],  solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="351">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="352">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="353">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should solve using head and tail with lists&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="354">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until HeadTail added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="355">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="356">
+          
+          
+          <code class="ruby">        predicate :head_tail</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="357">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="358">
+          
+          
+          <code class="ruby">        head_tail([1,2,3,4,5,6,7]).fact!</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="359">
+          
+          
+          <code class="ruby">        head_tail([&#39;head&#39;,&#39;body&#39;,&#39;foot&#39;]).fact!</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="360">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="361">
+          
+          
+          <code class="ruby">        solutions = head_tail(:head/:tail).solve</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="362">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="363">
+          
+          
+          <code class="ruby">        assert_equal    [</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="364">
+          
+          
+          <code class="ruby">          { head: 1,      tail: [2,3,4,5,6,7] },</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="365">
+          
+          
+          <code class="ruby">          { head: &#39;head&#39;, tail: [&#39;body&#39;,&#39;foot&#39;] },</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="366">
+          
+          
+          <code class="ruby">        ], solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="367">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="368">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="369">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      it &#39;should solve a goal recursively&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="370">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        skip &#39;until HeadTail added&#39;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="371">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="372">
+          
+          
+          <code class="ruby">        predicate :recursive</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="373">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="374">
+          
+          
+          <code class="ruby">        recursive([]) &lt;&lt; [:CUT, true]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="375">
+          
+          
+          <code class="ruby">        recursive(:head/:tail) &lt;&lt; [</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="376">
+          
+          
+          <code class="ruby">          write(&#39;(&#39;,:head,&#39;)&#39;),</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="377">
+          
+          
+          <code class="ruby">          alpha(:tail)</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="378">
+          
+          
+          <code class="ruby">        ]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="379">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="380">
+          
+          
+          <code class="ruby">        assert_output &#39;(1)(2)(3)(four)(5)(6)(7)&#39; do</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="381">
+          
+          
+          <code class="ruby">          solutions = alpha([1,2,3,&#39;four&#39;,5,6,7]).solve</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="382">
+          
+          
+          <code class="ruby">          </code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="383">
+          
+          
+          <code class="ruby">          assert_equal    [{}], solutions</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="384">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="385">
+          
+          
+          <code class="ruby">        </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="386">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="387">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="388">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="389">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="390">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="391">
+          
+          
+          <code class="ruby">  </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="392">
           
           
           <code class="ruby">end</code>
@@ -6684,7 +10138,7 @@
         <li class="covered" data-hits="1" data-linenumber="26">
           <span class="hits">1</span>
           
-          <code class="ruby">      skip &#39;until Goal added&#39;</code>
+          <code class="ruby">      skip &#39;until CoreExt added&#39;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="27">

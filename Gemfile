@@ -14,4 +14,6 @@ group :test do
   gem 'minitest'
   gem 'simplecov', require: false, group: :test
   gem 'simplecov-shields-badge', require: false
+  gem 'mocha'
+  gem 'spy'
 end

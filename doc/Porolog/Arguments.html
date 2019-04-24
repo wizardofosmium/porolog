@@ -561,7 +561,7 @@ Predicate.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#solutions-instance_method" title="#solutions (instance method)">#<strong>solutions</strong>(number = nil)  &#x21d2; Array&lt;Hash&gt; </a>
+      <a href="#solutions-instance_method" title="#solutions (instance method)">#<strong>solutions</strong>(number = nil)  &#x21d2; Array&lt;Hash{Symbol =&gt; Object}&gt; </a>
     
 
     
@@ -585,7 +585,7 @@ Predicate.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#solve-instance_method" title="#solve (instance method)">#<strong>solve</strong>(number_of_solutions = nil)  &#x21d2; Array&lt;Hash&gt; </a>
+      <a href="#solve-instance_method" title="#solve (instance method)">#<strong>solve</strong>(number_of_solutions = nil)  &#x21d2; Array&lt;Hash{Symbol =&gt; Object}&gt; </a>
     
 
     
@@ -950,7 +950,8 @@ Predicate.</p>
 168
 169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 19</span>
@@ -1049,12 +1050,12 @@ Predicate.</p>
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal (if this is a subgoal)
 </span>  <span class='comment'># @return [Porolog::Goal] the Goal to solve
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_goal'>goal</span><span class='lparen'>(</span><span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-    <span class='const'>Goal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Goal.html#initialize-instance_method" title="Porolog::Goal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Returns memoized solutions
 </span>  <span class='comment'># @param number [Integer] the maximum number of solutions to find (nil means find all)
-</span>  <span class='comment'># @return [Array&lt;Hash&gt;] the solutions found (memoized)
+</span>  <span class='comment'># @return [Array&lt;Hash{Symbol =&gt; Object}&gt;] the solutions found (memoized)
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_solutions'>solutions</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@solutions</span> <span class='op'>||=</span> <span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span>
     <span class='ivar'>@solutions</span>
@@ -1062,7 +1063,7 @@ Predicate.</p>
   
   <span class='comment'># Solves the Arguments
 </span>  <span class='comment'># @param number_of_solutions [Integer] the maximum number of solutions to find (nil means find all)
-</span>  <span class='comment'># @return [Array&lt;Hash&gt;] the solutions found
+</span>  <span class='comment'># @return [Array&lt;Hash{Symbol =&gt; Object}&gt;] the solutions found
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_number_of_solutions'>number_of_solutions</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_number_of_solutions'>number_of_solutions</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -1094,10 +1095,11 @@ Predicate.</p>
 </span>  <span class='comment'># @return [Porolog::Arguments] the duplicated Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_dup'>dup</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_arguments_dup'>arguments_dup</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='lparen'>(</span><span class='int'>0</span><span class='op'>...</span><span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-      <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>HeadTail</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span>
+    <span class='comment'># TODO: Uncomment when HeadTail added
+</span>    <span class='comment'>#(0...arguments_dup.size).each do |i|
+</span>    <span class='comment'>#  arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)
+</span>    <span class='comment'>#end
+</span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span>
   <span class='kw'>end</span>
   
   <span class='comment'># @param other [Porolog::Arguments] arguments for comparison
@@ -1293,7 +1295,8 @@ Predicate.</p>
 168
 169
 170
-171</pre>
+171
+172</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 19</span>
@@ -1392,12 +1395,12 @@ Predicate.</p>
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal (if this is a subgoal)
 </span>  <span class='comment'># @return [Porolog::Goal] the Goal to solve
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_goal'>goal</span><span class='lparen'>(</span><span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-    <span class='const'>Goal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Goal.html#initialize-instance_method" title="Porolog::Goal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Returns memoized solutions
 </span>  <span class='comment'># @param number [Integer] the maximum number of solutions to find (nil means find all)
-</span>  <span class='comment'># @return [Array&lt;Hash&gt;] the solutions found (memoized)
+</span>  <span class='comment'># @return [Array&lt;Hash{Symbol =&gt; Object}&gt;] the solutions found (memoized)
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_solutions'>solutions</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@solutions</span> <span class='op'>||=</span> <span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span>
     <span class='ivar'>@solutions</span>
@@ -1405,7 +1408,7 @@ Predicate.</p>
   
   <span class='comment'># Solves the Arguments
 </span>  <span class='comment'># @param number_of_solutions [Integer] the maximum number of solutions to find (nil means find all)
-</span>  <span class='comment'># @return [Array&lt;Hash&gt;] the solutions found
+</span>  <span class='comment'># @return [Array&lt;Hash{Symbol =&gt; Object}&gt;] the solutions found
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_number_of_solutions'>number_of_solutions</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='ivar'>@solutions</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_number_of_solutions'>number_of_solutions</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -1437,10 +1440,11 @@ Predicate.</p>
 </span>  <span class='comment'># @return [Porolog::Arguments] the duplicated Arguments
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_dup'>dup</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_arguments_dup'>arguments_dup</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='lparen'>(</span><span class='int'>0</span><span class='op'>...</span><span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-      <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>HeadTail</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span>
+    <span class='comment'># TODO: Uncomment when HeadTail added
+</span>    <span class='comment'>#(0...arguments_dup.size).each do |i|
+</span>    <span class='comment'>#  arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)
+</span>    <span class='comment'>#end
+</span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span>
   <span class='kw'>end</span>
   
   <span class='comment'># @param other [Porolog::Arguments] arguments for comparison
@@ -1729,13 +1733,13 @@ Predicate.</p>
       <pre class="lines">
 
 
-166
 167
 168
-169</pre>
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='ivar'>@predicate</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span>
@@ -1896,7 +1900,7 @@ Predicate and terminates solving the predicate.</p>
         <span class='name'>goal</span>
       
       
-        <span class='type'>(<tt>Porolog::Goal</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Porolog::Goal</a></span></tt>)</span>
       
       
       
@@ -1940,17 +1944,19 @@ Predicate and terminates solving the predicate.</p>
 159
 160
 161
-162</pre>
+162
+163</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 156</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dup'>dup</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_arguments_dup'>arguments_dup</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-  <span class='lparen'>(</span><span class='int'>0</span><span class='op'>...</span><span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_i'>i</span><span class='op'>|</span>
-    <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>HeadTail</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span>
+  <span class='comment'># TODO: Uncomment when HeadTail added
+</span>  <span class='comment'>#(0...arguments_dup.size).each do |i|
+</span>  <span class='comment'>#  arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)
+</span>  <span class='comment'>#end
+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='ivar'>@predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_arguments_dup'>arguments_dup</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2164,7 +2170,7 @@ Predicate.</p>
       <div class="method_details ">
   <h3 class="signature " id="goal-instance_method">
   
-    #<strong>goal</strong>(calling_goal = nil)  &#x21d2; <tt>Porolog::Goal</tt> 
+    #<strong>goal</strong>(calling_goal = nil)  &#x21d2; <tt><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Porolog::Goal</a></span></tt> 
   
 
   
@@ -2187,7 +2193,7 @@ Predicate.</p>
         <span class='name'>calling_goal</span>
       
       
-        <span class='type'>(<tt>Porolog::Goal</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Porolog::Goal</a></span></tt>)</span>
       
       
         <em class="default">(defaults to: <tt>nil</tt>)</em>
@@ -2208,7 +2214,7 @@ Predicate.</p>
     <li>
       
       
-        <span class='type'>(<tt>Porolog::Goal</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Porolog::Goal</a></span></tt>)</span>
       
       
       
@@ -2235,7 +2241,7 @@ Predicate.</p>
       <pre class="code"><span class="info file"># File 'lib/porolog/arguments.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_goal'>goal</span><span class='lparen'>(</span><span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='const'>Goal</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Goal.html#initialize-instance_method" title="Porolog::Goal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2363,7 +2369,7 @@ Predicate.</p>
       <div class="method_details ">
   <h3 class="signature " id="solutions-instance_method">
   
-    #<strong>solutions</strong>(number = nil)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+    #<strong>solutions</strong>(number = nil)  &#x21d2; <tt>Array&lt;Hash{Symbol =&gt; Object}&gt;</tt> 
   
 
   
@@ -2407,7 +2413,7 @@ Predicate.</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Hash{Symbol =&gt; Object}&gt;</tt>)</span>
       
       
       
@@ -2446,7 +2452,7 @@ Predicate.</p>
       <div class="method_details ">
   <h3 class="signature " id="solve-instance_method">
   
-    #<strong>solve</strong>(number_of_solutions = nil)  &#x21d2; <tt>Array&lt;Hash&gt;</tt> 
+    #<strong>solve</strong>(number_of_solutions = nil)  &#x21d2; <tt>Array&lt;Hash{Symbol =&gt; Object}&gt;</tt> 
   
 
   
@@ -2490,7 +2496,7 @@ Predicate.</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;Hash&gt;</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Hash{Symbol =&gt; Object}&gt;</tt>)</span>
       
       
       
@@ -2749,7 +2755,7 @@ coords = xs.zip(ys)</code></pre>
 </div>
 
       <div id="footer">
-  Generated on Tue Apr 23 07:52:08 2019 by
+  Generated on Wed Apr 24 20:17:20 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.3.4).
 </div>

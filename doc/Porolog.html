@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/porolog.rb<span class="defines">,<br />
-  lib/porolog/goal.rb,<br /> lib/porolog/rule.rb,<br /> lib/porolog/error.rb,<br /> lib/porolog/scope.rb,<br /> lib/porolog/arguments.rb,<br /> lib/porolog/predicate.rb</span>
+  lib/porolog/goal.rb,<br /> lib/porolog/rule.rb,<br /> lib/porolog/error.rb,<br /> lib/porolog/scope.rb,<br /> lib/porolog/value.rb,<br /> lib/porolog/arguments.rb,<br /> lib/porolog/predicate.rb</span>
 </dd>
   </dl>
   
@@ -106,7 +106,7 @@ Predicate</p>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Porolog/Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span>, <span class='object_link'><a href="Porolog/Goal.html" title="Porolog::Goal (class)">Goal</a></span>, <span class='object_link'><a href="Porolog/PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span>, <span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Predicate</a></span>, <span class='object_link'><a href="Porolog/Rule.html" title="Porolog::Rule (class)">Rule</a></span>, <span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Porolog/Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span>, <span class='object_link'><a href="Porolog/Goal.html" title="Porolog::Goal (class)">Goal</a></span>, <span class='object_link'><a href="Porolog/PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span>, <span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Predicate</a></span>, <span class='object_link'><a href="Porolog/Rule.html" title="Porolog::Rule (class)">Rule</a></span>, <span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span>, <span class='object_link'><a href="Porolog/Value.html" title="Porolog::Value (class)">Value</a></span>
     
   
 </p>
@@ -133,7 +133,7 @@ Predicate</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.6</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.7</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
         <dt id="VERSION_DATE-constant" class="">VERSION_DATE =
           <div class="docstring">
@@ -149,7 +149,7 @@ Predicate</p>
 
 </div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2019-04-24</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2019-06-18</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
     </dl>
   
@@ -229,7 +229,7 @@ returns an Arguments based on the arguments provided to the method.</p>
         <span class='name'>names</span>
       
       
-        <span class='type'>(<tt>Array&lt;#to_sym&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>&lt;#to_sym&gt;</tt>)</span>
       
       
       
@@ -262,7 +262,7 @@ returns an Arguments based on the arguments provided to the method.</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Porolog::Predicate</a></span>&gt;</tt>)</span>
       
       
       
@@ -307,7 +307,7 @@ returns an Arguments based on the arguments provided to the method.</p>
   <span class='id identifier rubyid_predicates'>predicates</span> <span class='op'>=</span> <span class='id identifier rubyid_names'>names</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='op'>|</span>
     <span class='id identifier rubyid_method'>method</span>     <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
     <span class='id identifier rubyid_predicate'>predicate</span>  <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Porolog/Predicate.html" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Porolog/Predicate.html#new-class_method" title="Porolog::Predicate.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
-    <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span><span class='lbrace'>{</span>
+    <span class='const'><span class='object_link'><a href="Object.html" title="Object (class)">Object</a></span></span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span><span class='lbrace'>{</span>
       <span class='id identifier rubyid_define_method'>define_method</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='op'>|</span>
         <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
       <span class='rbrace'>}</span>
@@ -327,7 +327,7 @@ returns an Arguments based on the arguments provided to the method.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Apr 24 20:17:19 2019 by
+  Generated on Tue Jun 18 08:28:54 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.3.4).
 </div>

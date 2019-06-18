@@ -64,6 +64,12 @@ module Porolog
       @@goals
     end
     
+    # A convenience method for testing/debugging.
+    # @return [String] the id of the goal.
+    def myid
+      "Goal#{(@@goals.index(self) || -1000) + 1}"
+    end
+    
     # @return [Boolean] whether the Goal has been deleted (memoized)
     def deleted?
       @deleted ||= check_deleted

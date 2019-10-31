@@ -16,7 +16,7 @@ GEM
     simplecov-shields-badge (0.1.0)
       simplecov (~> 0.15)
     spy (1.0.0)
-    yard (0.9.19)
+    yard (0.9.20)
 
 PLATFORMS
   ruby

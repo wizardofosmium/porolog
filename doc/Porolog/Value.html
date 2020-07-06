@@ -102,10 +102,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     
-<p>Porolog::Value</p>
-
-<pre class="code ruby"><code class="ruby">A Porolog::Value combines a value with a goal so that when the goal
-is closed, the value can be uninstantiated at the same time.</code></pre>
+<p>A Porolog::Value combines a value with a goal so that when the goal is closed, the value can be uninstantiated at the same time.</p>
 
 
   </div>
@@ -544,22 +541,16 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 37
 38
 39
-40
-41
-42
-43</pre>
+40</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 32</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
   
-  <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
-    <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
-  <span class='kw'>else</span>
-    <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='kw'>end</span>
+  <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@goal</span>  <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span>
   
   <span class='ivar'>@instantiations</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -603,12 +594,12 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
       <pre class="lines">
 
 
-75
-76
-77</pre>
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_method_missing'>method_missing</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -752,10 +743,7 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 100
 101
 102
-103
-104
-105
-106</pre>
+103</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 20</span>
@@ -763,9 +751,9 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span>
   
   <span class='comment'># Error class for rescuing or detecting any Value error.
-</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span></span> <span class='semicolon'>;</span> <span class='kw'>end</span>
+</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span>     <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span></span> <span class='semicolon'>;</span> <span class='kw'>end</span>
   <span class='comment'># Error class indicating that the supplied goal is not actually a goal.
-</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span>    <span class='semicolon'>;</span> <span class='kw'>end</span>
+</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span>        <span class='semicolon'>;</span> <span class='kw'>end</span>
   
   <span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:goal</span><span class='comma'>,</span> <span class='symbol'>:instantiations</span>
   
@@ -773,13 +761,10 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 </span>  <span class='comment'># @param goal [Porolog::Goal] the Goal to be associated.
 </span>  <span class='comment'># @return [Porolog::Value] the Value.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Porolog::Value#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
     
-    <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
-      <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
-    <span class='kw'>else</span>
-      <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-    <span class='kw'>end</span>
+    <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+    <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
     <span class='ivar'>@goal</span>  <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span>
     
     <span class='ivar'>@instantiations</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -857,7 +842,7 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
       <div class="method_details ">
   <h3 class="signature " id="instantiations-instance_method">
   
-    #<strong>instantiations</strong>  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Porolog::Instantiation&gt;</tt> 
+    #<strong>instantiations</strong>  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Instantiation.html" title="Porolog::Instantiation (class)">Porolog::Instantiation</a></span>&gt;</tt> 
   
 
   
@@ -879,7 +864,7 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Porolog::Instantiation&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Instantiation.html" title="Porolog::Instantiation (class)">Porolog::Instantiation</a></span>&gt;</tt>)</span>
       
       
       
@@ -981,10 +966,7 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 100
 101
 102
-103
-104
-105
-106</pre>
+103</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 20</span>
@@ -992,9 +974,9 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span>
   
   <span class='comment'># Error class for rescuing or detecting any Value error.
-</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span></span> <span class='semicolon'>;</span> <span class='kw'>end</span>
+</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span>     <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="PorologError.html" title="Porolog::PorologError (class)">PorologError</a></span></span> <span class='semicolon'>;</span> <span class='kw'>end</span>
   <span class='comment'># Error class indicating that the supplied goal is not actually a goal.
-</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span>    <span class='semicolon'>;</span> <span class='kw'>end</span>
+</span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Value/Error.html" title="Porolog::Value::Error (class)">Error</a></span></span>        <span class='semicolon'>;</span> <span class='kw'>end</span>
   
   <span class='id identifier rubyid_attr_accessor'>attr_accessor</span> <span class='symbol'>:goal</span><span class='comma'>,</span> <span class='symbol'>:instantiations</span>
   
@@ -1002,13 +984,10 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 </span>  <span class='comment'># @param goal [Porolog::Goal] the Goal to be associated.
 </span>  <span class='comment'># @return [Porolog::Value] the Value.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Porolog::Value#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Value/GoalError.html" title="Porolog::Value::GoalError (class)">GoalError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
     
-    <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
-      <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
-    <span class='kw'>else</span>
-      <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-    <span class='kw'>end</span>
+    <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+    <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
     <span class='ivar'>@goal</span>  <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span>
     
     <span class='ivar'>@instantiations</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1132,12 +1111,12 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
       <pre class="lines">
 
 
-97
-98
-99</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='ivar'>@value</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
@@ -1191,12 +1170,12 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
       <pre class="lines">
 
 
-47
-48
-49</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1218,9 +1197,7 @@ is closed, the value can be uninstantiated at the same time.</code></pre>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Pretty presentation with instantiations and indexes. This method is for
-polymorphic compatibility with Porolog::Variable. It used by
-Porolog::Goal#inspect_variables.</p>
+<p>Pretty presentation with instantiations and indexes. This method is for polymorphic compatibility with Porolog::Variable. It used by Porolog::Goal#inspect_variables.</p>
 
 
   </div>
@@ -1328,15 +1305,15 @@ Porolog::Goal#inspect_variables.</p>
       <pre class="lines">
 
 
+56
+57
+58
 59
 60
-61
-62
-63
-64</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_depth'>depth</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_self_index'>self_index</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_index_str'>index_str</span> <span class='op'>=</span> <span class='id identifier rubyid_index'>index</span>      <span class='op'>&amp;&amp;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>[</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_index'>index</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>]</span><span class='tstring_end'>&quot;</span></span>    <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
@@ -1393,14 +1370,14 @@ Porolog::Goal#inspect_variables.</p>
       <pre class="lines">
 
 
+65
+66
+67
 68
-69
-70
-71
-72</pre>
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span>
   <span class='ivar'>@instantiations</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:remove</span><span class='rparen'>)</span>
@@ -1456,12 +1433,12 @@ Porolog::Goal#inspect_variables.</p>
       <pre class="lines">
 
 
-81
-82
-83</pre>
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_include_all'>include_all</span><span class='op'>=</span><span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_method'>method</span><span class='comma'>,</span> <span class='id identifier rubyid_include_all'>include_all</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -1515,12 +1492,12 @@ Porolog::Goal#inspect_variables.</p>
       <pre class="lines">
 
 
-91
-92
-93</pre>
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_type'>type</span>
@@ -1574,12 +1551,12 @@ Porolog::Goal#inspect_variables.</p>
       <pre class="lines">
 
 
-86
-87
-88</pre>
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='op'>*</span><span class='rparen'>)</span>
   <span class='ivar'>@value</span>
@@ -1592,7 +1569,7 @@ Porolog::Goal#inspect_variables.</p>
       <div class="method_details ">
   <h3 class="signature " id="variables-instance_method">
   
-    #<strong>variables</strong>  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Porolog::Variable,<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt> 
+    #<strong>variables</strong>  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Porolog::Variable</a></span>,<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt> 
   
 
   
@@ -1614,7 +1591,7 @@ Porolog::Goal#inspect_variables.</p>
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;Porolog::Variable,<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Porolog::Variable</a></span>,<span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span>&gt;</tt>)</span>
       
       
       
@@ -1633,12 +1610,12 @@ Porolog::Goal#inspect_variables.</p>
       <pre class="lines">
 
 
-102
-103
-104</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/value.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
   <span class='ivar'>@value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
@@ -1653,9 +1630,9 @@ Porolog::Goal#inspect_variables.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jun 18 08:28:55 2019 by
+  Generated on Mon Jul  6 22:54:46 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.19 (ruby-2.3.4).
+  0.9.19 (ruby-2.6.5).
 </div>
 
     </div>

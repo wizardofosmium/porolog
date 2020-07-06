@@ -60,38 +60,21 @@
       <div id="content"><div id='filecontents'>
 <h1 id="label-porolog">porolog</h1>
 
-<p>&lt;img src=“<a
-href="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9">repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9</a>”
-width=“240” height=“120” align=“right” /&gt;</p>
+<p>&lt;img src=“<a href="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9">repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9</a>” width=“240” height=“120” align=“right” /&gt;</p>
 
 <p>Plain Old Ruby Objects Prolog (WORK IN PROGRESS)</p>
 
-<p><a href="https://badge.fury.io/rb/porolog"><img
-src="https://badge.fury.io/rb/porolog.svg"></a> <a
-href="https://travis-ci.com/wizardofosmium/porolog"><img
-src="https://travis-ci.com/wizardofosmium/porolog.svg?branch=master"></a>
-<img
-src="https://img.shields.io/badge/status-work%20in%20progress-orange.svg">
-<a href="https://github.com/wizardofosmium/porolog"><img
-src="https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg"></a></p>
+<p><a href="https://badge.fury.io/rb/porolog"><img src="https://badge.fury.io/rb/porolog.svg"></a> <a href="https://travis-ci.com/wizardofosmium/porolog"><img src="https://travis-ci.com/wizardofosmium/porolog.svg?branch=master"></a> <img src="https://img.shields.io/badge/status-work%20in%20progress-orange.svg"> <a href="https://github.com/wizardofosmium/porolog"><img src="https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg"></a></p>
 
 <h2 id="label-Introduction">Introduction</h2>
 
-<p><code>porolog</code> is a Prolog implementation using plain old Ruby
-objects with the aim that logic queries can be called within a regular Ruby
-program. The goal was not to implement a Prolog interpreter that is just
-implement in Ruby, but rather that a logic engine could be embedded in a
-larger program.</p>
+<p><code>porolog</code> is a Prolog implementation using plain old Ruby objects with the aim that logic queries can be called within a regular Ruby program. The goal was not to implement a Prolog interpreter that is just implement in Ruby, but rather that a logic engine could be embedded in a larger program.</p>
 
-<p>The need that this gem aims to meet is to have a Ruby program interact with
-a Prolog program using native Ruby objects (POROs); hence the name Porolog.
-The goal was to implement a minimal logic engine in the style of Prolog
-where Ruby objects could be passed in and Ruby objects were passed back.</p>
+<p>The need that this gem aims to meet is to have a Ruby program interact with a Prolog program using native Ruby objects (POROs); hence the name Porolog. The goal was to implement a minimal logic engine in the style of Prolog where Ruby objects could be passed in and Ruby objects were passed back.</p>
 
 <h2 id="label-Dependencies">Dependencies</h2>
 
-<p>The aim of <code>porolog</code> is to provide a logic engine with a minimal
-footprint. The only extra dependency is Yard for documentation.</p>
+<p>The aim of <code>porolog</code> is to provide a logic engine with a minimal footprint. The only extra dependency is Yard for documentation.</p>
 
 <h2 id="label-Installation">Installation</h2>
 
@@ -109,13 +92,11 @@ footprint. The only extra dependency is Yard for documentation.</p>
 <p>solving goals</p>
 </li></ul>
 
-<p>It is entirely possible to create a Ruby program that is effectively just a
-Prolog program.</p>
+<p>It is entirely possible to create a Ruby program that is effectively just a Prolog program.</p>
 
 <h3 id="label-Basic+Usage">Basic Usage</h3>
 
-<p>Using <code>porolog</code> involves creating logic from facts and rules. An
-example, of the most basic usage uses just facts.</p>
+<p>Using <code>porolog</code> involves creating logic from facts and rules. An example, of the most basic usage uses just facts.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>porolog</span><span class='tstring_end'>&#39;</span></span>
 
@@ -135,15 +116,15 @@ example, of the most basic usage uses just facts.</p>
 
 <h3 id="label-Common+Usage">Common Usage</h3>
 
-<p>Common usage is expected to be including Porolog in a class and
-encapsulating the engine defined.</p>
+<p>Common usage is expected to be including Porolog in a class and encapsulating the engine defined.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>porolog</span><span class='tstring_end'>&#39;</span></span>
 
+<span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="Porolog.html" title="Porolog (module)">Porolog</a></span></span>
+
 <span class='kw'>class</span> <span class='const'>Numbers</span>
 
-  <span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="Porolog.html" title="Porolog (module)">Porolog</a></span></span>
-
+  <span class='const'>Predicate</span><span class='period'>.</span><span class='id identifier rubyid_scope'>scope</span> <span class='kw'>self</span>
   <span class='id identifier rubyid_predicate'>predicate</span> <span class='symbol'>:prime</span>
 
   <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fact!'>fact!</span>
@@ -164,16 +145,18 @@ encapsulating the engine defined.</p>
   <span class='kw'>end</span>
 
 <span class='kw'>end</span>
+
+
+<span class='id identifier rubyid_numbers'>numbers</span> <span class='op'>=</span> <span class='const'>Numbers</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+<span class='id identifier rubyid_numbers'>numbers</span><span class='period'>.</span><span class='id identifier rubyid_show_primes'>show_primes</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_numbers'>numbers</span><span class='period'>.</span><span class='id identifier rubyid_primes'>primes</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
 </code></pre>
 
 <h3 id="label-Scope+and+Predicate+Usage">Scope and Predicate Usage</h3>
 
-<p>A Predicate represents a Prolog predicate. They form the basis for rules
-and queries.</p>
+<p>A Predicate represents a Prolog predicate. They form the basis for rules and queries.</p>
 
-<p>The Scope class enables you to have multiple logic programs embedded in the
-same Ruby program. A Scope object defines a scope for the predicates of a
-logic programme.</p>
+<p>The Scope class enables you to have multiple logic programs embedded in the same Ruby program. A Scope object defines a scope for the predicates of a logic programme.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>porolog</span><span class='tstring_end'>&#39;</span></span>
 
@@ -229,10 +212,17 @@ logic programme.</p>
 
 <p>or</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_scope_test'>scope_test</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_core_ext_test'>core_ext_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_porolog_test'>porolog_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_scope_test'>scope_test</span>
 <span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_predicate_test'>predicate_test</span>
 <span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_arguments_test'>arguments_test</span>
 <span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_rule_test'>rule_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_goal_test'>goal_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_variable_test'>variable_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_value_test'>value_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_tail_test'>tail_test</span>
+<span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_instantiation_test'>instantiation_test</span>
 </code></pre>
 
 <h2 id="label-Author">Author</h2>
@@ -241,9 +231,9 @@ logic programme.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jun 18 08:28:54 2019 by
+  Generated on Mon Jul  6 22:54:45 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.19 (ruby-2.3.4).
+  0.9.19 (ruby-2.6.5).
 </div>
 
     </div>

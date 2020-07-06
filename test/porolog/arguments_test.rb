@@ -13,16 +13,19 @@ describe 'Porolog' do
     reset
   end
   
+  let(:pred_name)   { :pred }
+  let(:pred)        { Predicate.new pred_name }
+  let(:pred1)       { Predicate.new :p }
+  let(:pred2)       { Predicate.new :q }
+  
   describe 'Arguments' do
     
     describe '.reset' do
       
       it 'should delete/unregister all Arguments' do
-        p = Predicate.new :p
-        
-        args1 = Arguments.new p, [1,:x,'word',[2,:y,0.3]]
-        args2 = Arguments.new p, [2]
-        args3 = Arguments.new p, [3,:x,:y,:z]
+        args1 = Arguments.new pred, [1,:x,'word',[2,:y,0.3]]
+        args2 = Arguments.new pred, [2]
+        args3 = Arguments.new pred, [3,:x,:y,:z]
         
         assert_equal    'Arguments1',       args1.myid
         assert_equal    'Arguments2',       args2.myid
@@ -30,8 +33,8 @@ describe 'Porolog' do
         
         Arguments.reset
         
-        args4 = Arguments.new p, [4,[1,2,3]]
-        args5 = Arguments.new p, [5,[]]
+        args4 = Arguments.new pred, [4,[1,2,3]]
+        args5 = Arguments.new pred, [5,[]]
         
         assert_equal    'Arguments-999',    args1.myid
         assert_equal    'Arguments-999',    args2.myid
@@ -53,10 +56,9 @@ describe 'Porolog' do
     describe '.new' do
       
       it 'should create a new Arguments' do
-        predicate = Predicate.new :p
-        arguments = Arguments.new predicate, [1,:x,'word',[2,:y,0.3]]
+        arguments = Arguments.new pred, [1, :x, 'word', [2, :y, 0.3]]
         
-        assert_Arguments arguments, :p, [1,:x,'word',[2,:y,0.3]]
+        assert_Arguments    arguments, :pred, [1, :x, 'word', [2, :y, 0.3]]
       end
       
     end
@@ -64,21 +66,23 @@ describe 'Porolog' do
     describe '.arguments' do
       
       it 'should return all registered arguments' do
-        assert_equal        0, Arguments.arguments.size
+        # -- No Arguments --
+        assert_equal        0,    Arguments.arguments.size
         
-        predicate1 = Predicate.new :p
-        arguments1 = Arguments.new predicate1, [:x,:y,:z]
+        # -- One Arguments --
+        arguments1 = Arguments.new pred1, [:x,:y,:z]
         
-        assert_equal        1, Arguments.arguments.size
+        assert_equal        1,    Arguments.arguments.size
         assert_Arguments    Arguments.arguments.last, :p, [:x,:y,:z]
         
-        predicate2 = Predicate.new :q
-        arguments2 = Arguments.new predicate2, [:a,:b,:c,:d]
+        # -- Two Arguments --
+        arguments2 = Arguments.new pred2, [:a,:b,:c,:d]
         
-        assert_equal        2, Arguments.arguments.size
+        assert_equal        2,    Arguments.arguments.size
         assert_Arguments    Arguments.arguments.last, :q, [:a,:b,:c,:d]
         
-        assert_equal        [arguments1,arguments2],   Arguments.arguments
+        
+        assert_equal        [arguments1, arguments2],     Arguments.arguments
       end
       
     end
@@ -86,18 +90,16 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize predicate and arguments' do
-        predicate = Predicate.new :p
-        arguments = Arguments.new predicate, [:x,:y,:z]
+        arguments = Arguments.new pred, [:x,:y,:z]
         
-        assert_equal  predicate,      arguments.predicate
+        assert_equal  pred,           arguments.predicate
         assert_equal  [:x,:y,:z],     arguments.arguments
       end
       
       it 'should register the arguments' do
-        predicate  = Predicate.new :p
-        arguments1 = Arguments.new predicate, [:x]
-        arguments2 = Arguments.new predicate, [:x,:y]
-        arguments3 = Arguments.new predicate, [:x,:y,:z]
+        arguments1 = Arguments.new pred, [:x]
+        arguments2 = Arguments.new pred, [:x,:y]
+        arguments3 = Arguments.new pred, [:x,:y,:z]
         
         assert_equal  [
           arguments1,
@@ -111,10 +113,9 @@ describe 'Porolog' do
     describe '#myid' do
       
       it 'should return its class and index as a String' do
-        predicate = Predicate.new :p
-        arguments1 = Arguments.new predicate, [:x]
-        arguments2 = Arguments.new predicate, [:x,:y]
-        arguments3 = Arguments.new predicate, [:x,:y,:z]
+        arguments1 = Arguments.new pred, [:x]
+        arguments2 = Arguments.new pred, [:x,:y]
+        arguments3 = Arguments.new pred, [:x,:y,:z]
         
         assert_equal  'Arguments1',     arguments1.myid
         assert_equal  'Arguments2',     arguments2.myid
@@ -122,10 +123,9 @@ describe 'Porolog' do
       end
       
       it 'should return its class and -999 as a String when deleted/reset' do
-        predicate = Predicate.new :p
-        arguments1 = Arguments.new predicate, [:x]
-        arguments2 = Arguments.new predicate, [:x,:y]
-        arguments3 = Arguments.new predicate, [:x,:y,:z]
+        arguments1 = Arguments.new pred, [:x]
+        arguments2 = Arguments.new pred, [:x,:y]
+        arguments3 = Arguments.new pred, [:x,:y,:z]
         
         Arguments.reset
         
@@ -142,6 +142,7 @@ describe 'Porolog' do
         predicate1 = Predicate.new :p
         predicate2 = Predicate.new :q
         predicate3 = Predicate.new :generic
+        
         arguments1 = Arguments.new predicate1, [:x]
         arguments2 = Arguments.new predicate2, [:list, [1,2,3]]
         arguments3 = Arguments.new predicate3, [:a,:b,:c]
@@ -156,12 +157,11 @@ describe 'Porolog' do
     describe '#fact!' do
       
       it 'should create a fact for its predicate' do
-        predicate1 = Predicate.new :predicate1
-        arguments1 = predicate1.(1,'a',0.1)
+        arguments1 = pred.(1,'a',0.1)
         
         arguments1.fact!
         
-        assert_equal '[  predicate1(1,"a",0.1):- true]', predicate1.rules.inspect
+        assert_equal '[  pred(1,"a",0.1):- true]', pred.rules.inspect
       end
       
     end
@@ -169,12 +169,11 @@ describe 'Porolog' do
     describe '#falicy!' do
       
       it 'should create a falicy for its predicate' do
-        predicate1 = Predicate.new :predicate1
-        arguments1 = predicate1.(1,'a',0.1)
+        arguments1 = pred.(1,'a',0.1)
         
         arguments1.falicy!
         
-        assert_equal '[  predicate1(1,"a",0.1):- false]', predicate1.rules.inspect
+        assert_equal '[  pred(1,"a",0.1):- false]', pred.rules.inspect
       end
       
     end
@@ -182,12 +181,11 @@ describe 'Porolog' do
     describe '#cut_fact!' do
       
       it 'should create a fact for its predicate and terminate solving the goal' do
-        predicate1 = Predicate.new :predicate1
-        arguments1 = predicate1.(1,'a',0.1)
+        arguments1 = pred.(1,'a',0.1)
         
         arguments1.cut_fact!
         
-        assert_equal '[  predicate1(1,"a",0.1):- [:CUT, true]]', predicate1.rules.inspect
+        assert_equal '[  pred(1,"a",0.1):- [:CUT, true]]', pred.rules.inspect
       end
       
     end
@@ -195,12 +193,11 @@ describe 'Porolog' do
     describe '#cut_falicy!' do
       
       it 'should create a falicy for its predicate and terminate solving the goal' do
-        predicate1 = Predicate.new :predicate1
-        arguments1 = predicate1.(1,'a',0.1)
+        arguments1 = pred.(1,'a',0.1)
         
         arguments1.cut_falicy!
         
-        assert_equal '[  predicate1(1,"a",0.1):- [:CUT, false]]', predicate1.rules.inspect
+        assert_equal '[  pred(1,"a",0.1):- [:CUT, false]]', pred.rules.inspect
       end
       
     end
@@ -208,14 +205,13 @@ describe 'Porolog' do
     describe '#<<' do
       
       it 'should create a rule for its predicate' do
-        predicate1 = Predicate.new :predicate1
-        arguments1 = predicate1.(1,'a',0.1)
+        arguments1 = pred.(1,'a',0.1)
         
         arguments1 << [
-          1,2,3
+          pred1.(1,2,3)
         ]
         
-        assert_equal '[  predicate1(1,"a",0.1):- [1, 2, 3]]', predicate1.rules.inspect
+        assert_equal '[  pred(1,"a",0.1):- [p(1,2,3)]]', pred.rules.inspect
       end
       
     end
@@ -223,16 +219,17 @@ describe 'Porolog' do
     describe '#evaluates' do
       
       it 'should add a block as a rule to its predicate' do
-        predicate1 = Predicate.new :predicate1
-        arguments1 = predicate1.(1,'a',0.1)
+        arguments1 = pred.(1,'a',0.1)
         
         line = __LINE__ ; arguments2 = arguments1.evaluates do |*args|
+          #:nocov:
           $stderr.puts "args = #{args.inspect}"
+          #:nocov:
         end
         
         assert_instance_of  Arguments,  arguments2
         
-        part1 = "[  predicate1(1,\"a\",0.1):- #<Proc:0x"
+        part1 = "[  pred(1,\"a\",0.1):- #<Proc:0x"
         part2 = "@#{__FILE__}:#{line}>]"
         
         matcher = Regexp.new(
@@ -242,41 +239,28 @@ describe 'Porolog' do
           Regexp.escape(part2) +
           '\Z'
         )
-        assert_match matcher, predicate1.rules.inspect
+        assert_match matcher, pred.rules.inspect
       end
     end
     
     describe '#variables' do
       
       it 'should find variable arguments' do
-        skip 'until CoreExt added'
-        
-        predicate1 = Predicate.new :alpha
-        arguments1 = predicate1.(1,'a',0.1,:a,2.2,:b,'b',:C,1234)
+        arguments1 = pred.(1,'a',0.1,:a,2.2,:b,'b',:C,1234)
         variables1 = arguments1.variables
         
         assert_equal  [:a,:b,:C], variables1
       end
       
       it 'should find nested variable arguments' do
-        skip 'until CoreExt added'
-        
-        predicate1 = Predicate.new :alpha
-        predicate2 = Predicate.new :bravo
-        
-        arguments = predicate1.(1,'a',0.1,:a,predicate2.(:P,4,:Q),2.2,:b,'b',:C,1234)
+        arguments = pred1.(1, 'a', 0.1, :a, pred2.(:P, 4, :Q), 2.2, :b, 'b', :C, 1234)
         variables = arguments.variables
         
         assert_equal  [:a,:P,:Q,:b,:C], variables
       end
       
       it 'should find embedded variable arguments' do
-        skip 'until CoreExt added'
-        
-        predicate1 = Predicate.new :alpha
-        predicate2 = Predicate.new :bravo
-        
-        arguments = predicate1.(1,[:e1],'a',:h/:t,0.1,:a,predicate2.(:P,[6,:r,8]/predicate2.([:z]),4,:Q),2.2,:b,'b',:C,1234)
+        arguments = pred1.(1, [:e1], 'a', :h/:t, 0.1, :a, pred2.(:P, [6, :r, 8]/pred2.([:z]), 4, :Q), 2.2, :b, 'b', :C, 1234)
         variables = arguments.variables
         
         assert_equal  [:e1,:h,:t,:a,:P,:r,:z,:Q,:b,:C], variables
@@ -287,15 +271,11 @@ describe 'Porolog' do
     describe '#goal' do
       
       it 'should return a new goal for solving the arguments' do
-        skip 'until Goal added'
-        
-        predicate1 = Predicate.new :alpha
-        arguments1 = predicate1.(1,'a',0.1,:a,2.2,:b,'b',:C,1234)
+        arguments1 = pred1.(1, 'a', 0.1, :a, 2.2, :b, 'b', :C, 1234)
         
         goal = arguments1.goal
         
-        assert_instance_of  Goal,         goal
-        assert_equal        arguments1,   goal.arguments
+        assert_Goal         goal,         :p, [1, 'a', 0.1, :a, 2.2, :b, 'b', :C, 1234]
       end
       
     end
@@ -303,8 +283,20 @@ describe 'Porolog' do
     describe '#solutions' do
       
       it 'should memoize solutions' do
-        skip 'until Goal added'
-        # TODO: it 'should memoize solutions' do
+        args1 = Arguments.new pred, [1,2]
+        args2 = Arguments.new pred, [:p,:q]
+        
+        args1.fact!
+        
+        solve_spy = Spy.on(args2, :solve).and_call_through
+        
+        assert_equal  [{ p: 1, q: 2 }],   args2.solutions
+        assert_equal  [{ p: 1, q: 2 }],   args2.solutions
+        assert_equal  [{ p: 1, q: 2 }],   args2.solutions
+        assert_equal  [{ p: 1, q: 2 }],   args2.solutions
+        assert_equal  [{ p: 1, q: 2 }],   args2.solutions
+        
+        assert_equal  1,                  solve_spy.calls.size
       end
       
     end
@@ -312,11 +304,8 @@ describe 'Porolog' do
     describe '#solve' do
       
       it 'should unify and solve a simple predicate' do
-        skip 'until Goal added'
-        
-        alpha = Predicate.new :alpha
-        args1 = Arguments.new alpha, [1,2]
-        args2 = Arguments.new alpha, [:p,:q]
+        args1 = Arguments.new pred, [1,2]
+        args2 = Arguments.new pred, [:p,:q]
         
         args1.fact!
         
@@ -326,14 +315,12 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a simple predicate with multiple solutions' do
-        skip 'until Goal added'
+        predicate :simple
         
-        predicate :alpha
+        simple(1,2).fact!
+        simple(3,4).fact!
         
-        alpha(1,2).fact!
-        alpha(3,4).fact!
-        
-        solutions = alpha(:p,:q).solve
+        solutions = simple(:p,:q).solve
         
         assert_equal  [
           { p: 1, q: 2 },
@@ -342,14 +329,12 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a simple predicate with multiple solutions involving a head and tail' do
-        skip 'until Goal added'
+        predicate :basic
         
-        predicate :alpha
+        basic([1,2,3]).fact!
+        basic([3,4,5]).fact!
         
-        alpha([1,2,3]).fact!
-        alpha([3,4,5]).fact!
-        
-        solutions = alpha(:p/:q).solve
+        solutions = basic(:p/:q).solve
         
         assert_equal  [
           { p: 1, q: [2,3] },
@@ -357,9 +342,7 @@ describe 'Porolog' do
         ],solutions
       end
       
-      it 'should unify and solve a basic predicate' do
-        skip 'until Goal added'
-        
+      it 'should unify and solve a normal predicate' do
         predicate :likes
 
         likes('mary','food').fact!
@@ -373,17 +356,28 @@ describe 'Porolog' do
 
         solutions = likes(:who,:what).solve
         
-        assert_equal  [
+        assert_equal [
           { who: 'mary', what: 'food' },
           { who: 'mary', what: 'wine' },
           { who: 'john', what: 'wine' },
           { who: 'john', what: 'mary' },
-        ],solutions
+        ], solutions
+      end
+      
+      it 'should allow isnt to be defined' do
+        predicate :isnt
+        
+        isnt(:A,:A) << [:CUT, false]
+        isnt(:A,:B) << [:CUT, true]
+        
+        solutions = isnt(123,123).solve
+        assert_equal [], solutions
+        
+        solutions = isnt(123,124).solve
+        assert_equal [{}], solutions
       end
       
       it 'should unify and solve a deeper predicate' do
-        skip 'until Goal added'
-        
         predicate :male, :female, :parent
 
         male('james1').fact!
@@ -419,6 +413,7 @@ describe 'Porolog' do
           { X: 'catherine' },
           { X: 'james2' },
         ], solutions
+        
         
         predicate :mother, :father, :sibling, :isnt
 
@@ -473,27 +468,38 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a predicate involving a head and tail' do
-        skip 'until Goal added'
+        predicate :join, :split, :head, :tail
         
-        predicate :alpha, :beta, :gamma
+        head(1).fact!
+        head(4).fact!
+        tail([2,3]).fact!
+        tail([5,6]).fact!
         
-        gamma([1,2]).fact!
-        gamma([2,3]).fact!
-        
-        gamma([:h/:t]) << [
-          gamma(:h),
-          gamma(:t),
+        split(:h/:t) << [
+          head(:h),
+          tail(:t),
         ]
         
-        alpha(:l) << [
-          gamma(:l)
+        join(:l) << [
+          split(:l)
         ]
         
-        solutions = alpha(:p/:q).solve
+        solutions = join(:l).solve
         
         assert_equal  [
-          { p: 1, q: 2 },
-          { p: 2, q: 3 },
+          { l: [1,2,3] },
+          { l: [1,5,6] },
+          { l: [4,2,3] },
+          { l: [4,5,6] },
+        ],solutions
+        
+        solutions = join(:p/:q).solve
+        
+        assert_equal  [
+          { p: 1, q: [2,3] },
+          { p: 1, q: [5,6] },
+          { p: 4, q: [2,3] },
+          { p: 4, q: [5,6] },
         ],solutions
       end
       
@@ -541,7 +547,7 @@ describe 'Porolog' do
         end
       end
       
-      it 'should pass on instantiations between goals' do
+      it 'should implement simple recursion' do
         skip 'until StandardPredicates added'
         
         predicate :count
@@ -623,7 +629,7 @@ describe 'Porolog' do
       end
       
       it 'should solve a peeling off predicate' do
-        skip 'until Goal added'
+        skip 'until StandardPredicates added'
         
         predicate :size
 
@@ -650,6 +656,18 @@ describe 'Porolog' do
         skip 'until StandardPredicates added and converted to list representation'
         # TODO: convert to list representation
         
+        predicate :tower
+        
+        tower(1, :X, :Y, :Z, [[:X,:Z]]).fact!
+        tower(:N, :X, :Y, :Z, :S) << [
+          gtr(:N,1),
+          is(:M,:N){|n| n - 1 },
+          tower(:M, :X, :Z, :Y, :S1), 
+          tower( 1, :X, :Y, :Z, :S2), 
+          tower(:M, :Y, :X, :Z, :S3),
+          append(:S1,  :S2, :S12),
+          append(:S12, :S3, :S),
+        ]
         predicate :move
 
         move(1,:X,:Y,:Z) << [
@@ -671,7 +689,6 @@ describe 'Porolog' do
           'Move top disk from right to left',
           'Move top disk from right to center',
           'Move top disk from left to center',
-          'Move top disk from left to right',
           'Move top disk from center to right',
           'Move top disk from center to left',
           'Move top disk from right to left',
@@ -681,6 +698,31 @@ describe 'Porolog' do
           'Move top disk from center to right',
         ].map{|s| "#{s}\n" }.join
         
+        solutions = tower(3, 'left', 'middle', 'right', :moves).solve
+        
+        expected_solutions = [
+          {
+            moves: [
+              ['left',   'center'],
+              ['left',   'right'],
+              ['center', 'right'],
+              ['left',   'center'],
+              ['right',  'left'],
+              ['right',  'center'],
+              ['left',   'center'],
+              ['center', 'right'],
+              ['center', 'left'],
+              ['right',  'left'],
+              ['center', 'right'],
+              ['left',   'center'],
+              ['left',   'right'],
+              ['center', 'right'],
+            ]
+          }
+        ]
+        
+        assert_equal  expected_solutions, solutions
+
         assert_output expected_output do
           solutions = move(4,'left','right','center').solve
           
@@ -695,20 +737,27 @@ describe 'Porolog' do
     describe '#solve_for' do
       
       it 'should solve a predicate for specified variables' do
-        skip 'until Goal added'
-        
         predicate :alpha
         
         alpha(1,2).fact!
         
-        solutions = alpha(:p,:q).solve_for(:p,:q)
+        solutions = alpha(:p,:q).solve_for(:q,:p)
         
-        assert_equal [[1,2]], solutions
+        assert_equal [[2,1]], solutions
+      end
+      
+      it 'should solve a predicate for a specified variable' do
+        predicate :alpha
+        
+        alpha(1,2).fact!
+        alpha(3,5).fact!
+        
+        solutions = alpha(:p,:q).solve_for(:q)
+        
+        assert_equal [2,5], solutions
       end
       
       it 'should solve a predicate with multiple solutions for specified variables' do
-        skip 'until Goal added'
-        
         predicate :alpha
         
         alpha(1,2).fact!
@@ -718,12 +767,7 @@ describe 'Porolog' do
         
         solutions = alpha(:p,:q).solve_for(:p)
         
-        assert_equal [
-          [1],
-          [3],
-          [5],
-          [5],
-        ], solutions
+        assert_equal [1,3,5,5], solutions
       end
       
     end
@@ -731,20 +775,48 @@ describe 'Porolog' do
     describe '#valid?' do
       
       it 'should return true when a solution is found' do
-        # TODO: it 'should return true when a solution is found' do
+        predicate :f
+        
+        f(3).fact!
+        
+        assert    f(3).valid?, name
       end
       
       it 'should return false when no solution is found' do
-        # TODO: it 'should return false when no solution is found' do
+        predicate :f
+        
+        f(1).fact!
+        f(2).fact!
+        f(4).fact!
+        f(5).fact!
+        
+        refute    f(3).valid?, name
+      end
+      
+      it 'should return false when a falicy is found' do
+        predicate :f
+        
+        f(3).falicy!
+        
+        refute    f(3).valid?, name
       end
       
     end
     
     describe '#dup' do
       
-      it 'should create a duplicate arguments for another goal' do
-        skip 'until HeadTail added'
-        # TODO: it 'should create a duplicate arguments for another goal' do
+      let(:args1) { pred.(1,'a',0.1,:a,2.2,:b,'b',:C,1234) }
+      let(:goal)  { args1.goal }
+      let(:args2) { args1.dup(goal) }
+      
+      it 'should create a new Arguments' do
+        assert_Arguments  args1, :pred, [1,'a',0.1,:a,2.2,:b,'b',:C,1234]
+        
+        refute_equal      args2.__id__, args1.__id__
+      end
+      
+      it 'should variablise the arguments for the goal' do
+        assert_Arguments  args2, :pred, [1, 'a', 0.1, goal.variable(:a), 2.2, goal.variable(:b), 'b', goal.variable(:C), 1234]
       end
       
     end
@@ -761,14 +833,24 @@ describe 'Porolog' do
         assert    arguments1 == arguments2, 'Arguments with identical predicates and arguments should return true'
       end
       
-      it 'should return false for Arguments with identical predicates and arguments' do
+      it 'should return false for Arguments with non-identical arguments' do
         predicate1 = Predicate.new :omega
         arguments1 = predicate1.(1,'a',0.1)
         
         predicate2 = Predicate.new :omega
         arguments2 = predicate2.(1,'a',0.2)
         
-        refute    arguments1 == arguments2, 'Arguments with non-identical predicates and arguments should return false'
+        refute    arguments1 == arguments2, 'Arguments with non-identical arguments should return false'
+      end
+      
+      it 'should return false for Arguments with non-identical predicates' do
+        predicate1 = Predicate.new :omega
+        arguments1 = predicate1.(1,'a',0.1)
+        
+        predicate2 = Predicate.new :omegb
+        arguments2 = predicate2.(1,'a',0.1)
+        
+        refute    arguments1 == arguments2, 'Arguments with non-identical predicates should return false'
       end
       
     end

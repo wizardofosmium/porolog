@@ -8,60 +8,85 @@
 module Porolog
   
   # A Porolog::Goal finds solutions for specific Arguments of a Predicate.
+  #
   # @author Luis Esteban
+  #
   # @!attribute calling_goal
-  #   @return [Porolog::Goal] The parent goal if this goal is a subgoal.
+  #   @return [Porolog::Goal, nil] The parent goal if this goal is a subgoal, otherwise nil.
   # @!attribute arguments
   #   @return [Porolog::Arguments] The specific Arguments this goal is trying to solve.
-  # @!attribute terminate
-  #   @return [Boolean] Whether this Goal is to terminate.
   # @!attribute index
-  #   @return [Integer, NilClass] Solution index for builtin predicates.
+  #   @return [Integer, nil] Solution index for builtin predicates.
   # @!attribute result
   #   @return [Boolean] Whether any result has been found.
+  # @!attribute description
+  #   @return [String] Description of the Arguments the Goal is attempting to solve.
+  # @!attribute log
+  #   @return [Array<String>] Log of events, namely unification failures.
+  #
   class Goal
     
     # Error class for rescuing or detecting any Goal error.
-    class GoalError        < PorologError ; end
+    class Error             < PorologError ; end
     # Error class indicating an unexpected type of Rule definition.
-    class DefinitionError  < GoalError    ; end
+    class DefinitionError   < Error        ; end
     # Error class indicating a non-Variable was attempted to be instantiated.
-    class NotVariableError < GoalError    ; end
+    class NotVariableError  < Error        ; end
     
     # Clears all goals and ensures they are deleted.
-    # @return [true]
+    # @return [Boolean] success
     def self.reset
       @@goals ||= []
       goals = @@goals
       @@goals = []
       goals.map(&:deleted?)
-      @@cache = {}
       true
     end
     
     reset
     
-    attr_accessor :calling_goal, :arguments, :terminate, :index, :result
+    attr_accessor :calling_goal, :arguments, :index, :result, :description, :log
     
     # Initializes and registers the Goal.
     # @param arguments [Porolog::Arguments] the Predicate Arguments that this Goal is to solve.
     # @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
     def initialize(arguments, calling_goal = nil)
+      @@goals << self
+      
       @arguments    = arguments
       @terminate    = false
       @calling_goal = calling_goal
       @variables    = {}
-      @result       = false
+      @values       = {}
+      @result       = nil
+      @description  = "Solve #{arguments.inspect}"
+      @log          = []
       
       @arguments = @arguments.dup(self) if @arguments.is_a?(Arguments)
+      @solutions = []
+    end
+    
+    # @return [Array<Porolog::Goal>] the calling chain for this goal.
+    def ancestors
+      ancestors = []
+      goal      = self
       
-      @@goals << self
+      while goal
+        ancestors << goal
+        goal = goal.calling_goal
+      end
+      
+      ancestors.reverse
     end
     
     # A convenience method for testing/debugging.
-    # @return [Array<Porolog::Goal>]
-    def self.goals
-      @@goals
+    # @return [String] the calling chain for this goal as a String.
+    def ancestry
+      indent = -1
+      ancestors.map do |goal|
+        indent += 1
+        "#{'  ' * indent}#{goal.myid} -- #{goal.description}  #{goal.variables.inspect}"
+      end.join("\n")
     end
     
     # A convenience method for testing/debugging.
@@ -70,42 +95,125 @@ module Porolog
       "Goal#{(@@goals.index(self) || -1000) + 1}"
     end
     
+    # @return [String] pretty representation.
+    def inspect
+      "#{myid} -- #{description}"
+    end
+    
+    # A convenience method for testing/debugging.
+    # @return [Array<Porolog::Goal>]
+    def self.goals
+      @@goals
+    end
+    
+    # Delete the Goal
+    # @return [Boolean] whether the Goal has been deleted (memoized)
+    def delete!
+      @@goals.delete(self)
+      deleted?
+    end
+    
     # @return [Boolean] whether the Goal has been deleted (memoized)
     def deleted?
       @deleted ||= check_deleted
       @deleted
     end
     
-    # Determines whether the Goal has been deleted and removes its Variables if it has
+    # Determines whether the Goal has been deleted and removes its Variables and Values if it has.
     # @return [Boolean] whether the Goal has been deleted
     def check_deleted
-      if @@goals.include?(self)
-        false
-      else
-        @variables.delete_if do |name,variable|
-          variable.remove
-          true
-        end
+      return false if @@goals.include?(self)
+      
+      @variables.delete_if do |name,variable|
+        variable.remove
         true
       end
+      
+      @values.delete_if do |name,value|
+        value.remove
+        true
+      end
+      
+      true
     end
+    
+    # Sets that the goal should no longer search any further rules for the current predicate
+    # once the current rule has finished being evaluated.
+    # This method implements the :CUT rule.
+    # That is, backtracking does not go back past the point of the cut.
+    # @return [Boolean] true.
+    def terminate!
+      @log << 'terminating'
+      @terminate = true
+    end
+    
+    # @return [Boolean] whether the goal has been cut.
+    def terminated?
+      @terminate
+    end
+    
+    # Converts all embedded Symbols to Variables within this Goal.
+    # @param object [Object] the object to variablise.
+    # @return [Object] the variablised object.
+    def variablise(object)
+      case object
+        when Symbol,Variable
+          variable(object)
+        when Array
+          object.map{|element| variablise(element) }
+        when Arguments
+          object.dup(self)
+        when Tail
+          Tail.new variablise(object.value)
+        when Value
+          object
+        when NilClass
+          nil
+        else
+          if object == UNKNOWN_TAIL || object == UNKNOWN_ARRAY
+            object
+          else
+            value(object)
+          end
+      end
+    end
+    
+    alias_method :[], :variablise
     
     # @return [Hash{Symbol => Object}] the Variables and their current values of this Goal
     def variables
       @variables.keys.each_with_object({}){|variable,variable_list|
-        next if self.variable(variable).internal?
-        variable_list[variable] = self.value_of(variable)
+        value = value_of(variable)
+        value = value.value if value.is_a?(Value)
+        if value.is_a?(Variable)
+          variable_list[variable] = nil
+        elsif value.is_a?(Value) || value.is_a?(Array)
+          variable_list[variable] = value.value
+        else
+          variable_list[variable] = value
+        end
       }
+    end
+    
+    # A convenience method for testing/debugging.
+    # @return [String] a tree representation of all the instantiations of this goal's variables.
+    def inspect_variables
+      @variables.map{|name,variable|
+        variable.inspect_with_instantiations
+      }.join("\n")
+    end
+    
+    # A convenience method for testing/debugging.
+    # @return [Array<Object>] the values instantiated for this goal.
+    def values
+      @values.map{|name,value| value.value }
     end
     
     # Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
     # @param name [Object] name of variable or variable
     # @return [Porolog::Variable, Object] a variable of the goal or the original parameter
     def variable(name)
-      unless name.is_a?(Symbol) || name.is_a?(Variable)
-        # -- Return parameter if it is not a variable --
-        return name
-      end
+      return name unless name.is_a?(Symbol) || name.is_a?(Variable)
       
       if name.is_a?(Variable)
         variable = name
@@ -117,60 +225,89 @@ module Porolog
       @variables[name]
     end
     
+    # @param value [Object] the value that needs to be associated with this Goal.
+    # @return [Porolog::Value] a Value, ensuring it has been associated with this Goal so that it can be uninstantiated.
+    def value(value)
+      @values[value] ||= Value.new(value, self)
+      @values[value]
+    end
+    
     # Returns the value of the indicated variable or value
     # @param name [Symbol, Object] name of the variable or value
-    # @param _index [Object] index is not used, it is for polymorphic compatibility with other classes
+    # @param index [Object] index is not yet used
     # @param visited [Array] used to avoid infinite recursion
     # @return [Object] the value
-    def value_of(name, _index = nil, visited = [])
-      if name.is_a?(Symbol)
-        variable = @variables[name]
-        value    = variable && variable.value(visited) || self.variable(name)
-      else
-        value = name
+    def value_of(name, index = nil, visited = [])
+      variable(name).value(visited)
+    end
+    
+    # Returns the values of an Object.  For most objects, this will basically just be the object.
+    # For Arrays, an Array will be returned where the elements are the value of the elements.
+    # @param object [Object] the Object to find the values of.
+    # @return [Object,Array<Object>] the value(s) of the object.
+    def values_of(object)
+      case object
+        when Array
+          object.map{|element| values_of(element) }
+        when Variable,Symbol,Value
+          value_of(object)
+        when Tail
+          # TODO: This needs to splat outwards; in the meantime, it splats just the first.
+          value_of(object.value).first
+        else
+          object
       end
-      
-      if value.respond_to?(:value)
-        begin
-          value = value.value(visited)
-        rescue
-          return value
-        end
-      end
-      
-      value
     end
     
     # Finds all possible solutions to the Predicate for the specific Arguments.
-    # @param number_of_solutions [Integer] if provided, the search is stopped once the number of solutions has been found
+    # @param max_solutions [Integer] if provided, the search is stopped once the number of solutions has been found
     # @return [Array<Hash{Symbol => Object}>]
-    def solve(number_of_solutions = nil)
-      solutions = []
-      variables = @arguments.variables
+    def solve(max_solutions = nil)
+      return @solutions unless @arguments
       
-      external_variables = variables.reject{|variable|
-        self.variable(variable).internal?
-      }
+      predicate = @arguments.predicate
       
-      satisfy do |goal|
-        @result = true
-        solution = {}
+      predicate && predicate.satisfy(self) do |goal|
+        @solutions << variables
+        @log << "SOLUTION: #{variables}"
+        @log << goal.ancestry
+        @log << goal.inspect_variables
         
-        external_variables.each{|variable|
-          solution[variable.to_sym] = goal.value_of(variable)
-        }
-        
-        solutions << solution
-        
-        if number_of_solutions && solutions.length >= number_of_solutions
-          @solutions = solutions
-          return @solutions
-        end
+        return @solutions if max_solutions && @solutions.size >= max_solutions
       end
       
-      # TODO: Delete all descendent goals
+      @solutions
+    end
+    
+    # Solves the goal but not as the root goal for a query.
+    # That is, solves an intermediate goal.
+    # @param block [Proc] code to perform when the Goal is satisfied.
+    # @return [Boolean] whether the definition was satisfied.
+    def satisfy(&block)
+      return false unless @arguments
       
-      @solutions = solutions
+      predicate = @arguments.predicate
+      
+      predicate && predicate.satisfy(self) do |subgoal|
+        block.call(subgoal)
+      end
+    end
+    
+    # Instantiates a Variable to another Variable or Value, for this Goal.
+    # @param name [Symbol,Porolog::Variable,Object] the name that references the variable to be instantiated.
+    # @param other [Object] the value that the variable is to be instantiated to.
+    # @param other_goal [Porolog::Goal,nil] the Goal of the other value.
+    # @return [Porolog::Instantiation] the instantiation.
+    def instantiate(name, other, other_goal = self)
+      variable = self.variable(name)
+      
+      other = if other.type == :variable
+        other_goal.variable(other)
+      else
+        other_goal.value(other)
+      end
+      
+      variable.instantiate(other)
     end
     
   end

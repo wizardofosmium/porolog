@@ -41,6 +41,7 @@ class Object
     [self]/other
   end
   
+  # Syntactic sugar to look like Prolog's [H|T]
   alias / :tail
   
   # @return [Boolean] whether the Object is an Array with a head and a tail (for an Object, should be false).
@@ -159,6 +160,11 @@ class Array
   # @return [Boolean] whether the Object is an Array with a head and a tail.
   def headtail?
     length == 2 && (last.is_a?(Tail) || last == UNKNOWN_TAIL)
+  end
+  
+  # @return [Porolog::Goal] the goal that is most likely to be the goal for this array.
+  def goal
+    map{|element| element.goal if element.respond_to?(:goal) }.flatten.find{|goal| goal.is_a?(Porolog::Goal) }
   end
   
 end

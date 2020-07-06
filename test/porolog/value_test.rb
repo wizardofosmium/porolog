@@ -205,7 +205,7 @@ describe 'Porolog' do
         assert_equal    variable4,  variable4.value
       end
       
-    end unless 'Variable added'
+    end
     
     describe '#method_missing' do
       

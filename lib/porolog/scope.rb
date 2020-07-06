@@ -16,9 +16,9 @@ module Porolog
   class Scope
     
     # Error class for rescuing or detecting any Scope error.
-    class ScopeError        < PorologError ; end
+    class Error             < PorologError ; end
     # Error class indicating a non-Predicate was assigned to a Scope.
-    class NotPredicateError < ScopeError   ; end
+    class NotPredicateError < Error        ; end
     
     attr_reader :name
     
@@ -74,7 +74,7 @@ module Porolog
     # @return [Porolog::Predicate] the Predicate assigned to the Scope.
     # @raise [NotPredicateError] when provided predicate is not actually a Predicate.
     def []=(name,predicate)
-      raise NotPredicateError.new("#{predicate.inspect} is not a Predicate") unless predicate.is_a?(Predicate)
+      raise NotPredicateError, "#{predicate.inspect} is not a Predicate" unless predicate.is_a?(Predicate)
       @predicates[name.to_sym] = predicate
     end
     

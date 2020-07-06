@@ -7,22 +7,22 @@
 
 module Porolog
   
-  # Porolog::Value
-  #
-  #   A Porolog::Value combines a value with a goal so that when the goal
-  #   is closed, the value can be uninstantiated at the same time.
+  # A Porolog::Value combines a value with a goal so that when the goal
+  # is closed, the value can be uninstantiated at the same time.
   #
   # @author Luis Esteban
+  #
   # @!attribute goal
   #   @return [Porolog::Goal] The goal in which the value was instantiated.
   # @!attribute instantiations
   #   @return [Array<Porolog::Instantiation>] Instantiations of this value.
+  #
   class Value
     
     # Error class for rescuing or detecting any Value error.
-    class Error < PorologError ; end
+    class Error     < PorologError ; end
     # Error class indicating that the supplied goal is not actually a goal.
-    class GoalError < Error    ; end
+    class GoalError < Error        ; end
     
     attr_accessor :goal, :instantiations
     
@@ -30,13 +30,10 @@ module Porolog
     # @param goal [Porolog::Goal] the Goal to be associated.
     # @return [Porolog::Value] the Value.
     def initialize(value, goal)
-      raise GoalError.new("Not a Goal: #{goal.inspect}") unless goal.is_a?(Goal)
+      raise GoalError, "Not a Goal: #{goal.inspect}" unless goal.is_a?(Goal)
       
-      if value.is_a?(Value)
-        @value = value.value
-      else
-        @value = value
-      end
+      @value = value
+      @value = value.value if value.is_a?(Value)
       @goal  = goal
       
       @instantiations = []

@@ -10,17 +10,21 @@ module Porolog
   # A Porolog::Predicate corresponds to a Prolog predicate.
   # It contains rules (Porolog::Rule) and belongs to a Porolog::Scope.
   # When provided with arguments, it produces a Porolog::Arguments.
+  #
   # @author Luis Esteban
+  #
   # @!attribute [r] name
   #   Name of the Predicate.
+  #
   # @!attribute [r] rules
   #   Rules of the Predicate.
+  #
   class Predicate
     
     # Error class for rescuing or detecting any Predicate error.
-    class PredicateError < PorologError   ; end
+    class Error          < PorologError   ; end
     # Error class indicating an error with the name of a Predicate.
-    class NameError      < PredicateError ; end
+    class NameError      < Error          ; end
     
     attr_reader :name, :rules
     
@@ -40,9 +44,7 @@ module Porolog
     # @param scope_name [Object] the name (or otherwise object) used to register a scope.
     # @return [Porolog::Scope] the current Scope.
     def self.scope=(scope_name)
-      if scope_name
-        @@current_scope = Scope[scope_name] || Scope.new(scope_name)
-      end
+      @@current_scope = Scope[scope_name] || Scope.new(scope_name)  if scope_name
       @@current_scope
     end
     
@@ -69,7 +71,7 @@ module Porolog
       @name  = name.to_sym
       @rules = []
       
-      raise NameError.new("Cannot name a predicate 'predicate'") if @name == :predicate
+      raise NameError, "Cannot name a predicate 'predicate'" if @name == :predicate
       
       scope = Scope[scope_name] || Scope.new(scope_name)
       scope[@name] = self
@@ -83,14 +85,17 @@ module Porolog
     end
     
     # Create Arguments for the Predicate.
-    # Provides the syntax options:
-    # * p.(x,y,z)
+    # Provides the syntax option:
+    #     p.(x,y,z)
+    # for
+    #     p.arguments(x,y,z)
     # @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
     def call(*args)
       Arguments.new(self,args)
     end
     
     # Create Arguments for the Predicate.
+    # @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
     def arguments(*args)
       Arguments.new(self,args)
     end
@@ -106,18 +111,13 @@ module Porolog
     # A pretty print String of the Predicate.
     # @return [String] the Predicate as a String.
     def inspect
-      lines = []
-      
       if @rules.size == 1
-        lines << "#{@name}:-#{@rules.first.inspect}"
+        "#{@name}:-#{@rules.first.inspect}"
       else
-        lines << "#{@name}:-"
-        @rules.each do |rule|
+        @rules.each_with_object(["#{@name}:-"]) do |rule, lines|
           lines << rule.inspect
-        end
+        end.join("\n")
       end
-        
-      lines.join("\n")
     end
     
     # Return a builtin Predicate based on its key.
@@ -128,6 +128,23 @@ module Porolog
       @builtin_predicate_ids[key]  += 1
       
       self.new("_#{key}_#{@builtin_predicate_ids[key]}")
+    end
+    
+    # Satisfy the Predicate within the supplied Goal.
+    # Satisfy of each rule of the Predicate is called with the Goal and success block.
+    # @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.
+    # @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.
+    # @return [Boolean] whether any Rule was satisfied.
+    def satisfy(goal, &block)
+      satisfied = false
+      @rules.each do |rule|
+        rule.satisfy(goal) do |subgoal|
+          satisfied = true
+          block.call(subgoal)
+        end
+        break if goal.terminated?
+      end
+      satisfied
     end
     
   end

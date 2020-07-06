@@ -53,15 +53,14 @@ describe 'Object' do
   
   describe '#/' do
     
-    it 'should create a n Array with a Tail' do
-      skip 'until Variable added'
+    it 'should create an n Array with a Tail' do
       assert_Array_with_Tail    object1 / :T,     [object1], '*:T'
       assert_Array_with_Tail    [object2] / :T,   [object2], '*:T'
-      assert_Array_with_Tail    object2.tail(:T), [object2], '*:T'
+      #assert_Array_with_Tail    object2.tail(:T), [object2], '*:T'
       assert_Array_with_Tail    object3 / :T,     [object3], '*:T'
       assert_Array_with_Tail    object4 / :T,     [object4], '*:T'
       assert_Array_with_Tail    [object5] / :T,   [object5], '*:T'
-      assert_Array_with_Tail    object2.tail(:T), [object5], '*:T'
+      #assert_Array_with_Tail    object5.tail(:T), [object5], '*:T'
     end
     
   end
@@ -115,7 +114,6 @@ describe 'Symbol' do
   describe '#/' do
     
     it 'should create a HeadTail' do
-      skip 'until Variable added'
       assert_Array_with_Tail    symbol1 / :T,     [symbol1], '*:T'
       assert_Array_with_Tail    symbol2 / :T,     [symbol2], '*:T'
       assert_Array_with_Tail    symbol3 / :T,     [symbol3], '*:T'
@@ -136,8 +134,21 @@ describe 'Array' do
   
   describe '#/' do
     
+    it 'creates an Array using the slash notation with Arrays' do
+      head_tail = [1] / [2,3,4,5]
+      
+      assert_equal              [1,2,3,4,5],      head_tail
+    end
+    
+    it 'should combine a head Array and a tail Array when they have no variables' do
+      assert_equal    [1,2,3,4,5,6],              [1,2,3] / [4,5,6]
+    end
+    
+    it 'should combine an embedded head Array and an embedded tail Array when they have no variables' do
+      assert_equal    [1,2,3,4,5,6,7,8,9],        [1,2,3] / [4,5,6] / [7,8,9]
+    end
+    
     it 'should create a HeadTail' do
-      skip 'until Variable added'
       assert_Array_with_Tail    array1 / :T,      array1, '*:T'
       assert_Array_with_Tail    array2 / :T,      array2, '*:T'
       assert_Array_with_Tail    array3 / :T,      array3, '*:T'
@@ -149,7 +160,6 @@ describe 'Array' do
   describe '#variables' do
     
     it 'should return an array of the embedded Symbols' do
-      skip 'until Tail added'
       assert_equal    [:A, :B, :C],     array1.variables
       assert_equal    [],               array2.variables
       assert_equal    [],               array3.variables
@@ -161,7 +171,6 @@ describe 'Array' do
   describe '#value' do
     
     it 'should return simple Arrays as is' do
-      skip 'until Tail added'
       assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],     array1.value
       assert_equal    [],                                   array2.value
       assert_equal    [UNKNOWN_TAIL],                       array3.value
@@ -169,14 +178,12 @@ describe 'Array' do
     end
     
     it 'should expand Tails that are an Array' do
-      skip 'until Tail added'
       array = [1,2,3,Tail.new([7,8,9])]
       
       assert_equal    [1,2,3,7,8,9],                        array.value
     end
     
     it 'should return the value of instantiated variables in a Tail' do
-      skip 'until Variable added'
       goal  = new_goal :tailor, :h, :t
       array = goal.variablise([:h, :b] / :t)
       goal.instantiate :h, [1,2,3]
@@ -185,12 +192,18 @@ describe 'Array' do
       assert_equal    [goal.value([1,2,3]),goal.variable(:b), goal.value(7), goal.value(8), goal.value(9)],     array.value
     end
     
+    it 'should return the value of instantiated variables in a Tail' do
+      goal  = new_goal :taylor, :head, :tail
+      array = [Tail.new(goal.value([5,6,7,8]))]
+      
+      assert_equal    [5,6,7,8],                            array.value
+    end
+    
   end
   
   describe '#type' do
     
     it 'should return :variable for symbols' do
-      skip 'until Tail added'
       assert_equal    :array,           array1.type
       assert_equal    :array,           array2.type
       assert_equal    :array,           array3.type
@@ -202,7 +215,6 @@ describe 'Array' do
   describe '#head' do
     
     it 'should return the first element when no headsize is provided' do
-      skip 'until Tail added'
       assert_equal    1,                array1.head
       assert_nil                        array2.head
       assert_nil                        array3.head
@@ -210,7 +222,6 @@ describe 'Array' do
     end
     
     it 'should return the first headsize elements' do
-      skip 'until Tail added'
       assert_equal    [1, 2],           array1.head(2)
       assert_equal    [],               array2.head(2)
       assert_equal    [UNKNOWN_TAIL],   array3.head(2)
@@ -218,7 +229,6 @@ describe 'Array' do
     end
     
     it 'should return an extended head if the tail is uninstantiated' do
-      skip 'until Tail added'
       assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],   array1.head(9)
       assert_equal    [],                                 array2.head(9)
       assert_equal    [UNKNOWN_TAIL],                     array3.head(9)
@@ -230,7 +240,6 @@ describe 'Array' do
   describe '#tail' do
     
     it 'should return the tail after the first element when no headsize is provided' do
-      skip 'until Tail added'
       assert_equal    [2, :A, 4, [:B, 6, 7, :C], 9],      array1.tail
       assert_equal    [],                                 array2.tail
       assert_equal    [UNKNOWN_TAIL],                     array3.tail
@@ -238,7 +247,6 @@ describe 'Array' do
     end
     
     it 'should return the tail after the first headsize elements' do
-      skip 'until Tail added'
       assert_equal    [:A, 4, [:B, 6, 7, :C], 9],         array1.tail(2)
       assert_equal    [],                                 array2.tail(2)
       assert_equal    [UNKNOWN_TAIL],                     array3.tail(2)
@@ -246,7 +254,6 @@ describe 'Array' do
     end
     
     it 'should return an extended tail if the tail is uninstantiated' do
-      skip 'until Tail added'
       assert_equal    [],                                 array1.tail(9)
       assert_equal    [],                                 array2.tail(9)
       assert_equal    [UNKNOWN_TAIL],                     array3.tail(9)

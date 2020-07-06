@@ -172,7 +172,7 @@ describe 'Porolog' do
     
       it 'can create predicates in different scopes' do
         left  = Scope.new :left
-        #right = Scope.new :right   # Not explicitly creating scope :right
+        #right = Scope.new :right       # Not explicitly creating scope :right
         
         assert_equal    left,           Predicate.scope(:left)
         assert_equal    :left,          Predicate.scope.name

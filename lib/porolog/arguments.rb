@@ -11,7 +11,9 @@ module Porolog
   # A predicate is not like a subroutine, although there are many similarities.
   # An Arguments represents an instance of a predicate with a specific set of arguments.
   # This forms the basis for implementing a goal to solve the predicate with those specific arguments.
+  #
   # @author Luis Esteban
+  #
   # @!attribute [r] predicate
   #   The Predicate for which these are the arguments.
   # @!attribute [r] arguments
@@ -52,7 +54,7 @@ module Porolog
     
     # @return [String] pretty representation
     def inspect
-      "#{@predicate.name}(#{@arguments && @arguments.map(&:inspect).join(',')})"
+      "#{@predicate && @predicate.name}(#{@arguments && @arguments.map(&:inspect).join(',')})"
     end
     
     # Creates a fact rule that states that these arguments satisfy the Predicate.
@@ -114,18 +116,18 @@ module Porolog
     end
     
     # Returns memoized solutions
-    # @param number [Integer] the maximum number of solutions to find (nil means find all)
+    # @param max_solutions [Integer] the maximum number of solutions to find (nil means find all)
     # @return [Array<Hash{Symbol => Object}>] the solutions found (memoized)
-    def solutions(number = nil)
-      @solutions ||= solve(number)
+    def solutions(max_solutions = nil)
+      @solutions ||= solve(max_solutions)
       @solutions
     end
     
     # Solves the Arguments
-    # @param number_of_solutions [Integer] the maximum number of solutions to find (nil means find all)
+    # @param max_solutions [Integer] the maximum number of solutions to find (nil means find all)
     # @return [Array<Hash{Symbol => Object}>] the solutions found
-    def solve(number_of_solutions = nil)
-      @solutions = goal.solve(number_of_solutions)
+    def solve(max_solutions = nil)
+      @solutions = goal.solve(max_solutions)
     end
     
     # Extracts solution values.
@@ -141,7 +143,12 @@ module Porolog
     def solve_for(*variables)
       variables = [*variables]
       solutions.map{|solution|
-        variables.map{|variable| solution[variable] }
+        values = variables.map{|variable| solution[variable] }
+        if values.size == 1
+          values.first
+        else
+          values
+        end
       }
     end
     
@@ -154,12 +161,7 @@ module Porolog
     # @param goal [Porolog::Goal] the destination goal
     # @return [Porolog::Arguments] the duplicated Arguments
     def dup(goal)
-      arguments_dup = arguments.dup
-      # TODO: Uncomment when HeadTail added
-      #(0...arguments_dup.size).each do |i|
-      #  arguments_dup[i] = arguments_dup[i].dup(goal) if arguments_dup[i].is_a?(HeadTail)
-      #end
-      self.class.new @predicate, arguments_dup
+      self.class.new @predicate, goal.variablise(arguments)
     end
     
     # @param other [Porolog::Arguments] arguments for comparison

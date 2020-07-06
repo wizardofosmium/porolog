@@ -2,11 +2,10 @@
 
 <img src="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9" width="240" height="120" align="right" />
 
-Plain Old Ruby Objects Prolog (WORK IN PROGRESS)
+Plain Old Ruby Objects Prolog
 
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)
 [![Build Status](https://travis-ci.com/wizardofosmium/porolog.svg?branch=master)](https://travis-ci.com/wizardofosmium/porolog)
-![Status](https://img.shields.io/badge/status-work%20in%20progress-orange.svg)
 [![Coverage](https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg)](https://github.com/wizardofosmium/porolog)
 
 ## Introduction
@@ -20,6 +19,8 @@ The need that this gem aims to meet is to have a Ruby program interact with a Pr
 program using native Ruby objects (POROs); hence the name Porolog.
 The goal was to implement a minimal logic engine in the style of Prolog where
 Ruby objects could be passed in and Ruby objects were passed back.
+
+This version completes the minimal/generic logic engine.
 
 ## Dependencies
 
@@ -71,10 +72,11 @@ Common usage is expected to be including Porolog in a class and encapsulating th
 ```ruby
 require 'porolog'
 
+include Porolog
+
 class Numbers
 
-  include Porolog
-
+  Predicate.scope self
   predicate :prime
 
   prime(2).fact!
@@ -95,6 +97,11 @@ class Numbers
   end
 
 end
+
+
+numbers = Numbers.new
+numbers.show_primes
+puts numbers.primes.inspect
 ```
 
 ### Scope and Predicate Usage
@@ -161,10 +168,17 @@ rake test
 or
 
 ```bash
+rake core_ext_test
+rake porolog_test
 rake scope_test
 rake predicate_test
 rake arguments_test
 rake rule_test
+rake goal_test
+rake variable_test
+rake value_test
+rake tail_test
+rake instantiation_test
 ```
 
 ## Author

@@ -16,6 +16,10 @@ describe 'Porolog' do
 
   describe 'Goal' do
     
+    let(:pred) { Predicate.new :p }
+    let(:args) { pred.(:x,:y) }
+    let(:goal) { Goal.new args }
+    
     describe '.reset' do
       
       it 'should clear all goals' do
@@ -45,10 +49,6 @@ describe 'Porolog' do
         Goal.reset
       end
       
-      it 'should clear the goal cache' do
-        # TECH-CREDIT: Probably not going to use a cache; we'll see ...
-      end
-      
     end
     
     describe '.goals' do
@@ -58,17 +58,14 @@ describe 'Porolog' do
         
         goal1 = new_goal :predicate1, :a
         
-        assert_equal  1,                      Goal.goals.size
         assert_equal  [goal1],                Goal.goals
         
         goal2 = new_goal :predicate2, :a, :b
         
-        assert_equal  2,                      Goal.goals.size
         assert_equal  [goal1,goal2],          Goal.goals
         
         goal3 = new_goal :predicate3, :a, :b, :c
         
-        assert_equal  3,                      Goal.goals.size
         assert_equal  [goal1,goal2,goal3],    Goal.goals
       end
       
@@ -87,9 +84,6 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize calling_goal' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal1 = Goal.new args
         goal2 = Goal.new args, goal1
         
@@ -101,40 +95,112 @@ describe 'Porolog' do
       end
       
       it 'should initialize arguments' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args, nil
         
-        assert_equal  args,     goal.arguments
+        assert_equal  goal.variablise(args),      goal.arguments
       end
       
       it 'should initialize terminate' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args, nil
         
-        assert_equal  false,    goal.terminate
+        assert_equal  false,                      goal.terminated?
       end
       
       it 'should initialize variables' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args, nil
         
-        assert_Goal_variables   goal, {}, ''
+        assert_Goal_variables   goal, { x: nil, y: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+        ].join("\n")
       end
       
       it 'should register the goal as undeleted' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal1 = Goal.new args, nil
         goal2 = Goal.new args, goal1
         
-        assert_equal  [goal1,goal2],    Goal.goals
+        assert_equal  [goal1,goal2],              Goal.goals
+      end
+      
+    end
+    
+    describe '#myid' do
+      
+      it 'should return the pretty id of the goal' do
+        goal1 = Goal.new args, nil
+        goal2 = Goal.new args, goal1
+        
+        assert_equal  'Goal1',          goal1.myid
+        assert_equal  'Goal2',          goal2.myid
+      end
+      
+    end
+
+    describe '#ancestors' do
+      
+      it 'should return an Array of the parent goals' do
+        goal1 = Goal.new args
+        goal2 = Goal.new args, goal1
+        goal3 = Goal.new args, goal2
+        goal4 = Goal.new args, goal3
+        
+        assert_equal  [goal1],                          goal1.ancestors
+        assert_equal  [goal1, goal2],                   goal2.ancestors
+        assert_equal  [goal1, goal2, goal3],            goal3.ancestors
+        assert_equal  [goal1, goal2, goal3, goal4],     goal4.ancestors
+      end
+      
+    end
+    
+    describe '#ancestry' do
+      
+      it 'should return an Array of the parent goals' do
+        goal1 = Goal.new args
+        goal2 = Goal.new args, goal1
+        goal3 = Goal.new args, goal2
+        goal4 = Goal.new args, goal3
+        
+        ancestors = [
+          'Goal1 -- Solve p(:x,:y)  {:x=>nil, :y=>nil}',
+          '  Goal2 -- Solve p(:x,:y)  {:x=>nil, :y=>nil}',
+          '    Goal3 -- Solve p(:x,:y)  {:x=>nil, :y=>nil}',
+          '      Goal4 -- Solve p(:x,:y)  {:x=>nil, :y=>nil}',
+        ]
+        
+        assert_equal  ancestors[0...1].join("\n"),      goal1.ancestry
+        assert_equal  ancestors[0...2].join("\n"),      goal2.ancestry
+        assert_equal  ancestors[0...3].join("\n"),      goal3.ancestry
+        assert_equal  ancestors[0...4].join("\n"),      goal4.ancestry
+      end
+      
+    end
+    
+    describe '#inspect' do
+      
+      it 'should show a description of the goal' do
+        goal1 = Goal.new args
+        goal2 = Goal.new pred.(1,:b,'word'), goal1
+        goal3 = Goal.new args, goal2
+        goal4 = Goal.new args, goal3
+        
+        assert_equal  'Goal1 -- Solve p(:x,:y)',        goal1.inspect
+        assert_equal  'Goal2 -- Solve p(1,:b,"word")',  goal2.inspect
+        assert_equal  'Goal3 -- Solve p(:x,:y)',        goal3.inspect
+        assert_equal  'Goal4 -- Solve p(:x,:y)',        goal4.inspect
+      end
+      
+    end
+    
+    describe '#delete!' do
+      
+      it 'should delete the goal' do
+        goal1 = Goal.new args
+        goal2 = Goal.new pred.(1,:b,'word'), goal1
+        goal3 = Goal.new args, goal2
+        goal4 = Goal.new args, goal3
+        
+        assert                                          goal2.delete!, 'goal should delete'
+        assert_equal  [goal1, goal3, goal4],            Goal.goals
       end
       
     end
@@ -142,9 +208,6 @@ describe 'Porolog' do
     describe '#deleted?' do
       
       it 'should return the deleted state of a goal' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args
         
         refute    goal.deleted?, 'goal should not be deleted'
@@ -155,9 +218,6 @@ describe 'Porolog' do
       end
       
       it 'should memoize the deleted state of a goal' do
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args
         
         check_deleted_spy = Spy.on(goal, :check_deleted).and_call_through
@@ -182,11 +242,6 @@ describe 'Porolog' do
     describe '#check_deleted' do
       
       it 'should return false when the goal is not deleted and keep variables intact' do
-        skip 'until Variable added'
-        
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args
         goal.variable(:x)
         goal.variable(:y)
@@ -194,17 +249,12 @@ describe 'Porolog' do
         
         variable_remove_spy = Spy.on_instance_method(Variable, :remove)
         
-        refute  goal.check_deleted
+        refute  goal.check_deleted, 'goal should not be deleted'
         
         assert_equal    0,    variable_remove_spy.calls.size
       end
       
       it 'should return true when the goal is deleted and remove all variables' do
-        skip 'until Variable added'
-        
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args
         goal.variable(:x)
         goal.variable(:y)
@@ -214,9 +264,76 @@ describe 'Porolog' do
         
         Goal.reset
         
-        assert  goal.check_deleted
+        assert  goal.check_deleted, 'goal should be deleted'
         
         assert_equal    3,    variable_remove_spy.calls.size
+      end
+      
+    end
+    
+    describe '#terminate!' do
+      
+      it 'should set the goal to terminate and log the event' do
+        goal = Goal.new args
+        
+        assert          goal.terminate!,      'the goal should be set to terminate'
+        assert_equal    ['terminating'],      goal.log
+      end
+      
+    end
+    
+    describe '#terminated?' do
+      
+      it 'should return whether the goal is set to terminate or not' do
+        goal = Goal.new args
+        
+        refute          goal.terminated?,     'the goal should not be initialized to terminate'
+        assert          goal.terminate!,      'the goal should be set to terminate'
+        assert          goal.terminated?,     'the goal should be set to terminate'
+      end
+      
+    end
+    
+    describe '#variablise' do
+      
+      it 'should convert a Symbol into a Variable' do
+        assert_Variable   goal.variablise(:k),  :k, goal, [], []
+      end
+      
+      it 'should return a Variable as is' do
+        v = Variable.new :r, goal
+        assert_equal      v,                goal.variablise(v)
+      end
+      
+      it 'should convert an Array into a Variables and Objects' do
+        assert_equal      [goal.value(1),goal.variable(:a),goal.value('word')],   goal.variablise([1,:a,'word'])
+      end
+      
+      it 'should return a duplicate of an Arguments' do
+        duplicate = goal.variablise(args)
+        assert_Arguments  duplicate,  :p, goal.variablise([:x, :y])
+        refute_equal      args,       duplicate
+      end
+      
+      it 'should convert a Tail into a Tail with a variablised value' do
+        assert_Tail       goal.variablise(Tail.new :m),  '*Goal1.:m'
+      end
+      
+      it 'should return a Value as is' do
+        v = Value.new(45, goal)
+        assert_equal      v,                goal.variablise(v)
+      end
+      
+      it 'should return an unknown array as is' do
+        assert_equal      UNKNOWN_ARRAY,    goal.variablise(UNKNOWN_ARRAY)
+      end
+      
+      it 'should return an unknown tail as is' do
+        assert_equal      UNKNOWN_TAIL,     goal.variablise(UNKNOWN_TAIL)
+      end
+      
+      it 'should convert any other Object into a Value' do
+        assert_Value      goal.variablise(23.61),  23.61, goal
       end
       
     end
@@ -224,11 +341,6 @@ describe 'Porolog' do
     describe '#variables' do
       
       it 'should return a Hash of variables and their values' do
-        skip 'until Variable added'
-        
-        pred = Predicate.new :p
-        args = pred.(:x,:y)
-        
         goal = Goal.new args
         goal.variable(:x)
         goal.variable(:y)
@@ -239,26 +351,148 @@ describe 'Porolog' do
         assert_instance_of      Hash, variables
         
         assert_Goal             goal, :p, [:x,:y]
-        assert_Goal_variables   goal, { x: nil, y: nil, z: nil }, ''
+        assert_Goal_variables   goal, { x: nil, y: nil, z: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+        ].join("\n")
+      end
+      
+    end
+    
+    describe '#inspect_variables' do
+      
+      it 'should return a string showing the instantiations of the variables of the goal' do
+        # -- Initial Goal --
+        goal = Goal.new args
+        
+        x = goal.variable(:x)
+        y = goal.variable(:y)
+        z = goal.variable(:z)
+        
+        expected = [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+        ].join("\n")
+        
+        assert_equal    expected,     goal.inspect_variables
+        
+        # -- After First Instantiation --
+        #   x.head = y
+        x.instantiate y, nil, :head
+        
+        expected = [
+          'Goal1.:x',
+          '  [:head]Goal1.:y',
+          'Goal1.:y',
+          '  Goal1.:x[:head]',
+          'Goal1.:z',
+        ].join("\n")
+        
+        assert_equal    expected,     goal.inspect_variables
+        
+        # -- After Second Instantiation --
+        #   x.head = y
+        #   x.tail = z
+        x.instantiate z, nil, :tail
+        
+        expected = [
+          'Goal1.:x',
+          '  [:head]Goal1.:y',
+          '  [:tail]Goal1.:z',
+          'Goal1.:y',
+          '  Goal1.:x[:head]',
+          '    [:tail]Goal1.:z',
+          'Goal1.:z',
+          '  Goal1.:x[:tail]',
+          '    [:head]Goal1.:y',
+        ].join("\n")
+        
+        assert_equal    expected,     goal.inspect_variables
+        
+        # -- After Third Instantiation --
+        #   x = [*y, *z]
+        #   y = 1,2,3
+        y.instantiate goal.value([1,2,3])
+        
+        expected = [
+          'Goal1.:x',
+          '  [:head]Goal1.:y',
+          '    Goal1.[1, 2, 3]',
+          '  [:tail]Goal1.:z',
+          'Goal1.:y',
+          '  Goal1.:x[:head]',
+          '    [:tail]Goal1.:z',
+          '  Goal1.[1, 2, 3]',
+          'Goal1.:z',
+          '  Goal1.:x[:tail]',
+          '    [:head]Goal1.:y',
+          '      Goal1.[1, 2, 3]',
+        ].join("\n")
+        
+        assert_equal    expected,     goal.inspect_variables
+        
+        # -- After Fourth Instantiation --
+        #   x = [*y, *z]
+        #   y = 1,2,3
+        #   z = 4,5,6
+        z.instantiate goal.value([4,5,6])
+        
+        expected = [
+          'Goal1.:x',
+          '  [:head]Goal1.:y',
+          '    Goal1.[1, 2, 3]',
+          '  [:tail]Goal1.:z',
+          '    Goal1.[4, 5, 6]',
+          'Goal1.:y',
+          '  Goal1.:x[:head]',
+          '    [:tail]Goal1.:z',
+          '      Goal1.[4, 5, 6]',
+          '  Goal1.[1, 2, 3]',
+          'Goal1.:z',
+          '  Goal1.:x[:tail]',
+          '    [:head]Goal1.:y',
+          '      Goal1.[1, 2, 3]',
+          '  Goal1.[4, 5, 6]',
+        ].join("\n")
+        
+        assert_equal    expected,     goal.inspect_variables
+      end
+      
+    end
+    
+    describe '#values' do
+      
+      it 'should return the values that have been associated with the goal' do
+        goal = Goal.new args
+        
+        x = goal.variable(:x)
+        y = goal.variable(:y)
+        z = goal.variable(:z)
+        
+        x.instantiate y, nil, :head
+        x.instantiate z, nil, :tail
+        y.instantiate goal.value([1,2,3])
+        z.instantiate goal.value([4,5,6])
+        
+        expected = [
+          [1,2,3],
+          [4,5,6],
+        ]
+        
+        assert_equal    expected,     goal.values
       end
       
     end
     
     describe '#variable' do
       
-      let(:pred) { Predicate.new :p }
-      let(:args) { pred.(:x,:y) }
-      let(:goal) { Goal.new args }
-      
       it 'should return a non-variable as is' do
-        skip 'until Variable added'
-        
         assert_equal    4.132,    goal.variable(4.132)
       end
       
       it 'should create and find a variable from a Symbol or Variable' do
-        skip 'until Variable added'
-        
         refute    goal.variables.key?(:v), ':v should not be a variable'
         
         variable1 = goal.variable :v
@@ -277,26 +511,40 @@ describe 'Porolog' do
       
     end
     
+    describe '#value' do
+      
+      it 'should create and find a value from an Object' do
+        refute    goal.values.include?(99.02), '99.02 should not be a value'
+        
+        value1 = goal.value 99.02
+        
+        assert    goal.values.include?(99.02), '99.02 should be a value'
+        
+        value2 = goal.value 99.02
+        
+        assert_Value    value1,       99.02, goal
+        assert_Value    value2,       99.02, goal
+        
+        assert_equal    [99.02],      goal.values
+      end
+      
+    end
+    
     describe '#value_of' do
       
-      let(:pred) { Predicate.new :p }
-      let(:args) { pred.(:x,:y) }
-      let(:goal) { Goal.new args }
-      
       describe 'when name is a Symbol' do
+        
         let(:variable_name) { :cymbal }
         
         it 'should create the Variable' do
-          skip 'until Variable added'
-          
           refute        goal.variables.key?(variable_name), "#{variable_name} should not exist"
           
-          assert_nil    goal.value_of(variable_name)
+          refute_nil    goal.value_of(variable_name)
           
           assert        goal.variables.key?(variable_name), "#{variable_name} should exist"
           
           variable       = goal.variable(variable_name)
-          variable.value = 44.5
+          variable.instantiate 44.5
           
           assert_equal      44.5,   goal.value_of(variable_name)
         end
@@ -304,6 +552,7 @@ describe 'Porolog' do
       end
       
       describe 'when name is not a Symbol' do
+        
         let(:variable_name) { 99.28 }
         
         it 'should return the name as the value' do
@@ -314,11 +563,55 @@ describe 'Porolog' do
       
     end
     
+    describe '#values_of' do
+      
+      it 'should return an Array with values_of applied to each element when given an Array' do
+        goal.instantiate :thomas, '$10'
+        
+        expected = [[1,'two'], '$10', 999, 'giraffe', 0.5]
+        
+        assert_equal    expected,     goal.values_of([[1,'two'], :thomas, 999, 'giraffe', 0.5])
+      end
+      
+      it 'should return the value_of the Variable when given a Variable' do
+        goal.instantiate :jones, 'Fuzzy'
+        
+        variable1 = goal.variable(:jones)
+        
+        assert_equal    'Fuzzy',      goal.values_of(variable1)
+      end
+      
+      it 'should return the value_of the Symbol when given a Symbol' do
+        goal.instantiate :x, 'Staunch'
+        
+        assert_equal    'Staunch',    goal.values_of(:x)
+      end
+      
+      it 'should return the value_of the Value when given a Value' do
+        value1 = goal.value(123.76)
+        
+        assert_equal    123.76,       goal.values_of(value1)
+      end
+      
+      it 'should somehow splat when given a Tail' do
+        tail1 = Tail.new ['apples','oranges','bananas']
+        
+        assert_equal    'apples',     goal.values_of(tail1)
+      end
+      
+      it 'should return the Object as is when given an Object' do
+        object = Object.new
+        
+        goal.expects(:value_of).times(0)
+        
+        assert_equal    object,     goal.values_of(object)
+      end
+      
+    end
+    
     describe '#solve' do
       
       it 'should find no solutions for a goal with no rules' do
-        skip 'until CoreExt added'
-        
         goal1 = new_goal :p, :x, :y
         
         solutions = goal1.solve
@@ -327,8 +620,6 @@ describe 'Porolog' do
       end
       
       it 'should solve a fact' do
-        skip 'until CoreExt added'
-        
         predicate :fact
         
         fact(42).fact!
@@ -339,8 +630,6 @@ describe 'Porolog' do
       end
       
       it 'should not solve a falicy' do
-        skip 'until CoreExt added'
-        
         predicate :fact
         
         fact(42).falicy!
@@ -351,8 +640,6 @@ describe 'Porolog' do
       end
       
       it 'should solve using head and tail with lists' do
-        skip 'until HeadTail added'
-        
         predicate :head_tail
         
         head_tail([1,2,3,4,5,6,7]).fact!
@@ -367,7 +654,8 @@ describe 'Porolog' do
       end
       
       it 'should solve a goal recursively' do
-        skip 'until HeadTail added'
+        #:nocov:
+        skip 'until Standard Predicates added'
         
         predicate :recursive
         
@@ -382,7 +670,126 @@ describe 'Porolog' do
           
           assert_equal    [{}], solutions
         end
+        #:nocov:
+      end
+      
+    end
+    
+    describe '#satisfy' do
+      
+      let(:block) { ->(subgoal){} }
+      
+      it 'should return false when the goal has no arguments' do
+        goal = Goal.new nil
         
+        block.expects(:call).times(0)
+        
+        refute          goal.satisfy(&block),   name
+      end
+      
+      it 'should access the predicate of its arguments' do
+        goal.arguments.expects(:predicate).with().returns(nil).times(1)
+        block.expects(:call).times(0)
+        
+        assert_nil      goal.satisfy(&block),   name
+      end
+      
+      it 'should try to satisfy the predicate with itself' do
+        pred.expects(:satisfy).with(goal).returns(nil).times(1)
+        block.expects(:call).times(0)
+        
+        assert_nil      goal.satisfy(&block),   name
+      end
+      
+      it 'should call the block when the predicate is satisfied' do
+        pred.(1,2).fact!
+        pred.(3,4).fact!
+        pred.(5,6).fact!
+        
+        block.expects(:call).times(3)
+        
+        assert          goal.satisfy(&block),   name
+      end
+      
+    end
+    
+    describe '#instantiate' do
+      
+      it 'creates an Array with a Tail using the slash notation with Symbols with a goal' do
+        goal      = new_goal  :bravo, :x, :y, :z
+        
+        head_tail = goal.variablise(:head / :tail)
+        
+        assert_Array_with_Tail    head_tail,      [goal.variable(:head)], '*Goal1.:tail'
+        
+        assert_Goal_variables     goal, { x: nil, y: nil, z: nil, head: nil, tail: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+          'Goal1.:head',
+          'Goal1.:tail',
+        ].join("\n")
+      end
+      
+      it 'creates an Array with a Tail using the slash notation with a single head with a goal' do
+        goal      = new_goal  :bravo, :x, :y, :z
+        
+        head_tail = goal.variablise([:head] / :tail)
+        
+        assert_Array_with_Tail    head_tail,      [goal.variable(:head)], '*Goal1.:tail'
+        
+        assert_Goal_variables     goal, { x: nil, y: nil, z: nil, head: nil, tail: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+          'Goal1.:head',
+          'Goal1.:tail',
+        ].join("\n")
+      end
+      
+      it 'creates variables from its contents with a goal' do
+        predicate :bravo
+        arguments = Predicate[:bravo].arguments(:x,:y,:z)
+        goal      = arguments.goal
+        
+        head_tail = [:alpha,bravo(:a,:b,:c),[:carly]] / [:x,[:y],bravo(:p,:q/:r)]
+        
+        assert_equal  [:alpha,bravo(:a,:b,:c),[:carly], :x,[:y],bravo(:p,:q/:r)].inspect,    head_tail.inspect
+        
+        assert_Goal_variables   goal, { x: nil, y: nil, z: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+        ].join("\n")
+        
+        head_tail = goal.variablise(head_tail)
+        
+        assert_equal  '[Goal1.:alpha, bravo(Goal1.:a,Goal1.:b,Goal1.:c), [Goal1.:carly], Goal1.:x, [Goal1.:y], bravo(Goal1.:p,[Goal1.:q, *Goal1.:r])]',    head_tail.inspect
+        
+        assert_Goal_variables   goal, { x: nil, y: nil, z: nil, alpha: nil, a: nil, b: nil, c: nil, carly: nil, p: nil, q: nil, r: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+          'Goal1.:alpha',
+          'Goal1.:a',
+          'Goal1.:b',
+          'Goal1.:c',
+          'Goal1.:carly',
+          'Goal1.:p',
+          'Goal1.:q',
+          'Goal1.:r',
+        ].join("\n")
+      end
+      
+      it 'should combine Array value of head and Array value of tail when it has a goal' do
+        head_tail = [:first] / :last
+        
+        goal.instantiate :first, 'alpha',   goal
+        goal.instantiate :last,  ['omega'], goal
+        
+        head_tail = goal.values_of(goal.variablise(head_tail))
+        
+        assert_equal    ['alpha','omega'],        head_tail
       end
       
     end

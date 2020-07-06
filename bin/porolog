@@ -6,6 +6,42 @@
 #       created
 #
 
-require 'porolog'
+require_relative '../lib/porolog'
+#require 'porolog'
 
-puts 'Sample Porolog Program'
+include Porolog
+
+puts '-- Sample Porolog Program --'
+
+
+# -- Predicate Facts --
+predicate :alpha
+
+alpha(2).fact!
+alpha(3).fact!
+alpha(5).fact!
+alpha(7).fact!
+
+
+# -- Validation Queries --
+(0..10).each do |i|
+  query = alpha(i)
+
+  if query.valid?
+    puts "#{query.inspect} is valid"
+  else
+    puts "#{query.inspect} is not valid"
+  end
+end
+
+
+# -- Solution Queries --
+query = alpha(:X)
+
+solutions = query.solve
+puts solutions.inspect
+
+solutions_for_x = query.solve_for(:X)
+solutions_for_x.each do |x|
+  puts "#{x.inspect} is alpha"
+end

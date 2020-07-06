@@ -23,8 +23,6 @@ describe 'Porolog' do
     end
     
     it 'should allow predicates with the same name to coexist in different scopes' do
-      skip 'until CoreExt added'
-      
       prime = prime1 = Predicate.new :prime, :first
 
       prime.(2).fact!

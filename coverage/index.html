@@ -1892,6 +1892,11 @@
       
         <li class="never" data-hits="" data-linenumber="266">
           
+          <code class="ruby">  def value(*)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="32">
+          <span class="hits">1</span>
           
           <code class="ruby">    # -- Trivial Unifications --</code>
         </li>
@@ -2025,7 +2030,7 @@
         <li class="never" data-hits="" data-linenumber="288">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="289">
@@ -2127,7 +2132,7 @@
         <li class="never" data-hits="" data-linenumber="305">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">    self.inspect</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="306">
@@ -2157,13 +2162,13 @@
         <li class="never" data-hits="" data-linenumber="310">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby">    [self]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="311">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="covered" data-hits="203" data-linenumber="312">
@@ -2385,6 +2390,7 @@
         <li class="covered" data-hits="2692" data-linenumber="348">
           <span class="hits">2692</span>
           
+
           <code class="ruby">        expand_splat(element)</code>
         </li>
       
@@ -2397,6 +2403,7 @@
         <li class="never" data-hits="" data-linenumber="350">
           
           
+
           <code class="ruby">    end</code>
         </li>
       
@@ -2409,6 +2416,7 @@
         <li class="covered" data-hits="4185" data-linenumber="352">
           <span class="hits">4185</span>
           
+
           <code class="ruby">    array</code>
         </li>
       
@@ -2439,12 +2447,14 @@
         <li class="never" data-hits="" data-linenumber="357">
           
           
+
           <code class="ruby">  # @param arrays_goals [Array&lt;Porolog::Goal&gt;] the Goals of the Arrays to be unified.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="358">
           
           
+
           <code class="ruby">  # @param visited [Array] prevents infinite recursion.</code>
         </li>
       
@@ -2457,6 +2467,7 @@
         <li class="never" data-hits="" data-linenumber="360">
           
           
+
           <code class="ruby">  # @return [nil] if the Arrays cannot be unified.</code>
         </li>
       
@@ -2469,6 +2480,7 @@
         <li class="never" data-hits="" data-linenumber="362">
           
           
+
           <code class="ruby">    # -- Validate Arrays --</code>
         </li>
       
@@ -2499,6 +2511,7 @@
         <li class="never" data-hits="" data-linenumber="367">
           
           
+
           <code class="ruby">      end</code>
         </li>
       
@@ -2511,60 +2524,70 @@
         <li class="never" data-hits="" data-linenumber="369">
           
           
+
           <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="370">
           
           
+
           <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="371">
           
           
+
           <code class="ruby">    # -- Trivial Unifications --</code>
         </li>
       
         <li class="covered" data-hits="347" data-linenumber="372">
           <span class="hits">347</span>
           
+
           <code class="ruby">    return [[],[]] if arrays.empty?</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="373">
           
           
+
           <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="374">
           
           
+
           <code class="ruby">    # -- Ensure Arrays elements have Goals --</code>
         </li>
       
         <li class="covered" data-hits="347" data-linenumber="375">
           <span class="hits">347</span>
           
+
           <code class="ruby">    arrays_values = arrays.dup</code>
         </li>
       
         <li class="covered" data-hits="347" data-linenumber="376">
           <span class="hits">347</span>
           
+
           <code class="ruby">    arrays_goals  = arrays_goals.dup</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="377">
           
           
+
           <code class="ruby">    </code>
         </li>
       
         <li class="covered" data-hits="347" data-linenumber="378">
           <span class="hits">347</span>
           
+
           <code class="ruby">    arrays.each_with_index do |array, index|</code>
         </li>
       
@@ -2577,6 +2600,7 @@
         <li class="covered" data-hits="9" data-linenumber="380">
           <span class="hits">9</span>
           
+
           <code class="ruby">        arrays_goals[index] ||= array.goal</code>
         </li>
       
@@ -2601,6 +2625,7 @@
         <li class="covered" data-hits="718" data-linenumber="384">
           <span class="hits">718</span>
           
+
           <code class="ruby">      if arrays_goals[index].nil?</code>
         </li>
       
@@ -2613,6 +2638,7 @@
         <li class="covered" data-hits="2" data-linenumber="386">
           <span class="hits">2</span>
           
+
           <code class="ruby">        arrays_goals[index] = value_with_goal.goal if value_with_goal &amp;&amp; value_with_goal.goal</code>
         </li>
       
@@ -2625,12 +2651,13 @@
         <li class="never" data-hits="" data-linenumber="388">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">    else</code>
         </li>
       
         <li class="covered" data-hits="718" data-linenumber="389">
           <span class="hits">718</span>
           
+
           <code class="ruby">      if arrays_goals[index].nil?</code>
         </li>
       
@@ -2643,15 +2670,17 @@
         <li class="never" data-hits="" data-linenumber="391">
           
           
+
           <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="392">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">  </code>
         </li>
       
+
         <li class="covered" data-hits="717" data-linenumber="393">
           <span class="hits">717</span>
           
@@ -2679,6 +2708,7 @@
         <li class="covered" data-hits="1062" data-linenumber="397">
           <span class="hits">1062</span>
           
+
           <code class="ruby">    unless arrays_values.all?{|array| array.is_a?(Array) }</code>
         </li>
       
@@ -2700,6 +2730,7 @@
           <code class="ruby">    end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="401">
           
           
@@ -2709,6 +2740,7 @@
         <li class="covered" data-hits="340" data-linenumber="402">
           <span class="hits">340</span>
           
+
           <code class="ruby">    arrays_variables = arrays_goals.zip(arrays)</code>
         </li>
       
@@ -2727,24 +2759,28 @@
         <li class="covered" data-hits="340" data-linenumber="405">
           <span class="hits">340</span>
           
+
           <code class="ruby">    new_arrays = []</code>
         </li>
       
         <li class="covered" data-hits="340" data-linenumber="406">
           <span class="hits">340</span>
           
+
           <code class="ruby">    arrays_variables.each do |goal,variables|</code>
         </li>
       
         <li class="covered" data-hits="700" data-linenumber="407">
           <span class="hits">700</span>
           
+
           <code class="ruby">      new_array = variables.map{|variable|</code>
         </li>
       
         <li class="covered" data-hits="1246" data-linenumber="408">
           <span class="hits">1246</span>
           
+
           <code class="ruby">        value = goal.value_of(variable, nil, visited).value</code>
         </li>
       
@@ -2802,6 +2838,7 @@
           <code class="ruby">            elsif element.is_a?(Value)</code>
         </li>
       
+
         <li class="covered" data-hits="3" data-linenumber="418">
           <span class="hits">3</span>
           
@@ -2823,6 +2860,7 @@
         <li class="never" data-hits="" data-linenumber="421">
           
           
+
           <code class="ruby">            else</code>
         </li>
       
@@ -2877,30 +2915,35 @@
         <li class="covered" data-hits="700" data-linenumber="430">
           <span class="hits">700</span>
           
+
           <code class="ruby">      new_arrays &lt;&lt; new_array</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="431">
           
           
+
           <code class="ruby">    end</code>
         </li>
       
         <li class="covered" data-hits="340" data-linenumber="432">
           <span class="hits">340</span>
           
+
           <code class="ruby">    arrays = new_arrays</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="433">
           
           
+
           <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="434">
           
           
+
           <code class="ruby">    # -- Unify All Elements --</code>
         </li>
       
@@ -2913,12 +2956,14 @@
         <li class="covered" data-hits="340" data-linenumber="436">
           <span class="hits">340</span>
           
+
           <code class="ruby">    if sizes.size &lt;= 1</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="437">
           
           
+
           <code class="ruby">      # -- Arrays are the same length --</code>
         </li>
       
@@ -2931,6 +2976,7 @@
         <li class="covered" data-hits="336" data-linenumber="439">
           <span class="hits">336</span>
           
+
           <code class="ruby">      unifications = []</code>
         </li>
       
@@ -2943,12 +2989,14 @@
         <li class="never" data-hits="" data-linenumber="441">
           
           
+
           <code class="ruby">      </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="442">
           
           
+
           <code class="ruby">      # TODO: Change these names</code>
         </li>
       
@@ -2984,6 +3032,7 @@
       
         <li class="never" data-hits="" data-linenumber="448">
           
+
           
           <code class="ruby">          else</code>
         </li>
@@ -2991,12 +3040,14 @@
         <li class="covered" data-hits="1118" data-linenumber="449">
           <span class="hits">1118</span>
           
+
           <code class="ruby">            value_value</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="450">
           
           
+
           <code class="ruby">          end</code>
         </li>
       
@@ -3009,6 +3060,7 @@
         <li class="never" data-hits="" data-linenumber="452">
           
           
+
           <code class="ruby">        </code>
         </li>
       
@@ -3021,6 +3073,7 @@
         <li class="never" data-hits="" data-linenumber="454">
           
           
+
           <code class="ruby">          # -- One Value --</code>
         </li>
       
@@ -3093,18 +3146,21 @@
         <li class="covered" data-hits="9" data-linenumber="466">
           <span class="hits">9</span>
           
+
           <code class="ruby">              unifications += subunifications</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="467">
           
           
+
           <code class="ruby">            else</code>
         </li>
       
         <li class="covered" data-hits="4" data-linenumber="468">
           <span class="hits">4</span>
           
+
           <code class="ruby">              msg = &quot;Cannot unify: #{values_to_unify_values.map(&amp;:inspect).join(&#39; with &#39;)}&quot;</code>
         </li>
       
@@ -3123,6 +3179,7 @@
         <li class="never" data-hits="" data-linenumber="471">
           
           
+
           <code class="ruby">            end</code>
         </li>
       
@@ -3135,6 +3192,7 @@
         <li class="never" data-hits="" data-linenumber="473">
           
           
+
           <code class="ruby">            # -- Incompatible Values --</code>
         </li>
       
@@ -3147,6 +3205,7 @@
         <li class="covered" data-hits="121" data-linenumber="475">
           <span class="hits">121</span>
           
+
           <code class="ruby">            msg = &quot;Cannot unify incompatible values: #{incompatible_values.compact.map(&amp;:inspect).join(&#39; with &#39;)}&quot;</code>
         </li>
       
@@ -3189,6 +3248,7 @@
         <li class="covered" data-hits="942" data-linenumber="482">
           <span class="hits">942</span>
           
+
           <code class="ruby">            values_to_unify.reject{|value| value.value.nil? }.combination(2).each do |vl, vr|</code>
         </li>
       
@@ -3207,6 +3267,7 @@
         <li class="covered" data-hits="323" data-linenumber="485">
           <span class="hits">323</span>
           
+
           <code class="ruby">                unifications += subunifications</code>
         </li>
       
@@ -3237,17 +3298,20 @@
         <li class="never" data-hits="" data-linenumber="490">
           
           
+
           <code class="ruby">              end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="491">
           
           
+
           <code class="ruby">            end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="492">
           
+
           
           <code class="ruby">            </code>
         </li>
@@ -3273,6 +3337,7 @@
         <li class="covered" data-hits="23" data-linenumber="496">
           <span class="hits">23</span>
           
+
           <code class="ruby">                if nonvariable.respond_to?(:goal)</code>
         </li>
       
@@ -3285,12 +3350,14 @@
         <li class="covered" data-hits="23" data-linenumber="498">
           <span class="hits">23</span>
           
+
           <code class="ruby">                  subgoals[index] = subgoal if subgoal</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="499">
           
           
+
           <code class="ruby">                end</code>
         </li>
       
@@ -3315,6 +3382,7 @@
         <li class="never" data-hits="" data-linenumber="503">
           
           
+
           <code class="ruby">            else</code>
         </li>
       
@@ -3327,6 +3395,7 @@
         <li class="never" data-hits="" data-linenumber="505">
           
           
+
           <code class="ruby">            end</code>
         </li>
       
@@ -3357,18 +3426,21 @@
         <li class="never" data-hits="" data-linenumber="510">
           
           
+
           <code class="ruby">          end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="511">
           
           
+
           <code class="ruby">        end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="512">
           
           
+
           <code class="ruby">      }</code>
         </li>
       
@@ -3405,6 +3477,7 @@
         <li class="covered" data-hits="12" data-linenumber="518">
           <span class="hits">12</span>
           
+
           <code class="ruby">      arrays_goals.uniq.each{|goal| goal.log &lt;&lt; msg }</code>
         </li>
       
@@ -3429,6 +3502,7 @@
         <li class="never" data-hits="" data-linenumber="522">
           
           
+
           <code class="ruby">  </code>
         </li>
       
@@ -3459,11 +3533,13 @@
         <li class="never" data-hits="" data-linenumber="527">
           
           
+
           <code class="ruby">  # @return [Array&lt;Array, Array&gt;] the merged Array and the unifications to be instantiated.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="528">
           
+
           
           <code class="ruby">  # @return [nil] if the Arrays cannot be unified.</code>
         </li>
@@ -3483,30 +3559,34 @@
         <li class="covered" data-hits="117" data-linenumber="531">
           <span class="hits">117</span>
           
+
           <code class="ruby">    merged       = []</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="532">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">        variable_list[variable] = self.value_of(variable)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="533">
           
           
+
           <code class="ruby">    # -- All tails --</code>
         </li>
       
         <li class="covered" data-hits="117" data-linenumber="534">
           <span class="hits">117</span>
           
+
           <code class="ruby">    signature = arrays.map(&amp;:headtail?)</code>
         </li>
       
         <li class="covered" data-hits="117" data-linenumber="535">
           <span class="hits">117</span>
           
+
           <code class="ruby">    arrays = arrays.map{|array|</code>
         </li>
       
@@ -3549,6 +3629,7 @@
         <li class="covered" data-hits="2" data-linenumber="542">
           <span class="hits">2</span>
           
+
           <code class="ruby">      unifications = unify(*arrays[0...2], *arrays_goals[0...2], visited)</code>
         </li>
       
@@ -3561,6 +3642,7 @@
         <li class="covered" data-hits="4" data-linenumber="544">
           <span class="hits">4</span>
           
+
           <code class="ruby">        merged = arrays.reject{|value| value.type == :variable }.first || nil</code>
         </li>
       
@@ -3621,6 +3703,7 @@
         <li class="never" data-hits="" data-linenumber="554">
           
           
+
           <code class="ruby">    </code>
         </li>
       
@@ -3633,6 +3716,7 @@
         <li class="covered" data-hits="115" data-linenumber="556">
           <span class="hits">115</span>
           
+
           <code class="ruby">    unifications = []</code>
         </li>
       
@@ -3645,6 +3729,7 @@
         <li class="never" data-hits="" data-linenumber="558">
           
           
+
           <code class="ruby">    </code>
         </li>
       
@@ -3657,6 +3742,7 @@
         <li class="covered" data-hits="109" data-linenumber="560">
           <span class="hits">109</span>
           
+
           <code class="ruby">      merged, unifications = unify_headtail_with_headtail(arrays, arrays_goals, visited)</code>
         </li>
       
@@ -3669,12 +3755,14 @@
         <li class="covered" data-hits="4" data-linenumber="562">
           <span class="hits">4</span>
           
+
           <code class="ruby">      merged, unifications = unify_tail_with_tail(arrays, arrays_goals, visited)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="563">
           
           
+
           <code class="ruby">    else</code>
         </li>
       
@@ -3692,6 +3780,7 @@
       
         <li class="never" data-hits="" data-linenumber="566">
           
+
           
           <code class="ruby">    </code>
         </li>
@@ -3711,6 +3800,7 @@
         <li class="never" data-hits="" data-linenumber="569">
           
           
+
           <code class="ruby">    else</code>
         </li>
       
@@ -3723,12 +3813,13 @@
         <li class="never" data-hits="" data-linenumber="571">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="572">
           
           
+
           <code class="ruby">  end</code>
         </li>
       
@@ -53718,6 +53809,7 @@
         <li class="covered" data-hits="1" data-linenumber="251">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Value    value2, [1,2,3],    goal1</code>
         </li>
       
@@ -54147,30 +54239,35 @@
           <code class="ruby">          &#39;    Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="323">
           
           
           <code class="ruby">          &#39;      Goal1.:z&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="324">
           
           
           <code class="ruby">          &#39;    Goal1.[Goal1.:m, *Goal1.:n]&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="325">
           
           
           <code class="ruby">          &#39;    [:head]Goal1.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="326">
           
           
           <code class="ruby">          &#39;Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="327">
           
           
@@ -54180,6 +54277,7 @@
         <li class="never" data-hits="" data-linenumber="328">
           
           
+
           <code class="ruby">          &#39;    Goal1.[Goal1.:m, *Goal1.:n]&#39;,</code>
         </li>
       
@@ -54222,24 +54320,28 @@
         <li class="never" data-hits="" data-linenumber="335">
           
           
+
           <code class="ruby">          &#39;  Goal1.[Goal1.:m, *Goal1.:n]&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="336">
           
           
+
           <code class="ruby">          &#39;  [:head]Goal1.:m&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="337">
           
           
+
           <code class="ruby">          &#39;  [:tail]Goal1.:n&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="338">
           
           
+
           <code class="ruby">          &#39;Goal1.:z&#39;,</code>
         </li>
       
@@ -54258,6 +54360,7 @@
         <li class="never" data-hits="" data-linenumber="341">
           
           
+
           <code class="ruby">          &#39;      Goal1.[Goal1.:m, *Goal1.:n]&#39;,</code>
         </li>
       
@@ -54270,6 +54373,7 @@
         <li class="never" data-hits="" data-linenumber="343">
           
           
+
           <code class="ruby">          &#39;      [:tail]Goal1.:n&#39;,</code>
         </li>
       
@@ -54288,24 +54392,28 @@
         <li class="never" data-hits="" data-linenumber="346">
           
           
+
           <code class="ruby">        # -- Instantiate --</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="347">
           <span class="hits">1</span>
           
+
           <code class="ruby">        i3 = variable3.instantiate value2</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="348">
           
           
+
           <code class="ruby">        </code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="349">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Instantiation        i3,   variable3, value2, nil, nil</code>
         </li>
       
@@ -54315,6 +54423,7 @@
           <code class="ruby">        assert_equal    [1,2,3],    variable1.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="351">
           <span class="hits">1</span>
           
@@ -54324,12 +54433,14 @@
         <li class="covered" data-hits="1" data-linenumber="352">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_equal    [1,2,3],    variable3.value</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="353">
           
           
+
           <code class="ruby">        </code>
         </li>
       
@@ -54348,6 +54459,7 @@
         <li class="never" data-hits="" data-linenumber="356">
           
           
+
           <code class="ruby">          &#39;  Goal1.:y[:head]&#39;,</code>
         </li>
       
@@ -54390,6 +54502,7 @@
         <li class="never" data-hits="" data-linenumber="363">
           
           
+
           <code class="ruby">          &#39;  Goal1.:y[:tail]&#39;,</code>
         </li>
       
@@ -54402,18 +54515,21 @@
         <li class="never" data-hits="" data-linenumber="365">
           
           
+
           <code class="ruby">          &#39;      Goal1.:z&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="366">
           
           
+
           <code class="ruby">          &#39;        Goal1.[1, 2, 3]&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="367">
           
           
+
           <code class="ruby">          &#39;    Goal1.[Goal1.:m, *Goal1.:n]&#39;,</code>
         </li>
       
@@ -54450,6 +54566,7 @@
         <li class="never" data-hits="" data-linenumber="373">
           
           
+
           <code class="ruby">          &#39;    [:tail]Goal1.:n&#39;,</code>
         </li>
       
@@ -54462,12 +54579,14 @@
         <li class="never" data-hits="" data-linenumber="375">
           
           
+
           <code class="ruby">          &#39;    Goal1.[1, 2, 3]&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="376">
           
           
+
           <code class="ruby">          &#39;Goal1.:y&#39;,</code>
         </li>
       
@@ -54498,24 +54617,28 @@
         <li class="never" data-hits="" data-linenumber="381">
           
           
+
           <code class="ruby">          &#39;  [:head]Goal1.:m&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="382">
           
           
+
           <code class="ruby">          &#39;  [:tail]Goal1.:n&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="383">
           
           
+
           <code class="ruby">          &#39;Goal1.:z&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="384">
           
           
+
           <code class="ruby">          &#39;  Goal1.:x&#39;,</code>
         </li>
       
@@ -54527,6 +54650,7 @@
       
         <li class="never" data-hits="" data-linenumber="386">
           
+
           
           <code class="ruby">          &#39;      Goal1.[Goal1.:m, *Goal1.:n]&#39;,</code>
         </li>
@@ -54540,6 +54664,7 @@
         <li class="never" data-hits="" data-linenumber="388">
           
           
+
           <code class="ruby">          &#39;      [:tail]Goal1.:n&#39;,</code>
         </li>
       
@@ -54552,18 +54677,21 @@
         <li class="never" data-hits="" data-linenumber="390">
           
           
+
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="391">
           
           
+
           <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="392">
           
           
+
           <code class="ruby">      </code>
         </li>
       
@@ -54594,6 +54722,7 @@
         <li class="never" data-hits="" data-linenumber="397">
           
           
+
           <code class="ruby">        </code>
         </li>
       
@@ -54612,6 +54741,7 @@
         <li class="never" data-hits="" data-linenumber="400">
           
           
+
           <code class="ruby">        </code>
         </li>
       
@@ -54648,6 +54778,7 @@
         <li class="covered" data-hits="1" data-linenumber="406">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_equal    variable2,  variable2.value</code>
         </li>
       
@@ -54684,24 +54815,28 @@
         <li class="covered" data-hits="1" data-linenumber="412">
           <span class="hits">1</span>
           
+
           <code class="ruby">        variable3 = Variable.new :z, goal3</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="413">
           
           
+
           <code class="ruby">        </code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="414">
           <span class="hits">1</span>
           
+
           <code class="ruby">        value1    = Value.new [1,2,3], goal2</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="415">
           <span class="hits">1</span>
           
+
           <code class="ruby">        value2    = Value.new &#39;word&#39;,  goal3</code>
         </li>
       
@@ -54732,6 +54867,7 @@
         <li class="covered" data-hits="1" data-linenumber="420">
           <span class="hits">1</span>
           
+
           <code class="ruby">        i4 = variable3.instantiate value2</code>
         </li>
       
@@ -54762,6 +54898,7 @@
         <li class="covered" data-hits="1" data-linenumber="425">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_nil              i4</code>
         </li>
       
@@ -54855,6 +54992,7 @@
           <code class="ruby">          &#39;    Goal3.:z&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="441">
           
           
@@ -54897,6 +55035,7 @@
           <code class="ruby">          &#39;  Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="448">
           
           
@@ -54909,6 +55048,7 @@
           <code class="ruby">          &#39;      Goal2.[1, 2, 3]&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="450">
           
           
@@ -54921,12 +55061,14 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="452">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="453">
           <span class="hits">1</span>
           
@@ -54945,6 +55087,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="skipped" data-hits="" data-linenumber="456">
           
           <span class="hits">skipped</span>
@@ -54975,6 +55118,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="skipped" data-hits="0" data-linenumber="461">
           
           <span class="hits">skipped</span>
@@ -54993,6 +55137,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="skipped" data-hits="0" data-linenumber="464">
           
           <span class="hits">skipped</span>
@@ -55011,6 +55156,7 @@
           <code class="ruby">        i3 = variable2.instantiate value1</code>
         </li>
       
+
         <li class="skipped" data-hits="0" data-linenumber="467">
           
           <span class="hits">skipped</span>
@@ -55023,12 +55169,14 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="skipped" data-hits="0" data-linenumber="469">
           
           <span class="hits">skipped</span>
           <code class="ruby">        assert_Instantiation    i1,     variable1,  variable2,  nil,  nil</code>
         </li>
       
+
         <li class="skipped" data-hits="0" data-linenumber="470">
           
           <span class="hits">skipped</span>
@@ -55077,6 +55225,7 @@
           <code class="ruby">        end</code>
         </li>
       
+
         <li class="skipped" data-hits="" data-linenumber="478">
           
           <span class="hits">skipped</span>
@@ -55095,6 +55244,7 @@
           <code class="ruby">          &#39;Goal1.:m&#39;,</code>
         </li>
       
+
         <li class="skipped" data-hits="" data-linenumber="481">
           
           <span class="hits">skipped</span>
@@ -55107,6 +55257,7 @@
           <code class="ruby">          &#39;Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="skipped" data-hits="" data-linenumber="483">
           
           <span class="hits">skipped</span>
@@ -55137,6 +55288,7 @@
           <code class="ruby">        assert_Goal_variables   goal2, { m: nil, n: nil, y: [1,2,3] }, [</code>
         </li>
       
+
         <li class="skipped" data-hits="" data-linenumber="488">
           
           <span class="hits">skipped</span>
@@ -55169,6 +55321,7 @@
       
         <li class="skipped" data-hits="" data-linenumber="493">
           
+
           <span class="hits">skipped</span>
           <code class="ruby">          &#39;  Goal2.[1, 2, 3]&#39;,</code>
         </li>
@@ -55193,6 +55346,7 @@
       
         <li class="skipped" data-hits="" data-linenumber="497">
           
+
           <span class="hits">skipped</span>
           <code class="ruby">          &#39;Goal3.:n&#39;,</code>
         </li>
@@ -55205,6 +55359,7 @@
       
         <li class="skipped" data-hits="" data-linenumber="499">
           
+
           <span class="hits">skipped</span>
           <code class="ruby">          &#39;  Goal1.:x&#39;,</code>
         </li>
@@ -55217,6 +55372,7 @@
       
         <li class="skipped" data-hits="" data-linenumber="501">
           
+
           <span class="hits">skipped</span>
           <code class="ruby">          &#39;      Goal2.[1, 2, 3]&#39;,</code>
         </li>
@@ -55229,6 +55385,7 @@
       
         <li class="skipped" data-hits="" data-linenumber="503">
           
+
           <span class="hits">skipped</span>
           <code class="ruby">        # :nocov:</code>
         </li>
@@ -55242,9 +55399,10 @@
         <li class="never" data-hits="" data-linenumber="505">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">#</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="506">
           <span class="hits">1</span>
           
@@ -55380,15 +55538,17 @@
         <li class="never" data-hits="" data-linenumber="528">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">      </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="529">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="530">
           <span class="hits">1</span>
           
@@ -55422,9 +55582,10 @@
         <li class="never" data-hits="" data-linenumber="535">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="536">
           <span class="hits">1</span>
           
@@ -55445,10 +55606,16 @@
       
         <li class="never" data-hits="" data-linenumber="539">
           
-          
-          <code class="ruby">        </code>
+          <code class="ruby">      assert_equal    0,        Scope[:default].predicates.size</code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="39">
+          
+          
+          <code class="ruby">      </code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="540">
           <span class="hits">1</span>
           
@@ -55458,15 +55625,17 @@
         <li class="never" data-hits="" data-linenumber="541">
           
           
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="542">
-          
-          
           <code class="ruby">      </code>
         </li>
       
+
+        <li class="never" data-hits="" data-linenumber="542">
+          
+          
+          <code class="ruby">      assert_equal          3,        Scope[:default].predicates.size</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="543">
           <span class="hits">1</span>
           
@@ -55494,9 +55663,10 @@
         <li class="never" data-hits="" data-linenumber="547">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      assert_instance_of    Array,    multiple_predicates</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="548">
           <span class="hits">1</span>
           
@@ -55505,10 +55675,16 @@
       
         <li class="never" data-hits="" data-linenumber="549">
           
-          
-          <code class="ruby">        </code>
+          <code class="ruby">      assert_Predicate      multiple_predicates[0], :alpha, []</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="49">
+          <span class="hits">1</span>
+          
+          <code class="ruby">      assert_Predicate      multiple_predicates[1], :beta,  []</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="550">
           <span class="hits">1</span>
           
@@ -55608,9 +55784,10 @@
         <li class="never" data-hits="" data-linenumber="566">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">  end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="567">
           <span class="hits">1</span>
           
@@ -55632,9 +55809,10 @@
         <li class="never" data-hits="" data-linenumber="570">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">#</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="571">
           <span class="hits">1</span>
           
@@ -55644,27 +55822,31 @@
         <li class="never" data-hits="" data-linenumber="572">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">#</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="573">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">#     Luis Esteban      2 May 2018</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="574">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby">#       created</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="575">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">#</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="576">
           <span class="hits">1</span>
           
@@ -55674,9 +55856,10 @@
         <li class="never" data-hits="" data-linenumber="577">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby"></code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="578">
           <span class="hits">1</span>
           
@@ -55697,10 +55880,16 @@
       
         <li class="never" data-hits="" data-linenumber="581">
           
-          
-          <code class="ruby">        </code>
+          <code class="ruby">    reset</code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="14">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="582">
           <span class="hits">1</span>
           
@@ -55710,9 +55899,10 @@
         <li class="never" data-hits="" data-linenumber="583">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="584">
           <span class="hits">1</span>
           
@@ -55767,6 +55957,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="593">
           <span class="hits">1</span>
           
@@ -55785,6 +55976,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="596">
           <span class="hits">1</span>
           
@@ -55815,6 +56007,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="601">
           <span class="hits">1</span>
           
@@ -55848,9 +56041,10 @@
         <li class="never" data-hits="" data-linenumber="606">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="607">
           
           
@@ -55893,6 +56087,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="614">
           
           
@@ -55917,6 +56112,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="618">
           <span class="hits">1</span>
           
@@ -55941,6 +56137,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="622">
           <span class="hits">1</span>
           
@@ -55953,6 +56150,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="624">
           <span class="hits">1</span>
           
@@ -55974,9 +56172,10 @@
         <li class="never" data-hits="" data-linenumber="627">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="628">
           <span class="hits">1</span>
           
@@ -56010,9 +56209,10 @@
         <li class="never" data-hits="" data-linenumber="633">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal      :internal, Predicate.scope.name</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="634">
           
           
@@ -56025,6 +56225,7 @@
           <code class="ruby">        assert_equal  &quot;Goal1.:x\n  Goal2.:y[2]\n    Goal2.[7, 11, 13, 23, 29]&quot;,    variable1.inspect_with_instantiations</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="636">
           <span class="hits">1</span>
           
@@ -56055,6 +56256,7 @@
           <code class="ruby">        # -- Elements --</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="641">
           <span class="hits">1</span>
           
@@ -56067,6 +56269,7 @@
           <code class="ruby">        variable2 = Variable.new :y, goal2</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="643">
           <span class="hits">1</span>
           
@@ -56085,6 +56288,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="646">
           <span class="hits">1</span>
           
@@ -56097,9 +56301,16 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="648">
           
+          <code class="ruby">        assert_equal  [alpha,carly], Scope[:internal].predicates</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="92">
+          <span class="hits">1</span>
           
+
           <code class="ruby">        # -- Assert goal variables --</code>
         </li>
       
@@ -56109,18 +56320,21 @@
           <code class="ruby">        assert_Goal_variables    goal1,    { m: nil, n: nil, x: nil },   [</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="650">
           
           
           <code class="ruby">          &#39;Goal1.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="651">
           
           
           <code class="ruby">          &#39;Goal1.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="652">
           
           
@@ -56159,7 +56373,13 @@
       
         <li class="never" data-hits="" data-linenumber="658">
           
+          <code class="ruby">        Predicate.reset</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="104">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;Goal2.:z&#39;,</code>
         </li>
       
@@ -56169,6 +56389,7 @@
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="660">
           
           
@@ -56189,7 +56410,13 @@
       
         <li class="never" data-hits="" data-linenumber="663">
           
+          <code class="ruby">        assert_equal    :temporary,     Predicate.scope.name</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="111">
+          <span class="hits">1</span>
           
+
           <code class="ruby">        #   Goal1.:x == Goal2.:y[2], Goal2.:y == [[],[1,2,3],&#39;word&#39;,[7,11,13,23,29]][3]</code>
         </li>
       
@@ -56199,6 +56426,7 @@
           <code class="ruby">        #</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="665">
           <span class="hits">1</span>
           
@@ -56211,6 +56439,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="667">
           
           
@@ -56223,6 +56452,7 @@
           <code class="ruby">        #            == [7,11,13,23,29]</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="669">
           <span class="hits">1</span>
           
@@ -56241,24 +56471,28 @@
           <code class="ruby">        # -- Assert Values --</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="672">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_equal        13,                     variable1.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="673">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_equal        [7,11,13,23,29],        variable2.value</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="674">
           
           
           <code class="ruby">        #assert_nil                                  variable3.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="675">
           <span class="hits">1</span>
           
@@ -56271,6 +56505,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="677">
           
           
@@ -56301,6 +56536,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="682">
           <span class="hits">1</span>
           
@@ -56322,9 +56558,10 @@
         <li class="never" data-hits="" data-linenumber="685">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="686">
           <span class="hits">1</span>
           
@@ -56343,6 +56580,7 @@
           <code class="ruby">        assert_Instantiation    variable1.instantiations[0], variable1, variable2, nil, 2</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="689">
           <span class="hits">1</span>
           
@@ -56361,6 +56599,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="692">
           <span class="hits">1</span>
           
@@ -56370,9 +56609,10 @@
         <li class="never" data-hits="" data-linenumber="693">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_instance_of Predicate,   alpha</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="694">
           
           
@@ -56388,6 +56628,7 @@
         <li class="covered" data-hits="1" data-linenumber="696">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_equal        &quot;Goal1.:x\n  Goal2.:y[2]\n    Goal2.[[], [1, 2, 3], \&quot;word\&quot;, [7, 11, 13, 23, 29]][3]&quot;,  variable1.inspect_with_instantiations</code>
         </li>
       
@@ -56427,6 +56668,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="703">
           <span class="hits">1</span>
           
@@ -56451,6 +56693,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="707">
           <span class="hits">1</span>
           
@@ -56481,24 +56724,28 @@
           <code class="ruby">          &#39;  Goal2.:y[2]&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="712">
           
           
           <code class="ruby">          &#39;    Goal2.[[], [1, 2, 3], &quot;word&quot;, [7, 11, 13, 23, 29]][3]&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="713">
           
           
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="714">
           
           
           <code class="ruby"></code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="715">
           <span class="hits">1</span>
           
@@ -56511,6 +56758,7 @@
           <code class="ruby">          &#39;Goal2.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="717">
           
           
@@ -56553,6 +56801,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="724">
           <span class="hits">1</span>
           
@@ -56621,7 +56870,13 @@
       
         <li class="never" data-hits="" data-linenumber="735">
           
+          <code class="ruby">      it &#39;can create predicates in different scopes&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="174">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;Goal2.:y&#39;,</code>
         </li>
       
@@ -56639,7 +56894,13 @@
       
         <li class="never" data-hits="" data-linenumber="738">
           
+          <code class="ruby">        assert_equal    left,           Predicate.scope(:left)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="178">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;Goal2.:z&#39;</code>
         </li>
       
@@ -56649,18 +56910,26 @@
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="740">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">        </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="741">
           
-          
-          <code class="ruby">      </code>
+          <code class="ruby">        assert_equal    :left,          Predicate.scope.name</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="183">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        refute_empty    left.predicates</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="742">
           <span class="hits">1</span>
           
@@ -56679,6 +56948,7 @@
           <code class="ruby">        variable2 = Variable.new :y, goal2</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="745">
           <span class="hits">1</span>
           
@@ -56700,21 +56970,29 @@
         <li class="covered" data-hits="1" data-linenumber="748">
           <span class="hits">1</span>
           
+
           <code class="ruby">        variable2.instantiate value, 3</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="749">
           
-          
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal    [left_test],    Scope[:left ].predicates</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="192">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal    [right_test],   Scope[:right].predicates</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="750">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_equal  &quot;Goal1.:x\n  Goal2.:y\n    Goal2.[7, 11, 13, 23, 29][3]&quot;,   variable1.inspect_with_instantiations</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="751">
           <span class="hits">1</span>
           
@@ -56723,13 +57001,24 @@
       
         <li class="never" data-hits="" data-linenumber="752">
           
+          <code class="ruby">      it &#39;should not create a Predicate named &quot;predicate&quot;&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="196">
+          <span class="hits">1</span>
           
+
           <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="753">
           
+          <code class="ruby">          predicate :predicate</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="198">
           
+
           <code class="ruby">      </code>
         </li>
       
@@ -56760,9 +57049,10 @@
         <li class="never" data-hits="" data-linenumber="758">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="759">
           <span class="hits">1</span>
           
@@ -56778,9 +57068,10 @@
         <li class="never" data-hits="" data-linenumber="761">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="762">
           <span class="hits">1</span>
           
@@ -56802,15 +57093,17 @@
         <li class="never" data-hits="" data-linenumber="765">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="766">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="767">
           <span class="hits">1</span>
           
@@ -56829,6 +57122,7 @@
           <code class="ruby">        variable2 = Variable.new :y, goal2</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="770">
           <span class="hits">1</span>
           
@@ -56841,6 +57135,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="772">
           <span class="hits">1</span>
           
@@ -56874,15 +57169,17 @@
         <li class="never" data-hits="" data-linenumber="777">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">    end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="778">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="779">
           <span class="hits">1</span>
           
@@ -56913,6 +57210,7 @@
           <code class="ruby">        # g6:f              g7:g</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="784">
           
           
@@ -56925,6 +57223,7 @@
           <code class="ruby">        reset</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="786">
           <span class="hits">1</span>
           
@@ -56949,12 +57248,14 @@
           <code class="ruby">        g4 = arguments1.goal</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="790">
           <span class="hits">1</span>
           
           <code class="ruby">        g5 = arguments1.goal</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="791">
           <span class="hits">1</span>
           
@@ -56970,9 +57271,10 @@
         <li class="never" data-hits="" data-linenumber="793">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="794">
           <span class="hits">1</span>
           
@@ -57003,6 +57305,7 @@
           <code class="ruby">        e = g5.variable :e</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="799">
           <span class="hits">1</span>
           
@@ -57018,9 +57321,10 @@
         <li class="never" data-hits="" data-linenumber="801">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal        :test_predicate_name,   test_predicate.name</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="802">
           <span class="hits">1</span>
           
@@ -57060,6 +57364,7 @@
         <li class="covered" data-hits="1" data-linenumber="808">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_instance_of  Instantiation,    d.instantiate(f)</code>
         </li>
       
@@ -57081,6 +57386,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="812">
           <span class="hits">1</span>
           
@@ -57107,7 +57413,13 @@
       
         <li class="never" data-hits="" data-linenumber="816">
           
+          <code class="ruby">      it &#39;should add new facts to a predicate&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="261">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;  Goal2.:b&#39;,</code>
         </li>
       
@@ -57129,6 +57441,7 @@
           <code class="ruby">          &#39;        Goal6.8&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="820">
           
           
@@ -57171,15 +57484,23 @@
           <code class="ruby">          &#39;Goal2.:b&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="827">
           
           
           <code class="ruby">          &#39;  Goal1.:a&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="828">
           
+          <code class="ruby">      it &#39;should add new falicies to a predicate&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="274">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;    Goal3.:c&#39;,</code>
         </li>
       
@@ -57209,7 +57530,13 @@
       
         <li class="never" data-hits="" data-linenumber="833">
           
+          <code class="ruby">        assert_equal    &#39;  alpha(&quot;p&quot;,&quot;q&quot;):- false&#39;,         alpha.rules.first.inspect</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="281">
+          <span class="hits">1</span>
           
+
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
@@ -57405,6 +57732,7 @@
           <code class="ruby">          &#39;            Goal6.8&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="866">
           
           
@@ -57585,18 +57913,21 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="896">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="897">
           
           
           <code class="ruby">    end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="898">
           
           
@@ -57609,6 +57940,7 @@
           <code class="ruby">    describe &#39;#remove&#39; do</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="900">
           
           
@@ -57618,6 +57950,7 @@
         <li class="covered" data-hits="4" data-linenumber="901">
           <span class="hits">4</span>
           
+
           <code class="ruby">      let(:variable1) { Variable.new :x,  goal1 }</code>
         </li>
       
@@ -57681,6 +58014,7 @@
           <code class="ruby">        variable3.instantiate value2</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="912">
           
           
@@ -57696,11 +58030,13 @@
         <li class="never" data-hits="" data-linenumber="914">
           
           
+
           <code class="ruby">          &#39;Goal1.:m&#39;,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="915">
           
+
           
           <code class="ruby">          &#39;Goal1.:n&#39;,</code>
         </li>
@@ -57713,6 +58049,7 @@
       
         <li class="never" data-hits="" data-linenumber="917">
           
+
           
           <code class="ruby">          &#39;  Goal2.:y&#39;,</code>
         </li>
@@ -57891,6 +58228,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="3" data-linenumber="947">
           <span class="hits">3</span>
           
@@ -57921,6 +58259,7 @@
           <code class="ruby">        assert_Instantiation      variable3.instantiations[0], variable1, variable3, nil, nil</code>
         </li>
       
+
         <li class="covered" data-hits="3" data-linenumber="952">
           <span class="hits">3</span>
           
@@ -57930,9 +58269,10 @@
         <li class="never" data-hits="" data-linenumber="953">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal  &#39;Rule2&#39;,    rule2.myid</code>
         </li>
       
+
         <li class="covered" data-hits="3" data-linenumber="954">
           <span class="hits">3</span>
           
@@ -57957,6 +58297,7 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="958">
           
           
@@ -57975,6 +58316,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="961">
           <span class="hits">1</span>
           
@@ -57983,10 +58325,16 @@
       
         <li class="never" data-hits="" data-linenumber="962">
           
-          
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal  &#39;Rule-999&#39;, rule2.myid</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="39">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_equal  &#39;Rule-999&#39;, rule3.myid</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="963">
           <span class="hits">1</span>
           
@@ -58005,24 +58353,28 @@
           <code class="ruby">          &#39;Goal1.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="966">
           
           
           <code class="ruby">          &#39;Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="967">
           
           
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="968">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="969">
           <span class="hits">1</span>
           
@@ -58065,6 +58417,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="976">
           <span class="hits">1</span>
           
@@ -58104,9 +58457,10 @@
         <li class="never" data-hits="" data-linenumber="982">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      it &#39;should initialize arguments and definition&#39; do</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="983">
           <span class="hits">1</span>
           
@@ -58131,6 +58485,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="987">
           <span class="hits">1</span>
           
@@ -58149,18 +58504,21 @@
           <code class="ruby">        assert_nil                  variable2.instantiations[1]</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="990">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_Instantiation        variable2.instantiations[0], variable2, value1,    nil, nil</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="991">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_nil                  variable3.instantiations[1]</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="992">
           <span class="hits">1</span>
           
@@ -58215,6 +58573,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1001">
           <span class="hits">1</span>
           
@@ -58224,9 +58583,10 @@
         <li class="never" data-hits="" data-linenumber="1002">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1003">
           <span class="hits">1</span>
           
@@ -58263,6 +58623,7 @@
           <code class="ruby">          &#39;    Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1009">
           
           
@@ -58275,6 +58636,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1011">
           <span class="hits">1</span>
           
@@ -58293,24 +58655,28 @@
           <code class="ruby">          &#39;Goal2.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1014">
           
           
           <code class="ruby">          &#39;Goal2.:y&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1015">
           
           
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1016">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1017">
           <span class="hits">1</span>
           
@@ -58323,6 +58689,7 @@
           <code class="ruby">          &#39;Goal3.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1019">
           
           
@@ -58383,6 +58750,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1029">
           <span class="hits">1</span>
           
@@ -58416,6 +58784,7 @@
         <li class="covered" data-hits="1" data-linenumber="1034">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Instantiation        variable3.instantiations[1], variable3, value2,    nil, nil</code>
         </li>
       
@@ -58476,9 +58845,10 @@
         <li class="never" data-hits="" data-linenumber="1044">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby"></code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1045">
           <span class="hits">1</span>
           
@@ -58593,6 +58963,7 @@
           <code class="ruby">          &#39;Goal3.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1064">
           
           
@@ -58662,6 +59033,7 @@
         <li class="covered" data-hits="1" data-linenumber="1075">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_nil                  variable3.instantiations[0]</code>
         </li>
       
@@ -58674,9 +59046,10 @@
         <li class="never" data-hits="" data-linenumber="1077">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      prime.(&#39;pump A&#39;).fact!</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1078">
           <span class="hits">1</span>
           
@@ -58731,6 +59104,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="10" data-linenumber="1087">
           <span class="hits">10</span>
           
@@ -58782,6 +59156,7 @@
         <li class="covered" data-hits="9" data-linenumber="1095">
           <span class="hits">9</span>
           
+
           <code class="ruby">        variable1.instantiate variable3</code>
         </li>
       
@@ -58857,12 +59232,14 @@
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1108">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="9" data-linenumber="1109">
           <span class="hits">9</span>
           
@@ -58899,6 +59276,7 @@
           <code class="ruby">          &#39;    Goal3.:z&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1115">
           
           
@@ -58923,24 +59301,28 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="9" data-linenumber="1119">
           <span class="hits">9</span>
           
           <code class="ruby">        assert_Goal_variables     goal3, { m: nil, n: nil, z: &#39;word&#39; }, [</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1120">
           
           
           <code class="ruby">          &#39;Goal3.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1121">
           
           
           <code class="ruby">          &#39;Goal3.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1122">
           
           
@@ -58971,6 +59353,7 @@
           <code class="ruby">          &#39;  Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1127">
           
           
@@ -58980,9 +59363,10 @@
         <li class="never" data-hits="" data-linenumber="1128">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        Scope.new :bravo</code>
         </li>
       
+
         <li class="covered" data-hits="9" data-linenumber="1129">
           <span class="hits">9</span>
           
@@ -59007,6 +59391,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="9" data-linenumber="1133">
           <span class="hits">9</span>
           
@@ -59055,6 +59440,7 @@
           <code class="ruby">        assert_equal    &#39;word&#39;,   variable1.value</code>
         </li>
       
+
         <li class="covered" data-hits="9" data-linenumber="1141">
           <span class="hits">9</span>
           
@@ -59070,15 +59456,22 @@
         <li class="never" data-hits="" data-linenumber="1143">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">        assert_nil                                                Scope[:alpha]</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1144">
           
-          
-          <code class="ruby">      </code>
+          <code class="ruby">        assert_nil                                                Scope[:bravo]</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="108">
+          <span class="hits">1</span>
+          
+          <code class="ruby">        assert_nil                                                Scope[:carly]</code>
+        </li>
+      
+
         <li class="covered" data-hits="1" data-linenumber="1145">
           <span class="hits">1</span>
           
@@ -59117,7 +59510,13 @@
       
         <li class="never" data-hits="" data-linenumber="1151">
           
+          <code class="ruby">        test_predicate13 = Predicate.new &#39;test_predicate13&#39;, :scope1</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="116">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;Goal1.:n&#39;,</code>
         </li>
       
@@ -59135,7 +59534,13 @@
       
         <li class="never" data-hits="" data-linenumber="1154">
           
+          <code class="ruby">        assert_equal  [:default, :scope1, :scope2],                               Scope.scopes</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="121">
+          <span class="hits">1</span>
           
+
           <code class="ruby">          &#39;    Goal2.&quot;word&quot;&#39;,</code>
         </li>
       
@@ -59151,6 +59556,7 @@
           <code class="ruby">          &#39;    Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1157">
           
           
@@ -59163,6 +59569,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1159">
           <span class="hits">1</span>
           
@@ -59199,12 +59606,14 @@
           <code class="ruby">          &#39;    Goal3.:z&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1165">
           
           
           <code class="ruby">          &#39;      Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1166">
           
           
@@ -59220,9 +59629,10 @@
         <li class="never" data-hits="" data-linenumber="1168">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1169">
           <span class="hits">1</span>
           
@@ -59259,6 +59669,7 @@
           <code class="ruby">          &#39;    Goal2.:y&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1175">
           
           
@@ -59271,18 +59682,21 @@
           <code class="ruby">          &#39;  Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1177">
           
           
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1178">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1179">
           <span class="hits">1</span>
           
@@ -59295,6 +59709,7 @@
           <code class="ruby">        assert_equal    2,        variable2.instantiations.size</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1181">
           <span class="hits">1</span>
           
@@ -59349,6 +59764,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1190">
           <span class="hits">1</span>
           
@@ -59373,12 +59789,14 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1194">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1195">
           <span class="hits">1</span>
           
@@ -59400,9 +59818,10 @@
         <li class="never" data-hits="" data-linenumber="1198">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1199">
           <span class="hits">1</span>
           
@@ -59451,6 +59870,7 @@
           <code class="ruby">          &#39;Goal2.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1207">
           
           
@@ -59469,6 +59889,7 @@
           <code class="ruby">          &#39;  Goal2.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1210">
           
           
@@ -59553,6 +59974,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1224">
           <span class="hits">1</span>
           
@@ -59607,6 +60029,7 @@
           <code class="ruby">        assert_equal    &#39;word&#39;,     variable2.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1233">
           <span class="hits">1</span>
           
@@ -59619,24 +60042,28 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1235">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1236">
           <span class="hits">1</span>
           
           <code class="ruby">      it &#39;should remove all instantiations and values case 3&#39; do</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1237">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1238">
           <span class="hits">1</span>
           
@@ -59784,9 +60211,10 @@
         <li class="never" data-hits="" data-linenumber="1262">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1263">
           <span class="hits">1</span>
           
@@ -59811,6 +60239,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1267">
           <span class="hits">1</span>
           
@@ -59823,6 +60252,7 @@
           <code class="ruby">        assert_nil                variable1.instantiations[1]</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1269">
           <span class="hits">1</span>
           
@@ -59841,6 +60271,7 @@
           <code class="ruby">        assert_nil                variable3.instantiations[1]</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1272">
           <span class="hits">1</span>
           
@@ -59874,15 +60305,17 @@
         <li class="never" data-hits="" data-linenumber="1277">
           
           
-          <code class="ruby">      end</code>
+          <code class="ruby">    end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1278">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">    </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1279">
           <span class="hits">1</span>
           
@@ -60027,18 +60460,21 @@
           <code class="ruby">          &#39;  Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1303">
           
           
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1304">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1305">
           <span class="hits">1</span>
           
@@ -60051,6 +60487,7 @@
           <code class="ruby">        assert_equal    0,          variable2.instantiations.size</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1307">
           <span class="hits">1</span>
           
@@ -60063,6 +60500,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1309">
           <span class="hits">1</span>
           
@@ -60102,9 +60540,10 @@
         <li class="never" data-hits="" data-linenumber="1315">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1316">
           <span class="hits">1</span>
           
@@ -60125,16 +60564,23 @@
       
         <li class="never" data-hits="" data-linenumber="1319">
           
-          
-          <code class="ruby">      end</code>
+          <code class="ruby">        assert_raises Value::GoalError do</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="38">
+          <span class="hits">1</span>
+          
+          <code class="ruby">          Value.new 456.789, &#39;goal&#39;</code>
+        </li>
+      
+
         <li class="never" data-hits="" data-linenumber="1320">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">        end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1321">
           <span class="hits">1</span>
           
@@ -60171,6 +60617,7 @@
           <code class="ruby">          &#39;Goal1.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1327">
           
           
@@ -60195,36 +60642,42 @@
           <code class="ruby">          &#39;  Goal3.:z&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1331">
           
           
           <code class="ruby">          &#39;    Goal3.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1332">
           
           
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1333">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1334">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_Goal_variables     goal2, { m: nil, n: nil, y: &#39;word&#39; }, [</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1335">
           
           
           <code class="ruby">          &#39;Goal2.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1336">
           
           
@@ -60273,24 +60726,28 @@
           <code class="ruby">        assert_Goal_variables     goal3, { m: nil, n: nil, z: &#39;word&#39; }, [</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1344">
           
           
           <code class="ruby">          &#39;Goal3.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1345">
           
           
           <code class="ruby">          &#39;Goal3.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1346">
           
           
           <code class="ruby">          &#39;Goal3.:z&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1347">
           
           
@@ -60317,7 +60774,13 @@
       
         <li class="never" data-hits="" data-linenumber="1351">
           
+          <code class="ruby">      it &#39;should should show the goal and value&#39; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="74">
+          <span class="hits">1</span>
           
+
           <code class="ruby">        </code>
         </li>
       
@@ -60354,6 +60817,7 @@
         <li class="covered" data-hits="1" data-linenumber="1357">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Instantiation      variable1.instantiations[1], variable1, variable3, nil, nil</code>
         </li>
       
@@ -60411,12 +60875,14 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1367">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1368">
           <span class="hits">1</span>
           
@@ -60429,6 +60895,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1370">
           <span class="hits">1</span>
           
@@ -60636,6 +61103,7 @@
         <li class="covered" data-hits="1" data-linenumber="1404">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_equal    2,        variable3.instantiations.size</code>
         </li>
       
@@ -60645,6 +61113,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1406">
           <span class="hits">1</span>
           
@@ -60654,6 +61123,7 @@
         <li class="covered" data-hits="1" data-linenumber="1407">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Instantiation      variable1.instantiations[1], variable1, variable3, nil, nil</code>
         </li>
       
@@ -60666,6 +61136,7 @@
         <li class="covered" data-hits="1" data-linenumber="1409">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Instantiation      variable2.instantiations[1], variable2, value1,    nil, nil</code>
         </li>
       
@@ -60678,6 +61149,7 @@
         <li class="covered" data-hits="1" data-linenumber="1411">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_Instantiation      variable3.instantiations[1], variable3, value2,    nil, nil</code>
         </li>
       
@@ -60696,6 +61168,7 @@
         <li class="covered" data-hits="1" data-linenumber="1414">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_equal    &#39;word&#39;,   variable2.value</code>
         </li>
       
@@ -60714,9 +61187,10 @@
         <li class="never" data-hits="" data-linenumber="1417">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">        assert_Instantiation      variable1.instantiations[1], variable1, variable3, nil, nil</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1418">
           <span class="hits">1</span>
           
@@ -60725,6 +61199,7 @@
       
         <li class="never" data-hits="" data-linenumber="1419">
           
+
           
           <code class="ruby">        </code>
         </li>
@@ -60737,6 +61212,7 @@
       
         <li class="never" data-hits="" data-linenumber="1421">
           
+
           
           <code class="ruby">        </code>
         </li>
@@ -60801,6 +61277,7 @@
           <code class="ruby">          &#39;Goal2.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1432">
           
           
@@ -60831,6 +61308,7 @@
           <code class="ruby">        ].join(&quot;\n&quot;)</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1437">
           
           
@@ -60897,6 +61375,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1448">
           <span class="hits">1</span>
           
@@ -60936,9 +61415,10 @@
         <li class="never" data-hits="" data-linenumber="1454">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_Instantiation        variable1.instantiations[1], variable1, variable3, nil, nil</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1455">
           <span class="hits">1</span>
           
@@ -60969,6 +61449,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1460">
           <span class="hits">1</span>
           
@@ -60978,9 +61459,10 @@
         <li class="never" data-hits="" data-linenumber="1461">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal    variable2,  variable2.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1462">
           <span class="hits">1</span>
           
@@ -60990,9 +61472,10 @@
         <li class="never" data-hits="" data-linenumber="1463">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">        assert_equal    &#39;draw&#39;,     variable4.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1464">
           <span class="hits">1</span>
           
@@ -61083,6 +61566,7 @@
           <code class="ruby">          &#39;  Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1479">
           
           
@@ -61113,6 +61597,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1484">
           <span class="hits">1</span>
           
@@ -61182,6 +61667,7 @@
         <li class="covered" data-hits="1" data-linenumber="1495">
           <span class="hits">1</span>
           
+
           <code class="ruby">        assert_equal    2,        variable2.instantiations.size</code>
         </li>
       
@@ -61197,6 +61683,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1498">
           <span class="hits">1</span>
           
@@ -61263,24 +61750,28 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1509">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1510">
           <span class="hits">1</span>
           
           <code class="ruby">      it &#39;should remove all instantiations and values case 9&#39; do</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1511">
           
           
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1512">
           <span class="hits">1</span>
           
@@ -61359,24 +61850,28 @@
           <code class="ruby">          &#39;Goal2.:m&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1525">
           
           
           <code class="ruby">          &#39;Goal2.:n&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1526">
           
           
           <code class="ruby">          &#39;Goal2.:y&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1527">
           
           
           <code class="ruby">          &#39;  Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1528">
           
           
@@ -61389,6 +61884,7 @@
           <code class="ruby">          &#39;  Goal2.&quot;word&quot;&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1530">
           
           
@@ -61431,12 +61927,14 @@
           <code class="ruby">          &#39;  Goal1.:x&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1537">
           
           
           <code class="ruby">          &#39;    Goal2.:y&#39;,</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1538">
           
           
@@ -61452,9 +61950,10 @@
         <li class="never" data-hits="" data-linenumber="1540">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">    end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1541">
           <span class="hits">1</span>
           
@@ -61479,6 +61978,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1545">
           <span class="hits">1</span>
           
@@ -61503,6 +62003,7 @@
           <code class="ruby">        assert_Instantiation      variable2.instantiations[1], variable2, value1,    nil, nil</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1549">
           <span class="hits">1</span>
           
@@ -61518,9 +62019,10 @@
         <li class="never" data-hits="" data-linenumber="1551">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1552">
           <span class="hits">1</span>
           
@@ -61545,24 +62047,28 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1556">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1557">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby">      it &#39;should return atomic for String&#39; do</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1558">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">        assert_equal        :atomic,    string.type</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1559">
           <span class="hits">1</span>
           
@@ -61575,6 +62081,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1561">
           <span class="hits">1</span>
           
@@ -61596,9 +62103,10 @@
         <li class="never" data-hits="" data-linenumber="1564">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1565">
           <span class="hits">1</span>
           
@@ -61611,18 +62119,21 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1567">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_equal    [3,5,7,11,13,17],     variable.value</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1568">
           <span class="hits">1</span>
           
           <code class="ruby">        assert_equal    13,                   variable[4]</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1569">
           
           
@@ -61635,6 +62146,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1571">
           <span class="hits">1</span>
           
@@ -61659,6 +62171,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1575">
           <span class="hits">1</span>
           
@@ -61668,9 +62181,10 @@
         <li class="never" data-hits="" data-linenumber="1576">
           
           
-          <code class="ruby">        </code>
+          <code class="ruby">      end</code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1577">
           <span class="hits">1</span>
           
@@ -61719,12 +62233,14 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1585">
           <span class="hits">1</span>
           
           <code class="ruby">        variable.instantiate value</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1586">
           
           
@@ -61752,9 +62268,10 @@
         <li class="never" data-hits="" data-linenumber="1590">
           
           
-          <code class="ruby">      </code>
+          <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1591">
           <span class="hits">1</span>
           
@@ -61815,6 +62332,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1601">
           <span class="hits">1</span>
           
@@ -61839,6 +62357,7 @@
           <code class="ruby">        </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1605">
           <span class="hits">1</span>
           
@@ -61865,6 +62384,7 @@
       
         <li class="never" data-hits="" data-linenumber="1609">
           
+
           
           <code class="ruby">      end</code>
         </li>
@@ -61899,6 +62419,7 @@
           <code class="ruby">      </code>
         </li>
       
+
         <li class="covered" data-hits="1" data-linenumber="1615">
           <span class="hits">1</span>
           
@@ -61929,36 +62450,42 @@
           <code class="ruby">      end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1620">
           
           
           <code class="ruby">      </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1621">
           
           
           <code class="ruby">    end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1622">
           
           
           <code class="ruby">    </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1623">
           
           
           <code class="ruby">  end</code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1624">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">  </code>
         </li>
       
+
         <li class="never" data-hits="" data-linenumber="1625">
           
           

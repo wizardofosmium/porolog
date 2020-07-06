@@ -53,7 +53,7 @@ describe 'Object' do
   
   describe '#/' do
     
-    it 'should create a n Array with a Tail' do
+    it 'should create an n Array with a Tail' do
       assert_Array_with_Tail    object1 / :T,     [object1], '*:T'
       assert_Array_with_Tail    [object2] / :T,   [object2], '*:T'
       #assert_Array_with_Tail    object2.tail(:T), [object2], '*:T'

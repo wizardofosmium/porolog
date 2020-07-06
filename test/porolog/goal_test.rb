@@ -205,6 +205,21 @@ describe 'Porolog' do
       
     end
     
+    describe '#myid' do
+      
+      let(:pred) { Predicate.new :p }
+      let(:args) { pred.(:x,:y) }
+      
+      it 'should return the pretty id of the goal' do
+        goal1 = Goal.new args, nil
+        goal2 = Goal.new args, goal1
+        
+        assert_equal  'Goal1',          goal1.myid
+        assert_equal  'Goal2',          goal2.myid
+      end
+      
+    end
+    
     describe '#deleted?' do
       
       it 'should return the deleted state of a goal' do

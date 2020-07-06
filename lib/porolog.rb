@@ -1046,6 +1046,7 @@ module Porolog
   
 end
 
+require_relative 'porolog/core_ext'
 require_relative 'porolog/error'
 require_relative 'porolog/core_ext'
 require_relative 'porolog/scope'

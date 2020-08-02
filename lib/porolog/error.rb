@@ -15,5 +15,8 @@ module Porolog
   
   # Error indicating that a Goal is needed but could not be found.
   class NoGoalError  < PorologError ; end
+  
+  # Error indicating that a Variable is needed but was not provided.
+  class NonVariableError  < PorologError ; end
 
 end

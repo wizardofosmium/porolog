@@ -20,7 +20,7 @@ module Porolog
   #   The actual arguments.
   class Arguments
     
-    attr_reader :predicate, :arguments
+    attr_reader :predicate, :arguments, :block
     
     # Unregisters all Arguments
     # @return [true]
@@ -34,9 +34,10 @@ module Porolog
     # Creates a new Arguments for a Predicate
     # @param predicate [Porolog::Predicate] the Predicate for which these are the arguments
     # @param arguments [Array<Object>] the actual arguments
-    def initialize(predicate, arguments)
+    def initialize(predicate, arguments, &block)
       @predicate = predicate
       @arguments = arguments
+      @block     = block
       @@arguments << self
     end
     
@@ -54,7 +55,8 @@ module Porolog
     
     # @return [String] pretty representation
     def inspect
-      "#{@predicate && @predicate.name}(#{@arguments && @arguments.map(&:inspect).join(',')})"
+      block_inspect = block.nil? ? '' : "{#{block.inspect}}"
+      "#{@predicate&.name}(#{@arguments&.map(&:inspect).join(',')})#{block_inspect}"
     end
     
     # Creates a fact rule that states that these arguments satisfy the Predicate.
@@ -103,9 +105,7 @@ module Porolog
     
     # @return [Array<Symbol>] the variables contained in the arguments
     def variables
-      @arguments.map{|argument|
-        argument.variables
-      }.flatten.uniq
+      @arguments.map(&:variables).flatten.uniq
     end
     
     # Creates a Goal for solving this Arguments for the Predicate
@@ -120,7 +120,7 @@ module Porolog
     # @return [Array<Hash{Symbol => Object}>] the solutions found (memoized)
     def solutions(max_solutions = nil)
       @solutions ||= solve(max_solutions)
-      @solutions
+      max_solutions && @solutions[0...max_solutions] || @solutions
     end
     
     # Solves the Arguments
@@ -132,6 +132,7 @@ module Porolog
     
     # Extracts solution values.
     # @param variables [Symbol, Array<Symbol>] variable or variables
+    # @param max_solutions [Integer] the maximum number of solutions to find (nil means find all)
     # @return [Array<Object>] all the values for the variables given
     # @example
     #   predicate :treasure_at
@@ -140,9 +141,9 @@ module Porolog
     #   xs = arguments.solve_for(:X)
     #   ys = arguments.solve_for(:Y)
     #   coords = xs.zip(ys)
-    def solve_for(*variables)
+    def solve_for(*variables, max_solutions: nil)
       variables = [*variables]
-      solutions.map{|solution|
+      solutions(max_solutions).map{|solution|
         values = variables.map{|variable| solution[variable] }
         if values.size == 1
           values.first
@@ -154,14 +155,14 @@ module Porolog
     
     # @return [Boolean] whether any solutions were found
     def valid?
-      !solutions.empty?
+      !solutions(1).empty?
     end
     
     # Duplicates the Arguments in the context of the given goal
     # @param goal [Porolog::Goal] the destination goal
     # @return [Porolog::Arguments] the duplicated Arguments
     def dup(goal)
-      self.class.new @predicate, goal.variablise(arguments)
+      self.class.new @predicate, goal.variablise(arguments), &@block
     end
     
     # @param other [Porolog::Arguments] arguments for comparison

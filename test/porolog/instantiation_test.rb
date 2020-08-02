@@ -608,6 +608,42 @@ describe 'Porolog' do
         assert_equal    [value1],       instantiation1.values_for(variable3)
       end
       
+      it 'should return the value of variable1 given the instantiation of the flathead of variable1' do
+        value1 = goal1.value([1,2,3,4])
+        
+        instantiation1 = variable1.instantiate variable2, nil, :flathead
+        variable2.instantiate value1
+        
+        assert_equal    [[1,2,3,4,UNKNOWN_TAIL]],       instantiation1.values_for(variable1)
+      end
+      
+      it 'should return the value of variable1 given the instantiation of the flathead of variable2' do
+        value1 = goal1.value([1,2,3,4])
+        
+        instantiation1 = variable2.instantiate variable1, :flathead
+        variable2.instantiate value1
+        
+        assert_equal    [[1,2,3,4,UNKNOWN_TAIL]],       instantiation1.values_for(variable1)
+      end
+      
+      it 'should return the value of variable1 given the instantiation of the flattail of variable1' do
+        value1 = goal1.value([1,2,3,4])
+        
+        instantiation1 = variable1.instantiate variable2, nil, :flattail
+        variable2.instantiate value1
+        
+        assert_equal    [[UNKNOWN_TAIL,1,2,3,4]],       instantiation1.values_for(variable1)
+      end
+      
+      it 'should return the value of variable1 given the instantiation of the flattail of variable2' do
+        value1 = goal1.value([1,2,3,4])
+        
+        instantiation1 = variable2.instantiate variable1, :flattail
+        variable2.instantiate value1
+        
+        assert_equal    [[UNKNOWN_TAIL,1,2,3,4]],       instantiation1.values_for(variable1)
+      end
+      
     end
     
     describe '#value_at_index' do

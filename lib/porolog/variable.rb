@@ -5,7 +5,6 @@
 #       created
 #
 
-
 module Porolog
   
   # A Porolog::Variable is used to hold instantiations during the process of satisfying a goal.
@@ -69,7 +68,7 @@ module Porolog
     # Converts a Variable back to a Symbol.
     # @return [Symbol, nil] the name of the Variable.
     def to_sym
-      @name && @name.to_sym
+      @name&.to_sym
     end
     
     # @return [Symbol] the type of the Variable, which should be :variable.
@@ -135,20 +134,39 @@ module Porolog
       # -- Condense Values --
       result = if values_values.size > 1
         # -- Potentially Multiple Values Found --
+        unifications = []
         if values_values.all?{|value| value.is_a?(Array) }
           # -- All Values Are Arrays --
-          unifications  = []
-          
+          values = values.reject{|value| value == UNKNOWN_ARRAY } if values.size > 2 && values.include?(UNKNOWN_ARRAY)
           values_goals = values.map{|value|
-            value.respond_to?(:goal) && value.goal || value.variables.map(&:goal).first
+            value.respond_to?(:goal) && value.goal || value.variables.map(&:goal).first || values.variables.map(&:goal).first
           }
 
-          merged, unifications = unify_many_arrays(values, values_goals, visited)
+          if values.size > 2
+            merged, unifications = unify_many_arrays(values, values_goals, visited)
+          elsif values.size == 2
+            no_variables = values.map(&:variables).flatten.empty?
+            if no_variables
+              left_value  = values[0].value.value
+              right_value = values[1].value.value
+              if left_value.last == UNKNOWN_TAIL && right_value.first == UNKNOWN_TAIL
+                return [*left_value[0...-1], *right_value[1..-1]]
+              elsif right_value.last == UNKNOWN_TAIL && left_value.first == UNKNOWN_TAIL
+                return [*right_value[0...-1], *left_value[1..-1]]
+              elsif left_value != right_value
+                return nil
+              end
+            end
+            merged, unifications = unify_arrays(*values, *values_goals, visited)
+          else
+            # :nocov: NOT REACHED
+            merged, unifications = values.first, []
+            # :nocov:
+          end
           
           merged.value(visited).to_a
         else
           # -- Not All Values Are Arrays --
-          unifications = []
           values.each_cons(2){|left,right|
             unification = unify(left, right, @goal, @goal, visited)
             if unification && unifications
@@ -158,26 +176,26 @@ module Porolog
             end
           }
           if unifications
-            values.sort_by{|value|
+            values.min_by{|value|
               case value
                 when Variable, Symbol             then  2
                 when UNKNOWN_TAIL, UNKNOWN_ARRAY  then  9
                 else                              0
               end
-            }.first || self
+            } || self
           else
             raise MultipleValuesError, "Multiple values detected for #{inspect}: #{values.inspect}"
           end
         end
       else
         # -- One (or None) Value Found --
-        values.sort_by{|value|
+        values.min_by{|value|
           case value
             when Variable, Symbol             then  2
             when UNKNOWN_TAIL, UNKNOWN_ARRAY  then  9
             else                              0
           end
-        }.first || self
+        } || self
       end
       
       # -- Splat Tail --

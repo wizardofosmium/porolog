@@ -94,7 +94,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/porolog/predicate.rb</dd>
+    <dd>lib/porolog/predicate.rb<span class="defines">,<br />
+  lib/porolog/predicate/builtin.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -129,6 +131,8 @@
 </div><h2>Defined Under Namespace</h2>
 <p class="children">
   
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Predicate/Builtin.html" title="Porolog::Predicate::Builtin (module)">Builtin</a></span>
     
   
     
@@ -241,7 +245,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#builtin-class_method" title="builtin (class method)">.<strong>builtin</strong>(key)  &#x21d2; Porolog::Predicate </a>
+      <a href="#call_builtin-class_method" title="call_builtin (class method)">.<strong>call_builtin</strong>(predicate, *args, &amp;arg_block)  &#x21d2; Boolean </a>
     
 
     
@@ -256,7 +260,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Return a builtin Predicate based on its key.</p>
+<p>Call a builtin predicate.</p>
 </div></span>
   
 </li>
@@ -394,7 +398,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#arguments-instance_method" title="#arguments (instance method)">#<strong>arguments</strong>(*args)  &#x21d2; Porolog::Arguments </a>
+      <a href="#arguments-instance_method" title="#arguments (instance method)">#<strong>arguments</strong>(*args, &amp;block)  &#x21d2; Porolog::Arguments </a>
     
 
     
@@ -418,7 +422,31 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(*args)  &#x21d2; Porolog::Arguments </a>
+      <a href="#builtin%3F-instance_method" title="#builtin? (instance method)">#<strong>builtin?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Whether the Predicate is a builtin predicate.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(*args, &amp;block)  &#x21d2; Porolog::Arguments </a>
     
 
     
@@ -442,7 +470,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name, scope_name = Predicate.scope.name)  &#x21d2; Predicate </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name, scope_name = Predicate.scope.name, builtin: false)  &#x21d2; Predicate </a>
     
 
     
@@ -513,6 +541,30 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#satisfy_builtin-instance_method" title="#satisfy_builtin (instance method)">#<strong>satisfy_builtin</strong>(goal, &amp;block)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Satisfy the builtin Predicate within the supplied Goal.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -522,7 +574,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(name, scope_name = Predicate.scope.name)  &#x21d2; <tt><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></tt> 
+    #<strong>initialize</strong>(name, scope_name = Predicate.scope.name, builtin: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></tt> 
   
 
   
@@ -596,22 +648,24 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
 74
 75
 76
 77
-78</pre>
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 74</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_scope'><span class='object_link'><a href="#scope-class_method" title="Porolog::Predicate.scope (method)">scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="Scope.html#name-instance_method" title="Porolog::Scope#name (method)">name</a></span></span><span class='rparen'>)</span>
-  <span class='ivar'>@name</span>  <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='ivar'>@rules</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_scope'><span class='object_link'><a href="#scope-class_method" title="Porolog::Predicate.scope (method)">scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="Scope.html#name-instance_method" title="Porolog::Scope#name (method)">name</a></span></span><span class='comma'>,</span> <span class='label'>builtin:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='ivar'>@name</span>    <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='ivar'>@rules</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@builtin</span> <span class='op'>=</span> <span class='id identifier rubyid_builtin'>builtin</span>
   
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Predicate/NameError.html" title="Porolog::Predicate::NameError (class)">NameError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot name a predicate &#39;predicate&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@name</span> <span class='op'>==</span> <span class='symbol'>:predicate</span>
   
@@ -784,7 +838,33 @@
 147
 148
 149
-150</pre>
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 22</span>
@@ -797,6 +877,10 @@
 </span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Predicate/NameError.html" title="Porolog::Predicate::NameError (class)">NameError</a></span></span>      <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Predicate/Error.html" title="Porolog::Predicate::Error (class)">Error</a></span></span>          <span class='semicolon'>;</span> <span class='kw'>end</span>
   
   <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:rules</span>
+  
+  <span class='comment'># A unique value used to verify instantiations.
+</span>  <span class='const'>UNIQUE_VALUE</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+  <span class='id identifier rubyid_private_constant'>private_constant</span> <span class='symbol'>:UNIQUE_VALUE</span>
   
   <span class='comment'># Returns the current scope, or sets the current scope if a paramter is provided
 </span>  <span class='comment'># (creating the new scope if necessary).
@@ -837,9 +921,10 @@
   <span class='comment'># Initializes a Porolog::Predicate and registers it by its name.
 </span>  <span class='comment'># @param name [#to_sym] the input object to read from
 </span>  <span class='comment'># @param scope_name the name of the scope in which to register the Predicate; if omitted, defaults to the name of the current scope
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_scope'><span class='object_link'><a href="#scope-class_method" title="Porolog::Predicate.scope (method)">scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="Scope.html#name-instance_method" title="Porolog::Scope#name (method)">name</a></span></span><span class='rparen'>)</span>
-    <span class='ivar'>@name</span>  <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='ivar'>@rules</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_scope'><span class='object_link'><a href="#scope-class_method" title="Porolog::Predicate.scope (method)">scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="Scope.html#name-instance_method" title="Porolog::Scope#name (method)">name</a></span></span><span class='comma'>,</span> <span class='label'>builtin:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='ivar'>@name</span>    <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='ivar'>@rules</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='ivar'>@builtin</span> <span class='op'>=</span> <span class='id identifier rubyid_builtin'>builtin</span>
     
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Predicate/NameError.html" title="Porolog::Predicate::NameError (class)">NameError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot name a predicate &#39;predicate&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@name</span> <span class='op'>==</span> <span class='symbol'>:predicate</span>
     
@@ -850,8 +935,7 @@
   <span class='comment'># Creates a new Predicate, or returns an existing Predicate if one already exists with the given name in the current scope.
 </span>  <span class='comment'># @return [Porolog::Predicate] a new or existing Predicate.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span> <span class='op'>=</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
-    <span class='id identifier rubyid_scope'>scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
+    <span class='id identifier rubyid_scope'>scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Create Arguments for the Predicate.
@@ -860,14 +944,14 @@
 </span>  <span class='comment'># for
 </span>  <span class='comment'>#     p.arguments(x,y,z)
 </span>  <span class='comment'># @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Create Arguments for the Predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Add a Rule to the Predicate.
@@ -890,31 +974,53 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='comment'># Return a builtin Predicate based on its key.
-</span>  <span class='comment'># @param key [Symbol] the name (or otherwise object) used to register a scope.
-</span>  <span class='comment'># @return [Porolog::Predicate] a Predicate with the next id based on the key.
-</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_builtin'>builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-    <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
-    <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>  <span class='op'>+=</span> <span class='int'>1</span>
-    
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  
   <span class='comment'># Satisfy the Predicate within the supplied Goal.
 </span>  <span class='comment'># Satisfy of each rule of the Predicate is called with the Goal and success block.
 </span>  <span class='comment'># @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.
 </span>  <span class='comment'># @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.
 </span>  <span class='comment'># @return [Boolean] whether any Rule was satisfied.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
-    <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
-      <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-        <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>true</span>
-        <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_builtin?'>builtin?</span>
+      <span class='id identifier rubyid_satisfy_builtin'>satisfy_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+      <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
+        <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+          <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>true</span>
+          <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+        <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_terminated?'>terminated?</span>
       <span class='kw'>end</span>
-      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_terminated?'>terminated?</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_satisfied'>satisfied</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Boolean] whether the Predicate is a builtin predicate.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_builtin?'>builtin?</span>
+    <span class='ivar'>@builtin</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Satisfy the builtin Predicate within the supplied Goal.
+</span>  <span class='comment'># Call the builtin Predicate method with the Goal and success block.
+</span>  <span class='comment'># The arguments and block are extracted from the Goal&#39;s Arguments.
+</span>  <span class='comment'># @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.
+</span>  <span class='comment'># @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.
+</span>  <span class='comment'># @return [Boolean] whether any Rule was satisfied.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_satisfy_builtin'>satisfy_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+    <span class='id identifier rubyid_arguments'>arguments</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span>
+    <span class='id identifier rubyid_arg_block'>arg_block</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_block'>block</span>
+    
+    <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call_builtin'><span class='object_link'><a href="#call_builtin-class_method" title="Porolog::Predicate.call_builtin (method)">call_builtin</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Call a builtin predicate
+</span>  <span class='comment'># @param predicate [Symbol] the name of the predicate to call.
+</span>  <span class='comment'># @param args [Array&lt;Object&gt;] arguments for the predicate call.
+</span>  <span class='comment'># @param arg_block [Proc] the block provided in the Arguments of the Predicate.
+</span>  <span class='comment'># @return [Boolean] whether the predicate was satisfied.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call_builtin'>call_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Predicate/Builtin.html" title="Porolog::Predicate::Builtin (module)">Builtin</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -1079,7 +1185,33 @@
 147
 148
 149
-150</pre>
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 22</span>
@@ -1092,6 +1224,10 @@
 </span>  <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="Predicate/NameError.html" title="Porolog::Predicate::NameError (class)">NameError</a></span></span>      <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="Predicate/Error.html" title="Porolog::Predicate::Error (class)">Error</a></span></span>          <span class='semicolon'>;</span> <span class='kw'>end</span>
   
   <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='symbol'>:rules</span>
+  
+  <span class='comment'># A unique value used to verify instantiations.
+</span>  <span class='const'>UNIQUE_VALUE</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+  <span class='id identifier rubyid_private_constant'>private_constant</span> <span class='symbol'>:UNIQUE_VALUE</span>
   
   <span class='comment'># Returns the current scope, or sets the current scope if a paramter is provided
 </span>  <span class='comment'># (creating the new scope if necessary).
@@ -1132,9 +1268,10 @@
   <span class='comment'># Initializes a Porolog::Predicate and registers it by its name.
 </span>  <span class='comment'># @param name [#to_sym] the input object to read from
 </span>  <span class='comment'># @param scope_name the name of the scope in which to register the Predicate; if omitted, defaults to the name of the current scope
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_scope'><span class='object_link'><a href="#scope-class_method" title="Porolog::Predicate.scope (method)">scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="Scope.html#name-instance_method" title="Porolog::Scope#name (method)">name</a></span></span><span class='rparen'>)</span>
-    <span class='ivar'>@name</span>  <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='ivar'>@rules</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_scope'><span class='object_link'><a href="#scope-class_method" title="Porolog::Predicate.scope (method)">scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name'><span class='object_link'><a href="Scope.html#name-instance_method" title="Porolog::Scope#name (method)">name</a></span></span><span class='comma'>,</span> <span class='label'>builtin:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+    <span class='ivar'>@name</span>    <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='ivar'>@rules</span>   <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='ivar'>@builtin</span> <span class='op'>=</span> <span class='id identifier rubyid_builtin'>builtin</span>
     
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Predicate/NameError.html" title="Porolog::Predicate::NameError (class)">NameError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot name a predicate &#39;predicate&#39;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@name</span> <span class='op'>==</span> <span class='symbol'>:predicate</span>
     
@@ -1145,8 +1282,7 @@
   <span class='comment'># Creates a new Predicate, or returns an existing Predicate if one already exists with the given name in the current scope.
 </span>  <span class='comment'># @return [Porolog::Predicate] a new or existing Predicate.
 </span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span> <span class='op'>=</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
-    <span class='id identifier rubyid_scope'>scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
+    <span class='id identifier rubyid_scope'>scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Create Arguments for the Predicate.
@@ -1155,14 +1291,14 @@
 </span>  <span class='comment'># for
 </span>  <span class='comment'>#     p.arguments(x,y,z)
 </span>  <span class='comment'># @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Create Arguments for the Predicate.
 </span>  <span class='comment'># @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Add a Rule to the Predicate.
@@ -1185,31 +1321,53 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='comment'># Return a builtin Predicate based on its key.
-</span>  <span class='comment'># @param key [Symbol] the name (or otherwise object) used to register a scope.
-</span>  <span class='comment'># @return [Porolog::Predicate] a Predicate with the next id based on the key.
-</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_builtin'>builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-    <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
-    <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>  <span class='op'>+=</span> <span class='int'>1</span>
-    
-    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  
   <span class='comment'># Satisfy the Predicate within the supplied Goal.
 </span>  <span class='comment'># Satisfy of each rule of the Predicate is called with the Goal and success block.
 </span>  <span class='comment'># @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.
 </span>  <span class='comment'># @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.
 </span>  <span class='comment'># @return [Boolean] whether any Rule was satisfied.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
-    <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
-      <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-        <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>true</span>
-        <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_builtin?'>builtin?</span>
+      <span class='id identifier rubyid_satisfy_builtin'>satisfy_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+      <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
+        <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+          <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>true</span>
+          <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+        <span class='kw'>end</span>
+        <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_terminated?'>terminated?</span>
       <span class='kw'>end</span>
-      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_terminated?'>terminated?</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_satisfied'>satisfied</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Boolean] whether the Predicate is a builtin predicate.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_builtin?'>builtin?</span>
+    <span class='ivar'>@builtin</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Satisfy the builtin Predicate within the supplied Goal.
+</span>  <span class='comment'># Call the builtin Predicate method with the Goal and success block.
+</span>  <span class='comment'># The arguments and block are extracted from the Goal&#39;s Arguments.
+</span>  <span class='comment'># @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.
+</span>  <span class='comment'># @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.
+</span>  <span class='comment'># @return [Boolean] whether any Rule was satisfied.
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_satisfy_builtin'>satisfy_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+    <span class='id identifier rubyid_arguments'>arguments</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span>
+    <span class='id identifier rubyid_arg_block'>arg_block</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_block'>block</span>
+    
+    <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call_builtin'><span class='object_link'><a href="#call_builtin-class_method" title="Porolog::Predicate.call_builtin (method)">call_builtin</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Call a builtin predicate
+</span>  <span class='comment'># @param predicate [Symbol] the name of the predicate to call.
+</span>  <span class='comment'># @param args [Array&lt;Object&gt;] arguments for the predicate call.
+</span>  <span class='comment'># @param arg_block [Proc] the block provided in the Arguments of the Predicate.
+</span>  <span class='comment'># @return [Boolean] whether the predicate was satisfied.
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call_builtin'>call_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
+    <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Predicate/Builtin.html" title="Porolog::Predicate::Builtin (module)">Builtin</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -1289,12 +1447,12 @@
       <pre class="lines">
 
 
-61
-62
-63</pre>
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='cvar'>@@current_scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
@@ -1305,9 +1463,9 @@
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="builtin-class_method">
+  <h3 class="signature " id="call_builtin-class_method">
   
-    .<strong>builtin</strong>(key)  &#x21d2; <tt><span class='object_link'><a href="" title="Porolog::Predicate (class)">Porolog::Predicate</a></span></tt> 
+    .<strong>call_builtin</strong>(predicate, *args, &amp;arg_block)  &#x21d2; <tt>Boolean</tt> 
   
 
   
@@ -1316,7 +1474,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Return a builtin Predicate based on its key.</p>
+<p>Call a builtin predicate</p>
 
 
   </div>
@@ -1327,7 +1485,7 @@
   
     <li>
       
-        <span class='name'>key</span>
+        <span class='name'>predicate</span>
       
       
         <span class='type'>(<tt><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></tt>)</span>
@@ -1336,7 +1494,39 @@
       
         &mdash;
         <div class='inline'>
-<p>the name (or otherwise object) used to register a scope.</p>
+<p>the name of the predicate to call.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>args</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="../Object.html" title="Object (class)">Object</a></span>&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>arguments for the predicate call.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>arg_block</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the block provided in the Arguments of the Predicate.</p>
 </div>
       
     </li>
@@ -1349,13 +1539,13 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="" title="Porolog::Predicate (class)">Porolog::Predicate</a></span></tt>)</span>
+        <span class='type'>(<tt>Boolean</tt>)</span>
       
       
       
         &mdash;
         <div class='inline'>
-<p>a Predicate with the next id based on the key.</p>
+<p>whether the predicate was satisfied.</p>
 </div>
       
     </li>
@@ -1368,21 +1558,15 @@
       <pre class="lines">
 
 
-126
-127
-128
-129
-130
-131</pre>
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 172</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_builtin'>builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
-  <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='int'>0</span>
-  <span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>  <span class='op'>+=</span> <span class='int'>1</span>
-  
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='ivar'>@builtin_predicate_ids</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_call_builtin'>call_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Predicate/Builtin.html" title="Porolog::Predicate::Builtin (module)">Builtin</a></span></span><span class='period'>.</span><span class='id identifier rubyid_instance_method'>instance_method</span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_bind'>bind</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1433,17 +1617,15 @@
       <pre class="lines">
 
 
-82
-83
-84
-85</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid__'>_</span> <span class='op'>=</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
-  <span class='id identifier rubyid_scope'>scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
+  <span class='id identifier rubyid_scope'>scope</span><span class='lbracket'>[</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1494,13 +1676,13 @@
       <pre class="lines">
 
 
-53
-54
-55
-56</pre>
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_reset'>reset</span>
   <span class='id identifier rubyid_scope'>scope</span><span class='lparen'>(</span><span class='symbol'>:default</span><span class='rparen'>)</span>
@@ -1577,16 +1759,16 @@
       <pre class="lines">
 
 
-35
-36
-37
-38
 39
 40
-41</pre>
+41
+42
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_scope'>scope</span><span class='lparen'>(</span><span class='id identifier rubyid_scope_name'>scope_name</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_scope_name'>scope_name</span>
@@ -1664,13 +1846,13 @@
       <pre class="lines">
 
 
-46
-47
-48
-49</pre>
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_scope='>scope=</span><span class='lparen'>(</span><span class='id identifier rubyid_scope_name'>scope_name</span><span class='rparen'>)</span>
   <span class='cvar'>@@current_scope</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Scope.html" title="Porolog::Scope (class)">Scope</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_scope_name'>scope_name</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="Scope.html" title="Porolog::Scope (class)">Scope</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Scope.html#new-class_method" title="Porolog::Scope.new (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_scope_name'>scope_name</span><span class='rparen'>)</span>  <span class='kw'>if</span> <span class='id identifier rubyid_scope_name'>scope_name</span>
@@ -1751,13 +1933,13 @@
       <pre class="lines">
 
 
-106
-107
-108
-109</pre>
+110
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_rule'>rule</span><span class='rparen'>)</span>
   <span class='ivar'>@rules</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_rule'>rule</span>
@@ -1771,7 +1953,7 @@
       <div class="method_details ">
   <h3 class="signature " id="arguments-instance_method">
   
-    #<strong>arguments</strong>(*args)  &#x21d2; <tt><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Porolog::Arguments</a></span></tt> 
+    #<strong>arguments</strong>(*args, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Porolog::Arguments</a></span></tt> 
   
 
   
@@ -1812,15 +1994,74 @@
       <pre class="lines">
 
 
-99
-100
-101</pre>
+103
+104
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 103</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_arguments'>arguments</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="builtin?-instance_method">
+  
+    #<strong>builtin?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns whether the Predicate is a builtin predicate.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether the Predicate is a builtin predicate.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_builtin?'>builtin?</span>
+  <span class='ivar'>@builtin</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1830,7 +2071,7 @@
       <div class="method_details ">
   <h3 class="signature " id="call-instance_method">
   
-    #<strong>call</strong>(*args)  &#x21d2; <tt><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Porolog::Arguments</a></span></tt> 
+    #<strong>call</strong>(*args, &amp;block)  &#x21d2; <tt><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Porolog::Arguments</a></span></tt> 
   
 
   
@@ -1879,15 +2120,15 @@
       <pre class="lines">
 
 
-93
-94
-95</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 97</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Arguments.html" title="Porolog::Arguments (class)">Arguments</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Arguments.html#initialize-instance_method" title="Porolog::Arguments#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1938,18 +2179,18 @@
       <pre class="lines">
 
 
-113
-114
-115
-116
 117
 118
 119
 120
-121</pre>
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='kw'>if</span> <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -2045,6 +2286,12 @@
       <pre class="lines">
 
 
+132
+133
+134
+135
+136
+137
 138
 139
 140
@@ -2053,23 +2300,128 @@
 143
 144
 145
-146
-147
-148</pre>
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 138</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
-  <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
-    <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>true</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_builtin?'>builtin?</span>
+    <span class='id identifier rubyid_satisfy_builtin'>satisfy_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='ivar'>@rules</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_rule'>rule</span><span class='op'>|</span>
+      <span class='id identifier rubyid_rule'>rule</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+        <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>true</span>
+        <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='kw'>end</span>
+      <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_terminated?'>terminated?</span>
     <span class='kw'>end</span>
-    <span class='kw'>break</span> <span class='kw'>if</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_terminated?'>terminated?</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_satisfied'>satisfied</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="satisfy_builtin-instance_method">
+  
+    #<strong>satisfy_builtin</strong>(goal, &amp;block)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Satisfy the builtin Predicate within the supplied Goal. Call the builtin Predicate method with the Goal and success block. The arguments and block are extracted from the Goal&#39;s Arguments.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>goal</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Porolog::Goal</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the Goal within which to satisfy the Predicate.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>block</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the block to be called each time a Rule of the Predicate is satisfied.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether any Rule was satisfied.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+159
+160
+161
+162
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/porolog/predicate.rb', line 159</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_satisfy_builtin'>satisfy_builtin</span><span class='lparen'>(</span><span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+  <span class='id identifier rubyid_arguments'>arguments</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span>
+  <span class='id identifier rubyid_arg_block'>arg_block</span> <span class='op'>=</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_block'>block</span>
+  
+  <span class='const'><span class='object_link'><a href="" title="Porolog::Predicate (class)">Predicate</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call_builtin'><span class='object_link'><a href="#call_builtin-class_method" title="Porolog::Predicate.call_builtin (method)">call_builtin</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_predicate'>predicate</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='comma'>,</span> <span class='id identifier rubyid_block'>block</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_arg_block'>arg_block</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -2081,7 +2433,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul  6 22:54:47 2020 by
+  Generated on Sun Aug  2 18:05:24 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.6.5).
 </div>

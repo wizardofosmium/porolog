@@ -13,10 +13,24 @@ describe 'Porolog' do
     reset
   end
   
-  describe 'UNKNOWN_TAIL#inspect' do
+  describe 'UNKNOWN_TAIL' do
     
-    it 'should return distinctive notation' do
-      assert_equal      '...',            UNKNOWN_TAIL.inspect
+    describe '#inspect' do
+      
+      it 'should return distinctive notation' do
+        assert_equal      '...',            UNKNOWN_TAIL.inspect
+      end
+      
+    end
+    
+    describe '#tail' do
+      
+      it 'should return itself' do
+        assert_equal      UNKNOWN_TAIL,     UNKNOWN_TAIL.tail
+        assert_equal      UNKNOWN_TAIL,     UNKNOWN_TAIL.tail(1)
+        assert_equal      UNKNOWN_TAIL,     UNKNOWN_TAIL.tail(5)
+      end
+      
     end
     
   end
@@ -71,6 +85,41 @@ describe 'Porolog' do
       assert                    respond_to?(:upsilon)
       assert_Arguments          epsilon(),   :epsilon, []
       assert_Arguments          upsilon([]), :upsilon, [[]]
+    end
+    
+    it 'should define a method in a base class as an instance method and a class method' do
+      class Base1 ; end
+      
+      refute_includes   Base1.methods,            :localised_predicate
+      refute_includes   Base1.instance_methods,   :localised_predicate
+      
+      class Base1
+        
+        predicate :localised_predicate, class_base: self
+        
+        localised_predicate(:X) << [
+          between(:X, 1, 5)
+        ]
+        
+        def process
+          localised_predicate(:X).solve_for(:X)
+        end
+      end
+      
+      assert_includes   Base1.methods,            :localised_predicate
+      assert_includes   Base1.instance_methods,   :localised_predicate
+      
+      refute_includes   methods,                  :localised_predicate
+      
+      assert_solutions    Base1.localised_predicate(:X),  [
+        { X: 1 },
+        { X: 2 },
+        { X: 3 },
+        { X: 4 },
+        { X: 5 },
+      ]
+      
+      assert_equal    [1,2,3,4,5],    Base1.new.process
     end
     
   end
@@ -267,7 +316,7 @@ describe 'Porolog' do
       end
       
       after do
-        assert_equal  1,  @spy.calls.size
+        assert_equal  1,  @spy.calls.size, "expected unify_arrays to be called once for #{name}"
       end
       
       it 'should unify empty arrays' do
@@ -367,8 +416,42 @@ describe 'Porolog' do
         assert_nil                                        unify(:draw, :word, goal),      name
         
         expected_log = [
-          'Cannot unify because Goal1."picturing" != Goal1."something" (variable != variable)'
+          'Cannot unify because "picturing" != "something" (variable != variable)'
         ]
+        
+        assert_equal    expected_log,   goal.log
+      end
+      
+      it 'should unify the unknown array with a variable' do
+        goal.instantiate :X, UNKNOWN_ARRAY
+        goal.instantiate :Y, [1,2,3,4]
+        
+        unifications = unify(goal[:X], goal[:Y], goal)
+        
+        expected_unifications = [
+          [goal[:X], goal[:Y], goal, goal]
+        ]
+        
+        assert_equal    expected_unifications,    unifications
+        
+        expected_log = []
+        
+        assert_equal    expected_log,   goal.log
+      end
+      
+      it 'should unify the unknown array with an array' do
+        goal.instantiate :X, [1,2,3,4]
+        goal.instantiate :Y, UNKNOWN_ARRAY
+        
+        unifications = unify(goal[:X], goal[:Y], goal)
+        
+        expected_unifications = [
+          [goal[:X], goal[:Y], goal, goal]
+        ]
+        
+        assert_equal    expected_unifications,    unifications
+        
+        expected_log = []
         
         assert_equal    expected_log,   goal.log
       end
@@ -470,7 +553,7 @@ describe 'Porolog' do
         assert_nil                                           unify([7,11,13], 'word', goal),      name
         
         expected_log = [
-          'Cannot unify [7, 11, 13] with "word"',
+          'Cannot unify [7, 11, 13] with "word" (array != atomic)',
         ]
         
         assert_equal    expected_log,                     goal.log
@@ -480,10 +563,78 @@ describe 'Porolog' do
         assert_nil                                           unify('word', [7,11,13], goal),      name
         
         expected_log = [
-          'Cannot unify "word" with [7, 11, 13]',
+          'Cannot unify "word" with [7, 11, 13] (atomic != array)',
         ]
         
         assert_equal    expected_log,                     goal.log
+      end
+      
+    end
+    
+    describe 'when [:array, :tail]' do
+      
+      let(:goal)  { new_goal :p, :x, :y }
+      
+      it 'should unify an array and a tail' do
+        assert    unify([7,11,13], Tail.new([[7,11,goal[:P]]]), goal),      name
+        
+        expected_log = []
+        
+        assert_equal    expected_log,                     goal.log
+      end
+      
+      it 'should not unify an array and tail when they cannot be unified' do
+        refute    unify([7,11,13], Tail.new([[7,11,14]]), goal),      name
+        
+        expected_log = [
+          'Cannot unify incompatible values: 13 with 14',
+          'Cannot unify: [7, 11, 13] with [7, 11, 14]',
+          'Cannot unify because [7, 11, 13] != *[[7, 11, 14]] (array != tail)'
+        ]
+        
+        assert_equal    expected_log,                     goal.log
+      end
+      
+    end
+    
+    describe 'when [:tail, :array]' do
+      
+      let(:goal)  { new_goal :p, :x, :y }
+      
+      it 'should unify a tail and an array' do
+        assert    unify(Tail.new([[7,11,13]]), [7,11,goal[:P]], goal),      name
+        
+        expected_log = []
+        
+        assert_equal    expected_log,                     goal.log
+      end
+      
+      it 'should not unify a tail and an array when they cannot be unified' do
+        refute    unify(Tail.new([[7,11,13]]), [7,11,14], goal),      name
+        
+        expected_log = [
+          'Cannot unify incompatible values: 13 with 14',
+          'Cannot unify: [7, 11, 13] with [7, 11, 14]',
+          'Cannot unify because *[[7, 11, 13]] != [7, 11, 14] (tail != array)'
+        ]
+        
+        assert_equal    expected_log,                     goal.log
+      end
+      
+    end
+    
+    describe 'when [:tail, :tail]' do
+      
+      it 'something' do
+        expected_unifications = [
+          [goal[:B], [goal[:H]]/:T,  goal, goal],
+          [goal[:C], [goal[:H]]/:NT, goal, goal]
+        ]
+        assert_equal    expected_unifications, unify(
+          [:A, :B,      :C],
+          [:A, [:H]/:T, [:H]/:NT],
+          goal
+        )
       end
       
     end
@@ -1094,7 +1245,7 @@ describe 'Porolog' do
       
       merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
-      expected_merged       = [1, 2, nil, 4, nil]
+      expected_merged       = [1, 2, nil, 4, g3[:z]]
       expected_unifications = [
         [g2[:j], g1[1],   g2, g1],
         [g2[:n], g1[2],   g2, g1],
@@ -1197,21 +1348,6 @@ describe 'Porolog' do
       ], g3.log
     end
     
-    it 'should raise an exception when an array has no associated goal' do    # NOT DONE: need to expose the call to unify_arrays_with_no_tails
-      
-      error = assert_raises Porolog::NoGoalError do
-        variable1 = Variable.new :x, g1
-        value     = Value.new [7,11,13,23,29], g2
-        
-        variable1.values << [7,11,13,23,29]
-        variable1.values << [7,12,13,23,29]
-        
-        variable1.instantiate value
-      end
-      
-      assert_equal    'Array [7, 11, 13, 23, 29] has no goal for unification',    error.message
-    end
-    
   end
   
   describe '#unify_arrays_with_some_tails' do
@@ -1307,7 +1443,7 @@ describe 'Porolog' do
       
       merged, unifications = unify_arrays_with_some_tails(arrays, arrays_goals, [])
       
-      expected_merged       = [1, 2, nil, 4, nil]
+      expected_merged       = [1, 2, nil, 4, g3[:z]]
       expected_unifications = [
         [g2.variable(:j), g1.value(1),      g2, g1],
         [g3.variable(:x), g1.value(1),      g3, g1],
@@ -1466,7 +1602,7 @@ describe 'Porolog' do
     
   end
   
-  describe '#unify_arrays_with_all_tails' do    # NOT DONE: coverage
+  describe '#unify_arrays_with_all_tails' do
     
     let(:g1)    { new_goal(:p, :x, :y) }
     let(:g2)    { new_goal(:q, :a, :b) }
@@ -1527,6 +1663,7 @@ describe 'Porolog' do
         [g3[:x], g2[2], g3, g2],
         [g2[:y], g1[5], g2, g1],
         [g1[:z], g3[6], g1, g3],
+        [g1[:z], g1[6], g1, g1],
       ]
       
       assert_equal    expected_merged,              merged
@@ -1879,11 +2016,11 @@ describe 'Porolog' do
       assert_nil          unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
-        'Cannot unify because Goal1.1 != Goal2.2 (variable != variable)',
+        'Cannot unify because 1 != 2 (variable != variable)',
         'Cannot unify heads: Goal1.:h with Goal2.:h',
       ],   g1.log
       assert_equal [
-        'Cannot unify because Goal1.1 != Goal2.2 (variable != variable)',
+        'Cannot unify because 1 != 2 (variable != variable)',
         'Cannot unify heads: Goal1.:h with Goal2.:h',
       ],   g2.log
       assert_equal [
@@ -1911,12 +2048,12 @@ describe 'Porolog' do
       assert_nil          unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
-        'Cannot unify because Goal1.[2, 3] != Goal2.[2, 4] (variable != variable)',
+        'Cannot unify because [2, 3] != [2, 4] (variable != variable)',
         'Cannot unify headtail tails: Goal1.:t with Goal2.:t',
         'Could not unify headtail arrays: [Goal1.:h, Goal1.2, Goal1.3] with [Goal2.:h, Goal2.2, Goal2.4] with [Goal4.:h, *Goal4.:t]',
       ],   g1.log
       assert_equal [
-        'Cannot unify because Goal1.[2, 3] != Goal2.[2, 4] (variable != variable)',
+        'Cannot unify because [2, 3] != [2, 4] (variable != variable)',
         'Cannot unify headtail tails: Goal1.:t with Goal2.:t',
         'Could not unify headtail arrays: [Goal1.:h, Goal1.2, Goal1.3] with [Goal2.:h, Goal2.2, Goal2.4] with [Goal4.:h, *Goal4.:t]',
       ],   g2.log
@@ -1980,7 +2117,6 @@ describe 'Porolog' do
       assert_equal [
         'Cannot unify incompatible values: 3 with 4',
         'Cannot unify: [3] with [4]',
-        #'Cannot unify: Goal2.3 with Goal3.4',
       ], g2.log
       assert_equal [
         'Cannot unify incompatible values: 3 with 4',
@@ -2168,6 +2304,124 @@ describe 'Porolog' do
       arrays_goals.each do |goal|
         assert_equal        [],         goal.log
       end
+    end
+    
+  end
+  
+  describe '#builtin' do
+    
+    it 'should create a Predicate' do
+      # -- Precondition Baseline --
+      assert_equal      0,                Scope[:default].predicates.size
+      
+      # -- Test --
+      single_predicate = builtin :member
+      
+      # -- Compare Result Against Baseline --
+      assert_equal      1,                Scope[:default].predicates.size
+      assert_equal      :member,          Scope[:default].predicates.first.name
+      assert_Predicate  single_predicate, :member, []
+    end
+    
+    it 'should define a method to create Arguments for solving' do
+      Object.class_eval{
+        remove_method(:member) if public_method_defined?(:member)
+      }
+      
+      refute                    respond_to?(:member)
+      
+      builtin :member
+      
+      assert                    respond_to?(:member)
+      assert_Arguments          member(:X, ['left','right']),   :member, [:X, ['left','right']]
+      
+      assert_includes           methods,                        :member
+    end
+    
+    it 'should create multiple Predicates' do
+      assert_equal              0,        Scope[:default].predicates.size
+      
+      multiple_predicates = builtin :member, :append, :is
+      
+      assert_equal              3,        Scope[:default].predicates.size
+      assert_equal              :member,  Scope[:default].predicates[0].name
+      assert_equal              :append,  Scope[:default].predicates[1].name
+      assert_equal              :is,      Scope[:default].predicates[2].name
+      assert_instance_of        Array,    multiple_predicates
+      assert_equal              3,        multiple_predicates.size
+      assert_Predicate          multiple_predicates[0], :member,  []
+      assert_Predicate          multiple_predicates[1], :append,  []
+      assert_Predicate          multiple_predicates[2], :is,      []
+    end
+    
+    it 'should define multiple methods to create Arguments for solving' do
+      Object.class_eval{
+        remove_method(:member) if public_method_defined?(:member)
+        remove_method(:append) if public_method_defined?(:append)
+      }
+      
+      refute                    respond_to?(:member)
+      refute                    respond_to?(:append)
+      
+      builtin :member, :append
+      
+      assert                    respond_to?(:member)
+      assert                    respond_to?(:append)
+      assert_Arguments          member(:X, :L),       :member, [:X, :L]
+      assert_Arguments          append(:A, :B, :AB),  :append, [:A, :B, :AB]
+    end
+    
+    it 'should define a method in a base class as an instance method and a class method' do
+      Object.class_eval{
+        remove_method(:member) if public_method_defined?(:member)
+      }
+      
+      class Base2 ; end
+      
+      refute_includes   Base2.methods,            :member
+      refute_includes   Base2.instance_methods,   :member
+      
+      builtin :member, class_base: Base2
+      
+      assert_includes   Base2.methods,            :member
+      assert_includes   Base2.instance_methods,   :member
+      
+      refute_includes   methods,                  :member
+      
+      class Base2
+        def process
+          member(:X, [4,5,6]).solve_for(:X)
+        end
+      end
+      
+      assert_solutions    Base2.member(:X, [1,2,3]),  [
+        { X: 1 },
+        { X: 2 },
+        { X: 3 },
+      ]
+      
+      assert_equal        [4,5,6],    Base2.new.process
+    end
+    
+  end
+  
+  describe '#_' do
+    
+    let(:goal)  { new_goal :p, :x, :y }
+    
+    it 'should return a different variable on each call' do
+      # _ is overridden by MiniTest
+      variable1 = Porolog._
+      variable2 = Porolog._
+      variable3 = Porolog._
+      
+      assert_equal    :_a,            variable1
+      assert_equal    :_b,            variable2
+      assert_equal    :_c,            variable3
+      
+      refute_equal    variable1,      variable2
+      refute_equal    variable2,      variable3
+      refute_equal    variable3,      variable1
     end
     
   end

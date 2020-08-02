@@ -321,6 +321,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#goal_count-class_method" title="goal_count (class method)">.<strong>goal_count</strong>  &#x21d2; Integer </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The number of goals created.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#goals-class_method" title="goals (class method)">.<strong>goals</strong>  &#x21d2; Array&lt;Porolog::Goal&gt; </a>
     
 
@@ -490,6 +514,30 @@
   
     <span class="summary_desc"><div class='inline'>
 <p>Whether the Goal has been deleted (memoized).</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#inherit_variables-instance_method" title="#inherit_variables (instance method)">#<strong>inherit_variables</strong>(other_goal = @calling_goal)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Inherits variables and their instantiations from another goal.</p>
 </div></span>
   
 </li>
@@ -953,12 +1001,6 @@
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
 59
 60
 61
@@ -967,13 +1009,21 @@
 64
 65
 66
-67</pre>
+67
+68
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+  <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
   
   <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
   <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -1329,7 +1379,49 @@
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 27</span>
@@ -1349,8 +1441,14 @@
     <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
     <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
     <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Integer] the number of goals created
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+    <span class='cvar'>@@goal_count</span>
   <span class='kw'>end</span>
   
   <span class='id identifier rubyid_reset'>reset</span>
@@ -1362,6 +1460,7 @@
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
     
     <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
     <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -1434,12 +1533,12 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
     
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
     
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -1480,7 +1579,7 @@
       <span class='kw'>when</span> <span class='const'>NilClass</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+        <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_object'>object</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -1488,17 +1587,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:[]</span><span class='comma'>,</span> <span class='symbol'>:variablise</span>
+  <span class='kw'>alias</span> <span class='op'>[]</span> <span class='id identifier rubyid_variablise'>variablise</span>
   
   <span class='comment'># @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
       <span class='kw'>end</span>
@@ -1508,15 +1606,13 @@
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [String] a tree representation of all the instantiations of this goal&#39;s variables.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-      <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [Array&lt;Object&gt;] the values instantiated for this goal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -1577,7 +1673,9 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+      <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>      
       <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -1598,9 +1696,12 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+      <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Instantiates a Variable to another Variable or Value, for this Goal.
@@ -1618,6 +1719,39 @@
     <span class='kw'>end</span>
     
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Inherits variables and their instantiations from another goal.
+</span>  <span class='comment'># @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+</span>  <span class='comment'># @return [Boolean] whether the variables could be inherited (unified).
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+    
+    <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+      
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>else</span>
+        <span class='comment'>#:nocov:
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>break</span>
+        <span class='comment'>#:nocov:
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -1958,7 +2092,49 @@
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 27</span>
@@ -1978,8 +2154,14 @@
     <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
     <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
     <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Integer] the number of goals created
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+    <span class='cvar'>@@goal_count</span>
   <span class='kw'>end</span>
   
   <span class='id identifier rubyid_reset'>reset</span>
@@ -1991,6 +2173,7 @@
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
     
     <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
     <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -2063,12 +2246,12 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
     
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
     
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -2109,7 +2292,7 @@
       <span class='kw'>when</span> <span class='const'>NilClass</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+        <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_object'>object</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -2117,17 +2300,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:[]</span><span class='comma'>,</span> <span class='symbol'>:variablise</span>
+  <span class='kw'>alias</span> <span class='op'>[]</span> <span class='id identifier rubyid_variablise'>variablise</span>
   
   <span class='comment'># @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
       <span class='kw'>end</span>
@@ -2137,15 +2319,13 @@
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [String] a tree representation of all the instantiations of this goal&#39;s variables.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-      <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [Array&lt;Object&gt;] the values instantiated for this goal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -2206,7 +2386,9 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+      <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>      
       <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -2227,9 +2409,12 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+      <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Instantiates a Variable to another Variable or Value, for this Goal.
@@ -2247,6 +2432,39 @@
     <span class='kw'>end</span>
     
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Inherits variables and their instantiations from another goal.
+</span>  <span class='comment'># @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+</span>  <span class='comment'># @return [Boolean] whether the variables could be inherited (unified).
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+    
+    <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+      
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>else</span>
+        <span class='comment'>#:nocov:
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>break</span>
+        <span class='comment'>#:nocov:
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -2587,7 +2805,49 @@
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 27</span>
@@ -2607,8 +2867,14 @@
     <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
     <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
     <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Integer] the number of goals created
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+    <span class='cvar'>@@goal_count</span>
   <span class='kw'>end</span>
   
   <span class='id identifier rubyid_reset'>reset</span>
@@ -2620,6 +2886,7 @@
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
     
     <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
     <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -2692,12 +2959,12 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
     
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
     
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -2738,7 +3005,7 @@
       <span class='kw'>when</span> <span class='const'>NilClass</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+        <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_object'>object</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -2746,17 +3013,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:[]</span><span class='comma'>,</span> <span class='symbol'>:variablise</span>
+  <span class='kw'>alias</span> <span class='op'>[]</span> <span class='id identifier rubyid_variablise'>variablise</span>
   
   <span class='comment'># @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
       <span class='kw'>end</span>
@@ -2766,15 +3032,13 @@
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [String] a tree representation of all the instantiations of this goal&#39;s variables.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-      <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [Array&lt;Object&gt;] the values instantiated for this goal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -2835,7 +3099,9 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+      <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>      
       <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -2856,9 +3122,12 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+      <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Instantiates a Variable to another Variable or Value, for this Goal.
@@ -2876,6 +3145,39 @@
     <span class='kw'>end</span>
     
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Inherits variables and their instantiations from another goal.
+</span>  <span class='comment'># @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+</span>  <span class='comment'># @return [Boolean] whether the variables could be inherited (unified).
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+    
+    <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+      
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>else</span>
+        <span class='comment'>#:nocov:
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>break</span>
+        <span class='comment'>#:nocov:
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -3216,7 +3518,49 @@
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 27</span>
@@ -3236,8 +3580,14 @@
     <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
     <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
     <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Integer] the number of goals created
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+    <span class='cvar'>@@goal_count</span>
   <span class='kw'>end</span>
   
   <span class='id identifier rubyid_reset'>reset</span>
@@ -3249,6 +3599,7 @@
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
     
     <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
     <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -3321,12 +3672,12 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
     
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
     
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -3367,7 +3718,7 @@
       <span class='kw'>when</span> <span class='const'>NilClass</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+        <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_object'>object</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -3375,17 +3726,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:[]</span><span class='comma'>,</span> <span class='symbol'>:variablise</span>
+  <span class='kw'>alias</span> <span class='op'>[]</span> <span class='id identifier rubyid_variablise'>variablise</span>
   
   <span class='comment'># @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
       <span class='kw'>end</span>
@@ -3395,15 +3745,13 @@
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [String] a tree representation of all the instantiations of this goal&#39;s variables.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-      <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [Array&lt;Object&gt;] the values instantiated for this goal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -3464,7 +3812,9 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+      <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>      
       <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -3485,9 +3835,12 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+      <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Instantiates a Variable to another Variable or Value, for this Goal.
@@ -3505,6 +3858,39 @@
     <span class='kw'>end</span>
     
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Inherits variables and their instantiations from another goal.
+</span>  <span class='comment'># @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+</span>  <span class='comment'># @return [Boolean] whether the variables could be inherited (unified).
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+    
+    <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+      
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>else</span>
+        <span class='comment'>#:nocov:
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>break</span>
+        <span class='comment'>#:nocov:
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -3845,7 +4231,49 @@
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 27</span>
@@ -3865,8 +4293,14 @@
     <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
     <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
     <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Integer] the number of goals created
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+    <span class='cvar'>@@goal_count</span>
   <span class='kw'>end</span>
   
   <span class='id identifier rubyid_reset'>reset</span>
@@ -3878,6 +4312,7 @@
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
     
     <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
     <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -3950,12 +4385,12 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
     
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
     
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -3996,7 +4431,7 @@
       <span class='kw'>when</span> <span class='const'>NilClass</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+        <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_object'>object</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -4004,17 +4439,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:[]</span><span class='comma'>,</span> <span class='symbol'>:variablise</span>
+  <span class='kw'>alias</span> <span class='op'>[]</span> <span class='id identifier rubyid_variablise'>variablise</span>
   
   <span class='comment'># @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
       <span class='kw'>end</span>
@@ -4024,15 +4458,13 @@
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [String] a tree representation of all the instantiations of this goal&#39;s variables.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-      <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [Array&lt;Object&gt;] the values instantiated for this goal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -4093,7 +4525,9 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+      <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>      
       <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -4114,9 +4548,12 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+      <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Instantiates a Variable to another Variable or Value, for this Goal.
@@ -4134,6 +4571,39 @@
     <span class='kw'>end</span>
     
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># Inherits variables and their instantiations from another goal.
+</span>  <span class='comment'># @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+</span>  <span class='comment'># @return [Boolean] whether the variables could be inherited (unified).
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+    
+    <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+      
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>else</span>
+        <span class='comment'>#:nocov:
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>break</span>
+        <span class='comment'>#:nocov:
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
   
 <span class='kw'>end</span></pre>
@@ -4474,7 +4944,49 @@
 310
 311
 312
-313</pre>
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 27</span>
@@ -4494,8 +5006,14 @@
     <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
     <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
     <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
     <span class='kw'>true</span>
+  <span class='kw'>end</span>
+  
+  <span class='comment'># @return [Integer] the number of goals created
+</span>  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+    <span class='cvar'>@@goal_count</span>
   <span class='kw'>end</span>
   
   <span class='id identifier rubyid_reset'>reset</span>
@@ -4507,6 +5025,7 @@
 </span>  <span class='comment'># @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_arguments'>arguments</span><span class='comma'>,</span> <span class='id identifier rubyid_calling_goal'>calling_goal</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='cvar'>@@goals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>self</span>
+    <span class='cvar'>@@goal_count</span> <span class='op'>+=</span> <span class='int'>1</span>
     
     <span class='ivar'>@arguments</span>    <span class='op'>=</span> <span class='id identifier rubyid_arguments'>arguments</span>
     <span class='ivar'>@terminate</span>    <span class='op'>=</span> <span class='kw'>false</span>
@@ -4579,12 +5098,12 @@
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
     <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
     
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
     
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
       <span class='kw'>true</span>
     <span class='kw'>end</span>
@@ -4625,7 +5144,7 @@
       <span class='kw'>when</span> <span class='const'>NilClass</span>
         <span class='kw'>nil</span>
       <span class='kw'>else</span>
-        <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+        <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
           <span class='id identifier rubyid_object'>object</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -4633,17 +5152,16 @@
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   
-  <span class='id identifier rubyid_alias_method'>alias_method</span> <span class='symbol'>:[]</span><span class='comma'>,</span> <span class='symbol'>:variablise</span>
+  <span class='kw'>alias</span> <span class='op'>[]</span> <span class='id identifier rubyid_variablise'>variablise</span>
   
   <span class='comment'># @return [Hash{Symbol =&gt; Object}] the Variables and their current values of this Goal
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
       <span class='kw'>end</span>
@@ -4653,15 +5171,13 @@
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [String] a tree representation of all the instantiations of this goal&#39;s variables.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-      <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># A convenience method for testing/debugging.
 </span>  <span class='comment'># @return [Array&lt;Object&gt;] the values instantiated for this goal.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -4722,7 +5238,9 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+      <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>      
       <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -4743,9 +5261,12 @@
     
     <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
     
-    <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-      <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+    <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+      <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
     <span class='kw'>end</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span>
   <span class='kw'>end</span>
   
   <span class='comment'># Instantiates a Variable to another Variable or Value, for this Goal.
@@ -4765,6 +5286,39 @@
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   
+  <span class='comment'># Inherits variables and their instantiations from another goal.
+</span>  <span class='comment'># @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+</span>  <span class='comment'># @return [Boolean] whether the variables could be inherited (unified).
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+      <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+    
+    <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+      <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+      
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+      <span class='kw'>else</span>
+        <span class='comment'>#:nocov:
+</span>        <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>break</span>
+        <span class='comment'>#:nocov:
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    
+    <span class='id identifier rubyid_unified'>unified</span>
+  <span class='kw'>end</span>
+  
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -4779,7 +5333,66 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="goals-class_method">
+  <h3 class="signature first" id="goal_count-class_method">
+  
+    .<strong>goal_count</strong>  &#x21d2; <tt>Integer</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the number of goals created</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the number of goals created</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goal_count'>goal_count</span>
+  <span class='cvar'>@@goal_count</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="goals-class_method">
   
     .<strong>goals</strong>  &#x21d2; <tt><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span>&lt;<span class='object_link'><a href="" title="Porolog::Goal (class)">Porolog::Goal</a></span>&gt;</tt> 
   
@@ -4817,12 +5430,12 @@
       <pre class="lines">
 
 
-105
-106
-107</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_goals'>goals</span>
   <span class='cvar'>@@goals</span>
@@ -4882,7 +5495,8 @@
 41
 42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 38</span>
@@ -4891,6 +5505,7 @@
   <span class='cvar'>@@goals</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_goals'>goals</span> <span class='op'>=</span> <span class='cvar'>@@goals</span>
   <span class='cvar'>@@goals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='cvar'>@@goal_count</span> <span class='op'>=</span> <span class='int'>0</span>
   <span class='id identifier rubyid_goals'>goals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:deleted?</span><span class='rparen'>)</span>
   <span class='kw'>true</span>
 <span class='kw'>end</span></pre>
@@ -4949,20 +5564,20 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
-75
-76
 77
 78
 79
-80</pre>
+80
+81
+82
+83
+84
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestors'>ancestors</span>
   <span class='id identifier rubyid_ancestors'>ancestors</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -5024,16 +5639,16 @@
       <pre class="lines">
 
 
-84
-85
-86
-87
-88
-89
-90</pre>
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestry'>ancestry</span>
   <span class='id identifier rubyid_indent'>indent</span> <span class='op'>=</span> <span class='op'>-</span><span class='int'>1</span>
@@ -5091,13 +5706,6 @@
       <pre class="lines">
 
 
-124
-125
-126
-127
-128
-129
-130
 131
 132
 133
@@ -5105,20 +5713,27 @@
 135
 136
 137
-138</pre>
+138
+139
+140
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
   
-  <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+  <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
     <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
     <span class='kw'>true</span>
   <span class='kw'>end</span>
   
-  <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+  <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__name'>_name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
     <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_remove'>remove</span>
     <span class='kw'>true</span>
   <span class='kw'>end</span>
@@ -5174,13 +5789,13 @@
       <pre class="lines">
 
 
-111
-112
-113
-114</pre>
+118
+119
+120
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete!'>delete!</span>
   <span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -5235,17 +5850,150 @@
       <pre class="lines">
 
 
-117
-118
-119
-120</pre>
+124
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_deleted?'>deleted?</span>
   <span class='ivar'>@deleted</span> <span class='op'>||=</span> <span class='id identifier rubyid_check_deleted'>check_deleted</span>
   <span class='ivar'>@deleted</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="inherit_variables-instance_method">
+  
+    #<strong>inherit_variables</strong>(other_goal = @calling_goal)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Inherits variables and their instantiations from another goal.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>other_goal</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="" title="Porolog::Goal (class)">Porolog::Goal</a></span></tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>@calling_goal</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>the Goal to inherit variables from.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>whether the variables could be inherited (unified).</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 325</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_inherit_variables'>inherit_variables</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='ivar'>@calling_goal</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_goal'>other_goal</span>
+  
+  <span class='id identifier rubyid_unified'>unified</span>      <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_variables'>variables</span>    <span class='op'>=</span> <span class='lparen'>(</span>
+    <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>+</span>
+    <span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>+</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_arguments'>arguments</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span>
+  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_sym</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+  
+  <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
+    <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
+    
+    <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+      <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
+    <span class='kw'>else</span>
+      <span class='comment'>#:nocov:
+</span>      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Couldn&#39;t unify: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> WITH </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> AND </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>break</span>
+      <span class='comment'>#:nocov:
+</span>    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+  
+  <span class='id identifier rubyid_unified'>unified</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -5296,12 +6044,12 @@
       <pre class="lines">
 
 
-99
-100
-101</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'> -- </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_description'>description</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -5355,19 +6103,15 @@
       <pre class="lines">
 
 
-200
-201
-202
-203
-204</pre>
+206
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect_variables'>inspect_variables</span>
-  <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
-    <span class='id identifier rubyid_variable'>variable</span><span class='period'>.</span><span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span>
-  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:inspect_with_instantiations</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -5472,20 +6216,20 @@
       <pre class="lines">
 
 
-301
-302
-303
-304
-305
-306
-307
-308
-309
 310
-311</pre>
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other'>other</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span> <span class='op'>=</span> <span class='kw'>self</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_variable'>variable</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -5547,12 +6291,12 @@
       <pre class="lines">
 
 
-94
-95
-96</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_myid'>myid</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Goal</span><span class='embexpr_beg'>#{</span><span class='lparen'>(</span><span class='cvar'>@@goals</span><span class='period'>.</span><span class='id identifier rubyid_index'>index</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='op'>-</span><span class='int'>1000</span><span class='rparen'>)</span> <span class='op'>+</span> <span class='int'>1</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -5626,27 +6370,33 @@
       <pre class="lines">
 
 
-286
-287
-288
-289
-290
-291
 292
 293
-294</pre>
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 286</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='ivar'>@arguments</span>
   
   <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
   
-  <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
-    <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='op'>|</span>
+    <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_subgoal'>subgoal</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_satisfied'>satisfied</span> <span class='op'>||=</span> <span class='id identifier rubyid_subgoal_satisfied'>subgoal_satisfied</span>
   <span class='kw'>end</span>
+  <span class='id identifier rubyid_satisfied'>satisfied</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -5714,10 +6464,6 @@
       <pre class="lines">
 
 
-265
-266
-267
-268
 269
 270
 271
@@ -5729,17 +6475,25 @@
 277
 278
 279
-280</pre>
+280
+281
+282
+283
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_solve'>solve</span><span class='lparen'>(</span><span class='id identifier rubyid_max_solutions'>max_solutions</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='ivar'>@solutions</span> <span class='kw'>unless</span> <span class='ivar'>@arguments</span>
   
   <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>=</span> <span class='ivar'>@arguments</span><span class='period'>.</span><span class='id identifier rubyid_predicate'>predicate</span>
   
-  <span class='id identifier rubyid_predicate'>predicate</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_predicate'>predicate</span><span class='period'>.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+  <span class='id identifier rubyid_predicate'>predicate</span><span class='op'>&amp;.</span><span class='id identifier rubyid_satisfy'>satisfy</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_goal'>goal</span><span class='op'>|</span>
+    <span class='comment'># TODO: Refactor to overrideable method (or another solution, say a lambda)
+</span>    
     <span class='ivar'>@solutions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_variables'>variables</span>
     <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>SOLUTION: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_variables'>variables</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_ancestry'>ancestry</span>
@@ -5799,13 +6553,13 @@
       <pre class="lines">
 
 
-145
-146
-147
-148</pre>
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_terminate!'>terminate!</span>
   <span class='ivar'>@log</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>terminating</span><span class='tstring_end'>&#39;</span></span>
@@ -5860,12 +6614,12 @@
       <pre class="lines">
 
 
-151
-152
-153</pre>
+158
+159
+160</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 158</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_terminated?'>terminated?</span>
   <span class='ivar'>@terminate</span>
@@ -5939,13 +6693,13 @@
       <pre class="lines">
 
 
-230
-231
-232
-233</pre>
+234
+235
+236
+237</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='ivar'>@values</span><span class='lbracket'>[</span><span class='id identifier rubyid_value'>value</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Value.html#initialize-instance_method" title="Porolog::Value#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
@@ -6056,12 +6810,12 @@
       <pre class="lines">
 
 
-240
-241
-242</pre>
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 244</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
@@ -6115,15 +6869,15 @@
       <pre class="lines">
 
 
-208
-209
-210</pre>
+212
+213
+214</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 208</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_values'>values</span>
-  <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@values</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:value</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -6194,10 +6948,6 @@
       <pre class="lines">
 
 
-248
-249
-250
-251
 252
 253
 254
@@ -6206,10 +6956,14 @@
 257
 258
 259
-260</pre>
+260
+261
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 252</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_values_of'>values_of</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_object'>object</span>
@@ -6293,10 +7047,6 @@
       <pre class="lines">
 
 
-215
-216
-217
-218
 219
 220
 221
@@ -6304,10 +7054,14 @@
 223
 224
 225
-226</pre>
+226
+227
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 215</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variable'>variable</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_name'>name</span> <span class='kw'>unless</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
@@ -6370,31 +7124,29 @@
       <pre class="lines">
 
 
-184
-185
-186
-187
-188
-189
-190
 191
 192
 193
 194
 195
-196</pre>
+196
+197
+198
+199
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
   <span class='ivar'>@variables</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='comma'>,</span><span class='id identifier rubyid_variable_list'>variable_list</span><span class='op'>|</span>
-    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value_of'>value_of</span><span class='lparen'>(</span><span class='id identifier rubyid_variable'>variable</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Variable.html" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span>
       <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
-    <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Value.html" title="Porolog::Value (class)">Value</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_clean'>clean</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_variable_list'>variable_list</span><span class='lbracket'>[</span><span class='id identifier rubyid_variable'>variable</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
     <span class='kw'>end</span>
@@ -6473,13 +7225,6 @@
       <pre class="lines">
 
 
-158
-159
-160
-161
-162
-163
-164
 165
 166
 167
@@ -6494,10 +7239,17 @@
 176
 177
 178
-179</pre>
+179
+180
+181
+182
+183
+184
+185
+186</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 158</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/goal.rb', line 165</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variablise'>variablise</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_object'>object</span>
@@ -6514,7 +7266,7 @@
     <span class='kw'>when</span> <span class='const'>NilClass</span>
       <span class='kw'>nil</span>
     <span class='kw'>else</span>
-      <span class='kw'>if</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>||</span> <span class='id identifier rubyid_object'>object</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>
+      <span class='kw'>if</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_object'>object</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
@@ -6531,7 +7283,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul  6 22:54:46 2020 by
+  Generated on Sun Aug  2 18:05:23 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.6.5).
 </div>

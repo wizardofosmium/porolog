@@ -62,15 +62,17 @@
 
 <p>&lt;img src=“<a href="https://repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9">repository-images.githubusercontent.com/131847563/b3754100-636a-11e9-995b-20d409b992c9</a>” width=“240” height=“120” align=“right” /&gt;</p>
 
-<p>Plain Old Ruby Objects Prolog (WORK IN PROGRESS)</p>
+<p>Plain Old Ruby Objects Prolog</p>
 
-<p><a href="https://badge.fury.io/rb/porolog"><img src="https://badge.fury.io/rb/porolog.svg"></a> <a href="https://travis-ci.com/wizardofosmium/porolog"><img src="https://travis-ci.com/wizardofosmium/porolog.svg?branch=master"></a> <img src="https://img.shields.io/badge/status-work%20in%20progress-orange.svg"> <a href="https://github.com/wizardofosmium/porolog"><img src="https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg"></a></p>
+<p><a href="https://badge.fury.io/rb/porolog"><img src="https://badge.fury.io/rb/porolog.svg"></a> <a href="https://travis-ci.com/wizardofosmium/porolog"><img src="https://travis-ci.com/wizardofosmium/porolog.svg?branch=master"></a> <a href="https://github.com/wizardofosmium/porolog"><img src="https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg"></a></p>
 
 <h2 id="label-Introduction">Introduction</h2>
 
 <p><code>porolog</code> is a Prolog implementation using plain old Ruby objects with the aim that logic queries can be called within a regular Ruby program. The goal was not to implement a Prolog interpreter that is just implement in Ruby, but rather that a logic engine could be embedded in a larger program.</p>
 
 <p>The need that this gem aims to meet is to have a Ruby program interact with a Prolog program using native Ruby objects (POROs); hence the name Porolog. The goal was to implement a minimal logic engine in the style of Prolog where Ruby objects could be passed in and Ruby objects were passed back.</p>
+
+<p>This version completes the minimal/generic logic engine along with some standard builtin predicates. Custom builtin predicates can be easily added.</p>
 
 <h2 id="label-Dependencies">Dependencies</h2>
 
@@ -92,7 +94,9 @@
 <p>solving goals</p>
 </li></ul>
 
-<p>It is entirely possible to create a Ruby program that is effectively just a Prolog program.</p>
+<p>It is entirely possible to create a Ruby program that is effectively just a Prolog program. The main purpose of Porolog though is to add declarative logic programming to Ruby and allow hybrid programming, in the same way that Ruby allows hybrid programming in the functional programming paradigm.</p>
+
+<p>This then Ruby programs to be written spanning all the major programming paradigms: - Imperative - Functional - Object Oriented - Declarative Logic</p>
 
 <h3 id="label-Basic+Usage">Basic Usage</h3>
 
@@ -231,7 +235,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jul  6 22:54:45 2020 by
+  Generated on Sun Aug  2 18:05:22 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.6.5).
 </div>

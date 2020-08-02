@@ -669,23 +669,20 @@ describe 'Porolog' do
       end
       
       it 'should solve a goal recursively' do
-        #:nocov:
-        skip 'until Standard Predicates added'
-        
+        builtin :write
         predicate :recursive
         
         recursive([]) << [:CUT, true]
         recursive(:head/:tail) << [
           write('(',:head,')'),
-          alpha(:tail)
+          recursive(:tail)
         ]
         
         assert_output '(1)(2)(3)(four)(5)(6)(7)' do
-          solutions = alpha([1,2,3,'four',5,6,7]).solve
+          solutions = recursive([1,2,3,'four',5,6,7]).solve
           
           assert_equal    [{}], solutions
         end
-        #:nocov:
       end
       
     end
@@ -706,14 +703,14 @@ describe 'Porolog' do
         goal.arguments.expects(:predicate).with().returns(nil).times(1)
         block.expects(:call).times(0)
         
-        assert_nil      goal.satisfy(&block),   name
+        refute          goal.satisfy(&block),   name
       end
       
       it 'should try to satisfy the predicate with itself' do
         pred.expects(:satisfy).with(goal).returns(nil).times(1)
         block.expects(:call).times(0)
         
-        assert_nil      goal.satisfy(&block),   name
+        refute          goal.satisfy(&block),   name
       end
       
       it 'should call the block when the predicate is satisfied' do
@@ -721,7 +718,7 @@ describe 'Porolog' do
         pred.(3,4).fact!
         pred.(5,6).fact!
         
-        block.expects(:call).times(3)
+        block.expects(:call).returns(true).times(3)
         
         assert          goal.satisfy(&block),   name
       end
@@ -805,6 +802,86 @@ describe 'Porolog' do
         head_tail = goal.values_of(goal.variablise(head_tail))
         
         assert_equal    ['alpha','omega'],        head_tail
+      end
+      
+    end
+    
+    describe '#inherit_variables' do
+      
+      it 'should return true for an initial goal' do
+        goal    = new_goal :goal,    :x, :y, :z
+        
+        assert                  goal.inherit_variables
+        assert_Goal_variables   goal, { x: nil, y: nil, z: nil }, [
+          'Goal1.:x',
+          'Goal1.:y',
+          'Goal1.:z',
+        ].join("\n")
+      end
+      
+      it 'should instantiate combined variables of both goals' do
+        goal    = new_goal :goal,    :x, :y, :z
+        subgoal = new_goal :subgoal, :a, :b, :c
+        
+        assert  subgoal.inherit_variables(goal)
+        assert_Goal_variables   goal, { x: nil, y: nil, z: nil, a: nil, b: nil, c: nil }, [
+          'Goal1.:x',
+          '  Goal2.:x',
+          'Goal1.:y',
+          '  Goal2.:y',
+          'Goal1.:z',
+          '  Goal2.:z',
+          'Goal1.:a',
+          '  Goal2.:a',
+          'Goal1.:b',
+          '  Goal2.:b',
+          'Goal1.:c',
+          '  Goal2.:c',
+        ].join("\n")
+        assert_Goal_variables   subgoal, { a: nil, b: nil, c: nil, x: nil, y: nil, z: nil }, [
+          'Goal2.:a',
+          '  Goal1.:a',
+          'Goal2.:b',
+          '  Goal1.:b',
+          'Goal2.:c',
+          '  Goal1.:c',
+          'Goal2.:x',
+          '  Goal1.:x',
+          'Goal2.:y',
+          '  Goal1.:y',
+          'Goal2.:z',
+          '  Goal1.:z',
+        ].join("\n")
+      end
+      
+      it 'should not make any instantiations when variables cannot be unified' do
+        goal    = new_goal :goal,    :x, :y, :z
+        subgoal = new_goal :subgoal, :a, :b, :c
+        
+        goal[:x].instantiate 1
+        subgoal[:x].instantiate 2
+        
+        refute  subgoal.inherit_variables(goal)
+        assert_equal  [
+          'Cannot unify because 1 != 2 (variable != variable)',
+        ], goal.log
+        assert_equal  [
+          'Cannot unify because 1 != 2 (variable != variable)',
+          "Couldn't unify: :x WITH Goal1 AND Goal2"
+        ], subgoal.log
+        assert_Goal_variables   goal, { x: 1, y: nil, z: nil }, [
+          'Goal1.:x',
+          '  Goal1.1',
+          'Goal1.:y',
+          'Goal1.:z',
+        ].join("\n")
+        assert_Goal_variables   subgoal, { a: nil, b: nil, c: nil, x: 2 }, [
+          'Goal2.:a',
+          'Goal2.:b',
+          'Goal2.:c',
+          'Goal2.:x',
+          '  Goal2.2',
+        ].join("\n")
       end
       
     end

@@ -39,8 +39,14 @@ module Porolog
       @@goals ||= []
       goals = @@goals
       @@goals = []
+      @@goal_count = 0
       goals.map(&:deleted?)
       true
+    end
+    
+    # @return [Integer] the number of goals created
+    def self.goal_count
+      @@goal_count
     end
     
     reset
@@ -52,6 +58,7 @@ module Porolog
     # @param calling_goal [Porolog::Goal] the parent Goal if this Goal is a subgoal.
     def initialize(arguments, calling_goal = nil)
       @@goals << self
+      @@goal_count += 1
       
       @arguments    = arguments
       @terminate    = false
@@ -124,12 +131,12 @@ module Porolog
     def check_deleted
       return false if @@goals.include?(self)
       
-      @variables.delete_if do |name,variable|
+      @variables.delete_if do |_name,variable|
         variable.remove
         true
       end
       
-      @values.delete_if do |name,value|
+      @values.delete_if do |_name,value|
         value.remove
         true
       end
@@ -170,7 +177,7 @@ module Porolog
         when NilClass
           nil
         else
-          if object == UNKNOWN_TAIL || object == UNKNOWN_ARRAY
+          if [UNKNOWN_TAIL, UNKNOWN_ARRAY].include?(object)
             object
           else
             value(object)
@@ -178,17 +185,16 @@ module Porolog
       end
     end
     
-    alias_method :[], :variablise
+    alias [] variablise
     
     # @return [Hash{Symbol => Object}] the Variables and their current values of this Goal
     def variables
       @variables.keys.each_with_object({}){|variable,variable_list|
-        value = value_of(variable)
-        value = value.value if value.is_a?(Value)
+        value = value_of(variable).value.value
         if value.is_a?(Variable)
           variable_list[variable] = nil
-        elsif value.is_a?(Value) || value.is_a?(Array)
-          variable_list[variable] = value.value
+        elsif value.is_a?(Array)
+          variable_list[variable] = value.clean
         else
           variable_list[variable] = value
         end
@@ -198,15 +204,13 @@ module Porolog
     # A convenience method for testing/debugging.
     # @return [String] a tree representation of all the instantiations of this goal's variables.
     def inspect_variables
-      @variables.map{|name,variable|
-        variable.inspect_with_instantiations
-      }.join("\n")
+      @variables.values.map(&:inspect_with_instantiations).join("\n")
     end
     
     # A convenience method for testing/debugging.
     # @return [Array<Object>] the values instantiated for this goal.
     def values
-      @values.map{|name,value| value.value }
+      @values.values.map(&:value)
     end
     
     # Finds or tries to create a variable in the goal (as much as possible) otherwise passes the parameter back.
@@ -267,7 +271,9 @@ module Porolog
       
       predicate = @arguments.predicate
       
-      predicate && predicate.satisfy(self) do |goal|
+      predicate&.satisfy(self) do |goal|
+        # TODO: Refactor to overrideable method (or another solution, say a lambda)
+        
         @solutions << variables
         @log << "SOLUTION: #{variables}"
         @log << goal.ancestry
@@ -288,9 +294,12 @@ module Porolog
       
       predicate = @arguments.predicate
       
-      predicate && predicate.satisfy(self) do |subgoal|
-        block.call(subgoal)
+      satisfied = false
+      predicate&.satisfy(self) do |subgoal|
+        subgoal_satisfied = block.call(subgoal)
+        satisfied ||= subgoal_satisfied
       end
+      satisfied
     end
     
     # Instantiates a Variable to another Variable or Value, for this Goal.
@@ -308,6 +317,39 @@ module Porolog
       end
       
       variable.instantiate(other)
+    end
+    
+    # Inherits variables and their instantiations from another goal.
+    # @param other_goal [Porolog::Goal,nil] the Goal to inherit variables from.
+    # @return [Boolean] whether the variables could be inherited (unified).
+    def inherit_variables(other_goal = @calling_goal)
+      return true unless other_goal
+      
+      unified      = true
+      unifications = []
+      variables    = (
+        other_goal.arguments.variables +
+        other_goal.variables.keys +
+        self.arguments.variables
+      ).map(&:to_sym).uniq
+      
+      variables.each do |variable|
+        name = variable
+        
+        unification = unify(name, name, other_goal, self)
+        unified   &&= !!unification
+        if unified
+          unifications += unification
+        else
+          #:nocov:
+          self.log << "Couldn't unify: #{name.inspect} WITH #{other_goal.myid} AND #{self.myid}"
+          break
+          #:nocov:
+        end
+      end
+      unified &&= instantiate_unifications(unifications) if unified
+      
+      unified
     end
     
   end

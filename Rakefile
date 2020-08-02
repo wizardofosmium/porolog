@@ -11,11 +11,11 @@ require 'yard'
 # -- Run All Tests Task --
 Rake::TestTask.new do |task|
   task.libs    << 'test'
-  task.pattern  = 'test/porolog/*_test.rb'
+  task.pattern  = 'test/**/*_test.rb'
 end
 
 # -- Create Separate Test Tasks --
-Dir['test/porolog/*_test.rb'].each do |test_file|
+Dir['test/**/*_test.rb'].each do |test_file|
   name = File.basename(test_file, '.rb')
   Rake::TestTask.new(name) do |task|
     task.verbose    = true

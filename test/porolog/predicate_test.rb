@@ -152,22 +152,6 @@ describe 'Porolog' do
       
     end
     
-    describe '.builtin' do
-      
-      it 'should incremently return Predicates' do
-        iota1 = Predicate.builtin :iota
-        zeta1 = Predicate.builtin :zeta
-        iota2 = Predicate.builtin :iota
-        zeta2 = Predicate.builtin :zeta
-        
-        assert_Predicate  iota1, :_iota_1, []
-        assert_Predicate  zeta1, :_zeta_1, []
-        assert_Predicate  iota2, :_iota_2, []
-        assert_Predicate  zeta2, :_zeta_2, []
-      end
-      
-    end
-    
     describe '#initialize' do
     
       it 'can create predicates in different scopes' do
@@ -336,6 +320,84 @@ describe 'Porolog' do
         ].join("\n"),                                                           alpha.inspect
         
         assert_Predicate  alpha, :alpha, [alpha.rules[0],alpha.rules[1]]
+      end
+      
+    end
+    
+    describe '#builtin?' do
+      
+      it 'should return false for normal predicates' do
+        p = predicate :normal
+        
+        assert_equal    false,    p.builtin?
+      end
+      
+      it 'should return true for builtin predicates' do
+        p = builtin :append
+        
+        assert_equal    true,     p.builtin?
+      end
+      
+    end
+    
+    describe '#satisfy_builtin' do
+      
+      module Porolog
+        class Predicate
+          module Builtin
+            def user_defined(goal, block, *args, &arg_block)
+              puts 'Called user_defined'
+              block.call(goal, *args) || false
+            end
+          end
+        end
+      end
+      
+      let(:predicate1)  { Predicate.new :user_defined, builtin: true }
+      let(:arguments1)  { predicate1.arguments(:m,:n) }
+      let(:goal)        { arguments1.goal }
+      
+      it 'should satisfy builtin predicate' do
+        called = false
+        
+        assert_output "Called user_defined\n" do
+          predicate1.satisfy_builtin(goal) {|*args|
+            called = args
+          }
+        end
+        
+        assert_equal    [goal, goal[:m], goal[:n]],       called
+      end
+      
+    end
+    
+    describe '.call_builtin' do
+      
+      it 'should raise an exception when no such builtin predicate exists' do
+        assert_raises NameError do
+          Predicate.call_builtin(:non_existent)
+        end
+        
+      end
+      
+      it 'should call a builtin predicate' do
+        module Porolog
+          class Predicate
+            module Builtin
+              def custom(goal, block, *args, &arg_block)
+                block.call(goal, *args) || false
+              end
+            end
+          end
+        end
+        called = false
+        
+        goal = new_goal :a, :b, :c
+        block = ->(goal, *args){
+          called = [goal] + args
+        }
+        Porolog::Predicate.call_builtin(:custom, goal, block, goal[:X], [1,2,3]) { 1 }
+        assert_equal    [goal, goal[:X], [1,2,3]],      called
       end
       
     end

@@ -14,7 +14,7 @@ class Object
   # A convenience method for testing/debugging.
   # @return [String] the equivalent of inspect.
   def myid
-    self.inspect
+    inspect
   end
   
   # @return [Array] embedded variables (for an Object, should be none).
@@ -58,7 +58,7 @@ class Symbol
   # A convenience method for testing/debugging.
   # @return [String] the equivalent of inspect.
   def myid
-    self.inspect
+    inspect
   end
   
   # @return [Array] embedded variables (for a Symbol, should be itself).
@@ -89,18 +89,20 @@ class Array
   end
   
   # @return [Array] the values of its elements.
-  def value(*args)
-    map{|element|
+  def value(visited = [])
+    return self if visited.include?(self)
+    visited = visited + [self]
+    flat_map{|element|
       if element.is_a?(Tail)
-        tail = element.value(*args)
+        tail = element.value(visited)
         if tail.is_a?(Array)
           tail
         elsif tail.is_a?(Variable) || tail.is_a?(Value)
-          tail = tail.value(*args)
+          tail = tail.value(visited)
           if tail.is_a?(Array)
             tail
           elsif tail.is_a?(Variable) || tail.is_a?(Value)
-            tail = tail.goal.variablise(tail.value(*args))
+            tail = tail.goal.variablise(tail.value(visited))
             if tail.is_a?(Array)
               tail
             else
@@ -113,9 +115,25 @@ class Array
           [element]
         end
       else
-        [element.value(*args)]
+        [element.value(visited)]
       end
-    }.flatten(1)
+    }
+  end
+  
+  # Removes Porolog processing objects.
+  # @return [Array] the values of its elements with variables replaced by nil and Tails replaced by UNKNOWN_TAIL.
+  def clean
+    value.map{|element|
+      if element.is_a?(Array)
+        element.clean
+      elsif element.is_a?(Tail)
+        UNKNOWN_TAIL
+      elsif element.is_a?(Variable)
+        nil
+      else
+        element.value
+      end
+    }
   end
   
   # @return [Symbol] the type of the object (for an Array, should be :array)

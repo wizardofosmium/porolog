@@ -11,9 +11,9 @@
 module Porolog
 
   # The most recent version of the Porolog gem.
-  VERSION      = '0.0.8'.freeze
+  VERSION      = '1.0.0'.freeze
   # The most recent date of when the VERSION changed.
-  VERSION_DATE = '2020-07-06'.freeze
+  VERSION_DATE = '2020-08-02'.freeze
   
   # Represents an unknown tail of a list.
   UNKNOWN_TAIL = Object.new
@@ -23,9 +23,15 @@ module Porolog
     '...'
   end
   
-  # Specifies that the unknown tail is a list.
+  # Specifies that the unknown tail is a tail.
   def UNKNOWN_TAIL.type
-    :array
+    :tail
+  end
+  
+  # @param _head_size [Integer] specifies the size of the head
+  # @return [Object] the tail of the Array
+  def UNKNOWN_TAIL.tail(_head_size = 1)
+    self
   end
   
   UNKNOWN_TAIL.freeze
@@ -33,37 +39,93 @@ module Porolog
   # Represents a list where all elements are unknown.
   UNKNOWN_ARRAY = [UNKNOWN_TAIL].freeze
   
+  # Stores the next unique anonymous variable name.
+  ANONYMOUS = ['_a']
+  
   # A convenience method to create a Predicate, along with a method
   # that returns an Arguments based on the arguments provided to
   # the method.
   # @param names [Array<#to_sym>] names of the Predicates to create.
+  # @param class_base [Class] class to define the method in.
   # @return [Porolog::Predicate] Predicate created if only one name is provided
   # @return [Array<Porolog::Predicate>] Predicates created if multiple names are provided
   # @example
   #     predicate :combobulator
   #     combobulator(:x,:y)       # --> Porolog::Arguments
-  def predicate(*names)
+  def predicate(*names, class_base: Object)
     names = [names].flatten
     
     predicates = names.map{|name|
       method     = name.to_sym
       predicate  = Predicate.new(name)
-      Object.class_eval{
+      class_base.class_eval{
         remove_method(method) if public_method_defined?(method)
         define_method(method){|*args|
           predicate.(*args)
         }
       }
+      (class << class_base; self; end).instance_eval {
+        remove_method(method) if public_method_defined?(method)
+        define_method(method){|*args|
+          predicate.(*args)
+        }
+      } unless class_base == Object
       predicate
     }
     
     predicates.size > 1 && predicates || predicates.first
   end
   
+  # A method to declare use of a standard / builtin Predicate, along with a method
+  # that returns an Arguments based on the arguments provided to
+  # the method.
+  # @param names [Array<#to_sym>] names of the Predicates to declare.
+  # @param class_base [Class] class to define the method in.
+  # @return [Porolog::Predicate] Predicate created if only one name is provided
+  # @return [Array<Porolog::Predicate>] Predicates created if multiple names are provided
+  # @example
+  #     builtin :is, :member, :append
+  #     member(:e,:l)       # --> Porolog::Arguments
+  def builtin(*names, class_base: Object)
+    names = [names].flatten
+    
+    predicates = names.map{|name|
+      method     = name.to_sym
+      raise NameError, "Undefined builtin predicate #{name.inspect}" unless Predicate::Builtin.instance_methods.include?(method)
+      predicate  = Predicate.new(name, builtin: true)
+      class_base.class_eval{
+        remove_method(method) if public_method_defined?(method)
+        define_method(method){|*args, &block|
+          predicate.(*args, &block)
+        }
+      }
+      (class << class_base; self; end).instance_eval {
+        remove_method(method) if public_method_defined?(method)
+        define_method(method){|*args, &block|
+          predicate.(*args, &block)
+        }
+      } unless class_base == Object
+      predicate
+    }
+    
+    predicates.size > 1 && predicates || predicates.first
+  end
+  
+  # @return [Symbol] a unique variable name.
+  def anonymous
+    anonymous = ANONYMOUS[0].to_sym
+    ANONYMOUS[0].succ!
+    anonymous
+  end
+  
+  alias _ anonymous
+  
   # Unify the Arguments of a Goal and a sub-Goal.
   # @param goal [Porolog::Goal] a Goal to solve a Predicate for specific Arguments.
   # @param subgoal [Porolog::Goal] a sub-Goal to solve the Goal following the Rules of the Predicate.
-  # @return [Boolean] whether the Goals can be unified.
+  # @return [Array<Porolog::Instantiation>] the instantiations if the goals can be unified and instantiated.
+  # @return [false] if they cannot be unified.
+  # @return [nil] if they can be unified but the instantiations are inconsistent.
   def unify_goals(goal, subgoal)
     if goal.arguments.predicate == subgoal.arguments.predicate
       unifications = unify(goal.arguments.arguments, subgoal.arguments.arguments, goal, subgoal)
@@ -98,9 +160,30 @@ module Porolog
       goals_variables[left_goal][left] ||= []
       goals_variables[left_goal][left] << [right_goal,right]
       
-      return_false = true if goals_variables[left_goal][left].map(&:last).reject{|value|
-        value.is_a?(Variable) || value.is_a?(Symbol)
-      }.uniq.size > 1
+      # -- Check Consistency --
+      goals_variables[left_goal][left].map(&:last).map(&:value)
+      values = goals_variables[left_goal][left].map{|value|
+        value.last.value.value
+      }
+      next if values.size < 2
+      
+      arrays = values.any?{|value| value.is_a?(Array) }
+      if arrays && !values.variables.empty?
+        zipped_values = values[0].zip(*values[1..-1])
+        zipped_values.each do |zipped_value|
+          vars, atomics = zipped_value.partition{|v| v.type == :variable }
+          return_false = true if atomics.uniq.size > 1
+          vars.each do |var|
+            goals_variables[var.goal]      ||= {}
+            goals_variables[var.goal][var] ||= []
+            goals_variables[var.goal][var] << [([left_goal,right_goal]-[var.goal]).first,atomics.first]
+          end
+        end
+      else
+        return_false = values.reject{|value|
+          value.is_a?(Variable) || value.is_a?(Symbol)
+        }.uniq.size > 1
+      end
       
       return false if return_false
     end
@@ -109,9 +192,9 @@ module Porolog
     instantiations = []
     consistent     = true
     
-    goals_variables.each do |goal,variables|
-      variables.each do |name,others|
-        others.each do |other_goal,other|
+    goals_variables.each do |goal, variables|
+      variables.each do |name, others|
+        others.each do |other_goal, other|
           instantiation = goal.instantiate(name, other, other_goal)
           if instantiation
             instantiations << instantiation
@@ -123,9 +206,12 @@ module Porolog
     end
     
     # -- Revert if inconsistent --
-    instantiations.each(&:remove) unless consistent
-    
-    consistent
+    if consistent
+      instantiations
+    else
+      instantiations.each(&:remove)
+      nil
+    end
   end
   
   # Attempt to unify two entities of two goals.
@@ -155,12 +241,32 @@ module Porolog
           nil
         end
       
-      when [:array, :array]
+      when [:array, :array], [:tail, :tail]
         _merged, unifications = unify_arrays(left, right, left_goal, right_goal, visited)
         if unifications
           unifications
         else
           msg = "Cannot unify because #{left.inspect} != #{right.inspect} (array != array)"
+          goals.each{|goal| goal.log << msg }
+          nil
+        end
+      
+      when [:array, :tail]
+        _merged, unifications = unify_arrays([left], right.value, left_goal, right_goal, visited)
+        if unifications
+          unifications
+        else
+          msg = "Cannot unify because #{left.inspect} != #{right.inspect} (array != tail)"
+          goals.each{|goal| goal.log << msg }
+          nil
+        end
+      
+      when [:tail, :array]
+        _merged, unifications = unify_arrays(left.value, [right], left_goal, right_goal, visited)
+        if unifications
+          unifications
+        else
+          msg = "Cannot unify because #{left.inspect} != #{right.inspect} (tail != array)"
           goals.each{|goal| goal.log << msg }
           nil
         end
@@ -188,9 +294,13 @@ module Porolog
         end
       
       when [:variable, :variable]
-        left_value  = left_goal.value_of(left, nil, visited)
-        right_value = right_goal.value_of(right, nil, visited)
+        left_value  = left_goal.value_of(left, nil, visited).value
+        right_value = right_goal.value_of(right, nil, visited).value
         if left_value == right_value || left_value.is_a?(Variable) || right_value.is_a?(Variable) || left_value.nil? || right_value.nil?
+          [[left, right, left_goal, right_goal]]
+        elsif left_value == UNKNOWN_ARRAY && (right_value.is_a?(Variable) || right_value.nil? || right_value.is_a?(Array))
+          [[left, right, left_goal, right_goal]]
+        elsif right_value == UNKNOWN_ARRAY && (left_value.is_a?(Variable) || left_value.nil? || left_value.is_a?(Array))
           [[left, right, left_goal, right_goal]]
         else
           msg = "Cannot unify because #{left_value.inspect} != #{right_value.inspect} (variable != variable)"
@@ -198,7 +308,7 @@ module Porolog
           nil
         end
       
-      when [:variable, :array]
+      when [:variable, :array], [:variable, :tail]
         left_value  = left_goal.value_of(left, nil, visited)
         right_value = right
         if left_value == right_value || left_value.is_a?(Variable) || left_value == UNKNOWN_ARRAY || left_value.nil?
@@ -218,7 +328,7 @@ module Porolog
           nil
         end
       
-      when [:array, :variable]
+      when [:array, :variable], [:tail, :variable]
         left_value  = left
         right_value = right_goal.value_of(right, nil, visited)
         if left_value == right_value || right_value.is_a?(Variable) || right_value == UNKNOWN_ARRAY || right_value.nil?
@@ -238,8 +348,8 @@ module Porolog
           nil
         end
       
-      when [:array,:atomic], [:atomic,:array]
-        msg = "Cannot unify #{left.inspect} with #{right.inspect}"
+      when [:array, :atomic], [:atomic, :array], [:tail, :atomic], [:atomic, :tail]
+        msg = "Cannot unify #{left.inspect} with #{right.inspect} (#{signature.join(' != ')})"
         goals.each{|goal| goal.log << msg }
         nil
       
@@ -261,11 +371,11 @@ module Porolog
   def unify_arrays(left, right, left_goal, right_goal = left_goal, visited = [])
     arrays        = [left,       right]
     arrays_goals  = [left_goal,  right_goal]
-    arrays_values = arrays.map(&:value)
+    arrays_values = arrays.map{|array| array.value(visited) }
     
     # -- Trivial Unifications --
-    return [left_goal. variablise(left), []] if right == UNKNOWN_ARRAY
-    return [right_goal.variablise(right),[]] if left  == UNKNOWN_ARRAY
+    return [left_goal. variablise(left),  []] if right == UNKNOWN_ARRAY
+    return [right_goal.variablise(right), []] if left  == UNKNOWN_ARRAY
     
     # -- Validate Arrays --
     unless arrays_values.all?{|array| array.is_a?(Array) || array == UNKNOWN_TAIL }
@@ -279,7 +389,7 @@ module Porolog
     number_of_tails  = arrays.count{|array| has_tail?(array) }
     
     # -- Handle Tails --
-    if number_of_tails == 0
+    if number_of_tails.zero?
       unify_arrays_with_no_tails(arrays, arrays_goals, visited)
     elsif number_of_tails == number_of_arrays
       unify_arrays_with_all_tails(arrays, arrays_goals, visited)
@@ -295,7 +405,9 @@ module Porolog
   # @return [Array<Array, Array>] the merged Array and the unifications to be instantiated.
   # @return [nil] if the Arrays cannot be unified.
   def unify_many_arrays(arrays, arrays_goals, visited = [])
-    arrays_values = arrays.map{|array| expand_splat(array) }.map{|array| array.is_a?(Array) ? array.map{|element| element.value } : array.value }
+    arrays_values = arrays.
+      map{|array| expand_splat(array) }.
+      map{|array| array.is_a?(Array) ? array.map(&:value) : array.value }
     
     unless arrays_values.all?{|array_values| [:array,:variable].include?(array_values.type) }
       msg = "Cannot unify: #{arrays.map(&:inspect).join(' with ')}"
@@ -303,7 +415,7 @@ module Porolog
       return nil
     end
     
-    # TODO: Fix
+    # TODO: Fix / improve
     if arrays_values.size == 2 && arrays_values.any?{|array| array == UNKNOWN_ARRAY }
       merged = arrays_values.reject{|array| array == UNKNOWN_ARRAY }.first
       return [merged,[]]
@@ -312,7 +424,7 @@ module Porolog
     number_of_arrays = arrays.size
     number_of_tails  = arrays.count{|array| has_tail?(array) }
     
-    if number_of_tails == 0
+    if number_of_tails.zero?
       unify_arrays_with_no_tails(arrays, arrays_goals, visited)
     elsif number_of_tails == number_of_arrays
       unify_arrays_with_all_tails(arrays, arrays_goals, visited)
@@ -383,11 +495,13 @@ module Porolog
       
       if arrays_goals[index].nil?
         value_with_goal = array.find{|element| element.respond_to?(:goal) }
-        arrays_goals[index] = value_with_goal.goal if value_with_goal && value_with_goal.goal
+        arrays_goals[index] = value_with_goal.goal if value_with_goal&.goal
       end
       
       if arrays_goals[index].nil?
+        # :nocov:
         raise NoGoalError, "Array #{array.inspect} has no goal for unification"
+        # :nocov:
       end
       
       arrays_values[index] = expand_splat(arrays_values[index])
@@ -403,10 +517,10 @@ module Porolog
     
     # -- Remap Arrays so that they are variablised and valuised with their Goals --
     new_arrays = []
-    arrays_variables.each do |goal,variables|
+    arrays_variables.each do |goal, variables|
       new_array = variables.map{|variable|
         value = goal.value_of(variable, nil, visited).value
-        value = variable if value == UNKNOWN_TAIL || value == UNKNOWN_ARRAY
+        value = variable if [UNKNOWN_TAIL, UNKNOWN_ARRAY].include?(value)
         
         if value.type == :variable
           value = goal.variable(value)
@@ -440,10 +554,10 @@ module Porolog
       merged       = []
       
       # TODO: Change these names
-      zipped.each_with_index{|values_to_unify, index|
+      zipped.each{|values_to_unify|
         values_to_unify_values = values_to_unify.map{|value|
           value_value = value.value
-          if value_value == UNKNOWN_TAIL || value_value == UNKNOWN_ARRAY
+          if [UNKNOWN_TAIL, UNKNOWN_ARRAY].include?(value_value)
             value
           else
             value_value
@@ -527,15 +641,10 @@ module Porolog
   # @return [Array<Array, Array>] the merged Array and the unifications to be instantiated.
   # @return [nil] if the Arrays cannot be unified.
   def unify_arrays_with_all_tails(arrays, arrays_goals, visited)
-    unifications = []
-    merged       = []
-    
     # -- All tails --
-    signature = arrays.map(&:headtail?)
     arrays = arrays.map{|array|
       expand_splat(array.headtail? ? array : array.value)
     }
-    signature = arrays.map(&:headtail?)
     
     # -- Unify Embedded Arrays --
     if arrays.any?{|array| array.type == :variable }
@@ -565,9 +674,9 @@ module Porolog
     end
     
     if unifications
-      return [merged, unifications]
+      [merged, unifications]
     else
-      return nil
+      nil
     end
   end
   
@@ -615,10 +724,8 @@ module Porolog
           first_goal = pair.first.goal if pair.first.respond_to?(:goal)
           last_goal  = pair.last.goal  if pair.last.respond_to?(:goal)
           m,u = unify_arrays(first_goal.variablise([pair.first]), last_goal.variablise([pair.last]), first_goal, last_goal, visited)
-          unless m
-            return nil
-          end
-          m[-1] = UNKNOWN_TAIL if m[-1] == nil
+          return nil unless m
+          m[-1] = UNKNOWN_TAIL if m[-1].nil?
           merged_tails += m
           unifications += u
         end
@@ -682,19 +789,23 @@ module Porolog
     
     # -- Variablise Arrays --
     arrays = arrays_goals.zip(arrays).map do |goal, array|
-      goal.variablise(array)
+      if array == UNKNOWN_ARRAY
+        array
+      else
+        goal.variablise(array)
+      end
     end
     
     # -- Determine the fixed length (if any) --
     fixed_length = nil
     arrays.each do |array|
-      unless has_tail?(array)
-        array_length = array.value.size
-        fixed_length ||= array_length
-        unless fixed_length == array_length
-          array.goal.log << "Cannot unify #{array.value.inspect} because it has a different length from #{fixed_length}"
-          return nil
-        end
+      next if has_tail?(array)
+      
+      array_length = array.value.size
+      fixed_length ||= array_length
+      unless fixed_length == array_length
+        array.goal.log << "Cannot unify #{array.value.inspect} because it has a different length from #{fixed_length}"
+        return nil
       end
     end
     
@@ -703,7 +814,7 @@ module Porolog
     
     # -- Unify All HeadTail Arrays --
     if headtail_arrays.size > 1
-      headtail_goals = headtail_arrays.map{|array| array.goal }
+      headtail_goals = headtail_arrays.map(&:goal)
       merged_headtails, headtail_unifications = unify_headtail_with_headtail(headtail_arrays, headtail_goals, visited)
       unless merged_headtails
         msg = "Could not unify headtail arrays: #{headtail_arrays.map(&:value).map(&:inspect).join(' with ')}"
@@ -724,7 +835,7 @@ module Porolog
     
     # -- Unify All Tail Arrays --
     if tail_arrays.size > 1
-      tail_goals = tail_arrays.map{|array| array.goal }
+      tail_goals = tail_arrays.map(&:goal)
       merged_tails, tail_unifications = unify_tail_with_tail(tail_arrays, tail_goals, visited)
       return nil unless merged_tails
       unifications += tail_unifications
@@ -812,7 +923,7 @@ module Porolog
         case element.type
           when :atomic
             0
-          when :array
+          when :array, :tail
             if [UNKNOWN_TAIL, UNKNOWN_ARRAY].include?(element)
               3
             else
@@ -931,7 +1042,7 @@ module Porolog
         goal = array.goal        if array.is_a?(Value)
         if goal.nil? && array.is_a?(Array)
           v = array.find{|element| element.respond_to?(:goal) }
-          goal = v && v.goal
+          goal = v&.goal
         end
       end
       goal = arrays_goals.compact.last if goal.nil?
@@ -1001,7 +1112,6 @@ module Porolog
       value_values = value.map(&:value).compact.uniq
       if value_values.size <= 1
         m = value.first.value
-        m = nil if m.type == :variable
         merged << m
       else
         if values.variables.empty?
@@ -1014,7 +1124,6 @@ module Porolog
           _variables, nonvariables = values.reject{|v| v.value.nil? }.partition{|element| element.type == :variable }
           if nonvariables.value.uniq.size <= 1
             m = nonvariables.first.value
-            m = nil if m.type == :variable
             merged << m
             
             value.combination(2).each do |vl, vr|
@@ -1035,6 +1144,7 @@ module Porolog
       end
     }
     
+    # -- Unify Tails --
     tails.each do |head_size,tail,goal|
       next if tail == UNKNOWN_TAIL
       merged_goals = arrays_goals - [goal] + [goal]
@@ -1048,9 +1158,9 @@ end
 
 require_relative 'porolog/core_ext'
 require_relative 'porolog/error'
-require_relative 'porolog/core_ext'
 require_relative 'porolog/scope'
 require_relative 'porolog/predicate'
+require_relative 'porolog/predicate/builtin'
 require_relative 'porolog/arguments'
 require_relative 'porolog/rule'
 require_relative 'porolog/goal'

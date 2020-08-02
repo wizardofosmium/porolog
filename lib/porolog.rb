@@ -93,18 +93,31 @@ module Porolog
       method     = name.to_sym
       raise NameError, "Undefined builtin predicate #{name.inspect}" unless Predicate::Builtin.instance_methods.include?(method)
       predicate  = Predicate.new(name, builtin: true)
-      class_base.class_eval{
-        remove_method(method) if public_method_defined?(method)
-        define_method(method){|*args, &block|
-          predicate.(*args, &block)
+      if class_base == Object
+        # -- Add Global Method --
+        class_base.class_eval{
+          remove_method(method) if method_defined?(method)
+          define_method(method){|*args, &block|
+            predicate.(*args, &block)
+          }
         }
-      }
-      (class << class_base; self; end).instance_eval {
-        remove_method(method) if public_method_defined?(method)
-        define_method(method){|*args, &block|
-          predicate.(*args, &block)
+      else
+        # -- Add Instance Method --
+        class_base.class_eval{
+          remove_method(method) if methods(false).include?(method)
+          define_method(method){|*args, &block|
+            predicate.(*args, &block)
+          }
         }
-      } unless class_base == Object
+        
+        # -- Add Class Method --
+        (class << class_base; self; end).instance_eval {
+          remove_method(method) if methods(false).include?(method)
+          define_method(method){|*args, &block|
+            predicate.(*args, &block)
+          }
+        }
+      end
       predicate
     }
     

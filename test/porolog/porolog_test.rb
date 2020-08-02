@@ -95,7 +95,8 @@ describe 'Porolog' do
       
       class Base1
         
-        predicate :localised_predicate, class_base: self
+        builtin :between,                 class_base: self
+        predicate :localised_predicate,   class_base: self
         
         localised_predicate(:X) << [
           between(:X, 1, 5)

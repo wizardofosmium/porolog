@@ -32,6 +32,7 @@ def reset
   Rule.reset
   Goal.reset
   Instantiation.reset
+  Porolog::ANONYMOUS[0] = '_a'
 end
 
 def assert_Scope(scope, name, predicates)
@@ -151,4 +152,12 @@ def new_goal(predicate_name, *arguments_list)
   predicate = Predicate.new(predicate_name)
   arguments = predicate.arguments(*arguments_list)
   arguments.goal
+end
+
+def assert_solutions(arguments, expected_solutions, goals: nil)
+  solutions = arguments.solve
+  
+  assert_equal    expected_solutions,   solutions
+  assert_equal    goals,                Goal.goal_count   if goals
+  solutions
 end

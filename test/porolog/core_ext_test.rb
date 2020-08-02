@@ -262,4 +262,29 @@ describe 'Array' do
     
   end
   
+  describe '#clean' do
+    
+    let(:predicate1)  { Predicate.new :generic }
+    let(:arguments1)  { predicate1.arguments(:m,:n) }
+    let(:goal1)       { arguments1.goal }
+    
+    let(:array5)      { [1, 2, goal1[:A], 4, [goal1[:B], 6, 7, goal1[:C]], 9] }
+    let(:array6)      { [1, goal1[:B], 3]/:T }
+    let(:array7)      { [1, goal1[:B], 3]/goal1[:T] }
+    
+    it 'should return simple Arrays as is' do
+      assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],     array1.clean
+      assert_equal    [],                                   array2.clean
+      assert_equal    [UNKNOWN_TAIL],                       array3.clean
+      assert_equal    [1, :B, 3, UNKNOWN_TAIL],             array4.clean
+    end
+    
+    it 'should return the values of its elements with variables replaced by nil and Tails replaced by UNKNOWN_TAIL' do
+      assert_equal    [1, 2, nil, 4, [nil, 6, 7, nil], 9],  array5.clean
+      assert_equal    [1, nil, 3, UNKNOWN_TAIL],            array6.clean
+      assert_equal    [1, nil, 3, UNKNOWN_TAIL],            array7.clean
+    end
+    
+  end
+  
 end

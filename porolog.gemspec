@@ -10,8 +10,8 @@ require_relative 'lib/porolog'
 Gem::Specification.new do |gem|
   # -- Attributes --
   gem.name                      = 'porolog'
-  gem.summary                   = 'Prolog using Plain Old Ruby Objects (work in progress)'
-  gem.description               = 'Implements a Prolog inference engine using Plain Old Ruby Objects (work in progress)'
+  gem.summary                   = 'Prolog using Plain Old Ruby Objects'
+  gem.description               = 'Implements a Prolog inference engine using Plain Old Ruby Objects'
   gem.authors                   = ['Luis Esteban']
   gem.version                   = Porolog::VERSION
   gem.date                      = Porolog::VERSION_DATE
@@ -21,7 +21,6 @@ Gem::Specification.new do |gem|
   gem.default_executable        = 'porolog'
   gem.require_paths             = ['lib']
   gem.required_rubygems_version = Gem::Requirement.new('>= 0') if gem.respond_to? :required_rubygems_version=
-  gem.rubygems_version          = '1.6.2'
   
   # -- Files --
   gem.files = Dir[
@@ -30,6 +29,7 @@ Gem::Specification.new do |gem|
     'bin/porolog',
     'lib/porolog.rb',
     'lib/porolog/*.rb',
+    'lib/porolog/**/*.rb',
     'doc/**',
     'coverage/**',
   ]
@@ -37,6 +37,6 @@ Gem::Specification.new do |gem|
   # -- Test Files --
   gem.test_files = Dir[
     'test/test_helper.rb',
-    'test/porolog/*_test.rb',
+    'test/**/*_test.rb',
   ]
 end

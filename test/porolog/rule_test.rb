@@ -304,6 +304,25 @@ describe 'Porolog' do
         assert_equal    [goal, subgoal, [false]],       rule_spy.calls[0].args
       end
       
+      it 'should handle nil expression' do
+        rule = Rule.new args1, []
+        
+        goal.expects(:terminate!).with().times(0)
+        rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
+        called   = false
+        
+        result = rule.satisfy_conjunction(goal, subgoal, rule.definition) do |solution_goal|
+          #:nocov:
+          called = true
+          #:nocov:
+        end
+        
+        assert          result,                         'satisfy_conjunction should not succeed'
+        assert          called,                         'the satisfy block should not be called'
+        assert_equal    1,                              rule_spy.calls.size
+        assert_equal    [goal, subgoal, []],            rule_spy.calls[0].args
+      end
+      
       it 'should evaluate conjunctions until a fail' do
         conjunction = [true, true, true, false, true, :CUT, true]
         rule = Rule.new args1, conjunction

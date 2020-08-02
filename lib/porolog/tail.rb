@@ -23,6 +23,11 @@ module Porolog
       @value = value
     end
     
+    # @return [Symbol] the type of the Tail, which should be :tail.
+    def type
+      :tail
+    end
+    
     # Returns the value of the Tail.
     # The optional arguments are ignored; this is for polymorphic compatibility with Porolog::Value and Porolog::Variable,
     # which are used to prevent inifinite recursion.

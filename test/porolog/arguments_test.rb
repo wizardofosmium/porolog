@@ -504,8 +504,7 @@ describe 'Porolog' do
       end
       
       it 'should call a builtin predicate' do
-        skip 'until StandardPredicates added'
-        
+        builtin :write
         predicate :callwrite
         
         callwrite(:MESSAGE) << [
@@ -522,8 +521,7 @@ describe 'Porolog' do
       end
       
       it 'should pass on instantiations between goals' do
-        skip 'until StandardPredicates added'
-        
+        builtin :write
         predicate :passon, :copy
 
         copy(:A,:A).fact!
@@ -548,8 +546,7 @@ describe 'Porolog' do
       end
       
       it 'should implement simple recursion' do
-        skip 'until StandardPredicates added'
-        
+        builtin :write, :is, :gtr
         predicate :count
         
         count(1) << [
@@ -557,10 +554,12 @@ describe 'Porolog' do
           :CUT
         ]
         count(:N) << [
+          gtr(:N,1),
           write("N = ",:N),
           is(:M,:N){|n| n - 1 },
           write(" M = ",:M,"\n"),
           count(:M),
+          :CUT
         ]
         
         expected_output = [
@@ -586,8 +585,7 @@ describe 'Porolog' do
       end
       
       it 'should solve tower of Hanoi' do
-        skip 'until StandardPredicates added'
-        
+        builtin :gtr, :is, :write
         predicate :move
 
         move(1,:X,:Y,:Z) << [
@@ -629,23 +627,22 @@ describe 'Porolog' do
       end
       
       it 'should solve a peeling off predicate' do
-        skip 'until StandardPredicates added'
-        
-        predicate :size
+        builtin :is
+        predicate :peel
 
-        size([],0).cut_fact!
-        size(:H/:T,:N) << [
-          size(:T,:NT),
+        peel([],0).cut_fact!
+        peel(:H/:T,:N) << [
+          peel(:T,:NT),
           is(:N,:NT){|nt| nt + 1 },
         ]
         
-        solutions = size([],:N).solve
+        solutions = peel([],:N).solve
         
         assert_equal  [
           { N: 0 }
         ],solutions
         
-        solutions = size([13,17,19,23],:N).solve
+        solutions = peel([13,17,19,23],:N).solve
         
         assert_equal  [
           { N: 4 },
@@ -653,10 +650,10 @@ describe 'Porolog' do
       end
       
       it 'should solve tower of Hanoi with list representation' do
-        skip 'until StandardPredicates added and converted to list representation'
         # TODO: convert to list representation
         
-        predicate :tower
+        builtin :gtr, :is, :append, :write
+        predicate :tower, :move
         
         tower(1, :X, :Y, :Z, [[:X,:Z]]).fact!
         tower(:N, :X, :Y, :Z, :S) << [
@@ -668,68 +665,50 @@ describe 'Porolog' do
           append(:S1,  :S2, :S12),
           append(:S12, :S3, :S),
         ]
-        predicate :move
-
-        move(1,:X,:Y,:Z) << [
-          write('Move top disk from ', :X, ' to ', :Y, "\n"),
-        ]
-        move(:N,:X,:Y,:Z) << [
-          gtr(:N,1),
-          is(:M,:N){|n| n - 1 },
-          move(:M,:X,:Z,:Y), 
-          move(1,:X,:Y,:Q), 
-          move(:M,:Z,:Y,:X),
-        ]
-        
-        expected_output = [
-          'Move top disk from left to center',
-          'Move top disk from left to right',
-          'Move top disk from center to right',
-          'Move top disk from left to center',
-          'Move top disk from right to left',
-          'Move top disk from right to center',
-          'Move top disk from left to center',
-          'Move top disk from center to right',
-          'Move top disk from center to left',
-          'Move top disk from right to left',
-          'Move top disk from center to right',
-          'Move top disk from left to center',
-          'Move top disk from left to right',
-          'Move top disk from center to right',
-        ].map{|s| "#{s}\n" }.join
         
         solutions = tower(3, 'left', 'middle', 'right', :moves).solve
         
         expected_solutions = [
           {
             moves: [
-              ['left',   'center'],
               ['left',   'right'],
-              ['center', 'right'],
-              ['left',   'center'],
-              ['right',  'left'],
-              ['right',  'center'],
-              ['left',   'center'],
-              ['center', 'right'],
-              ['center', 'left'],
-              ['right',  'left'],
-              ['center', 'right'],
-              ['left',   'center'],
+              ['left',   'middle'],
+              ['right',  'middle'],
               ['left',   'right'],
-              ['center', 'right'],
+              ['middle', 'left'],
+              ['middle', 'right'],
+              ['left',   'right']
             ]
           }
         ]
         
         assert_equal  expected_solutions, solutions
 
-        assert_output expected_output do
-          solutions = move(4,'left','right','center').solve
-          
-          assert_equal  [
-            {},
-          ],solutions
-        end
+        solutions = tower(4, 'left', 'middle', 'right', :moves).solve
+        
+        expected_solutions = [
+          {
+            moves: [
+              ['left',    'middle'],
+              ['left',    'right'],
+              ['middle',  'right'],
+              ['left',    'middle'],
+              ['right',   'left'],
+              ['right',   'middle'],
+              ['left',    'middle'],
+              ['left',    'right'],
+              ['middle',  'right'],
+              ['middle',  'left'],
+              ['right',   'left'],
+              ['middle',  'right'],
+              ['left',    'middle'],
+              ['left',    'right'],
+              ['middle',  'right']
+            ]
+          }
+        ]
+        
+        assert_equal  expected_solutions, solutions
       end
       
     end

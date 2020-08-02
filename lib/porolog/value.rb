@@ -54,8 +54,8 @@ module Porolog
     # @param self_index [Integer,Symbol,Array] the index of which this value belongs.
     # @return [String] the inspect of the value in the context of the variables of a goal.
     def inspect_with_instantiations(visited = [], depth = 0, index = nil, self_index = nil)
-      index_str = index      && "[#{index.inspect}]"    || ''
-      prefix    = self_index && "#{self_index.inspect}" || ''
+      index_str = index && "[#{index.inspect}]" || ''
+      prefix    = self_index&.inspect || ''
       
       "#{'  ' * depth}#{prefix}#{inspect}#{index_str}"
     end
@@ -75,7 +75,7 @@ module Porolog
     
     # Responds to all the Value's value methods as well as its own.
     # @return [Boolean] whether the value responds to the method.
-    def respond_to?(method, include_all=false)
+    def respond_to?(method, include_all = false)
       @value.respond_to?(method, include_all) || super
     end
     

@@ -635,6 +635,7 @@
       <pre class="lines">
 
 
+44
 45
 46
 47
@@ -656,11 +657,10 @@
 63
 64
 65
-66
-67</pre>
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_goal'>goal</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/GoalError.html" title="Porolog::Variable::GoalError (class)">GoalError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not a Goal: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_goal'>goal</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="Goal.html" title="Porolog::Goal (class)">Goal</a></span></span><span class='rparen'>)</span>
@@ -741,6 +741,7 @@
       <pre class="lines">
 
 
+26
 27
 28
 29
@@ -1019,10 +1020,28 @@
 302
 303
 304
-305</pre>
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 26</span>
 
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span>
   
@@ -1069,7 +1088,7 @@
   <span class='comment'># Converts a Variable back to a Symbol.
 </span>  <span class='comment'># @return [Symbol, nil] the name of the Variable.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='ivar'>@name</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='ivar'>@name</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
   
   <span class='comment'># @return [Symbol] the type of the Variable, which should be :variable.
@@ -1135,21 +1154,40 @@
     <span class='comment'># -- Condense Values --
 </span>    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
       <span class='comment'># -- Potentially Multiple Values Found --
-</span>      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>      <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
         <span class='comment'># -- All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        
+</span>        <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_values_goals'>values_goals</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
         <span class='rbrace'>}</span>
 
-        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>elsif</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_no_variables'>no_variables</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_no_variables'>no_variables</span>
+            <span class='id identifier rubyid_left_value'>left_value</span>  <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='id identifier rubyid_right_value'>right_value</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='kw'>if</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_left_value'>left_value</span> <span class='op'>!=</span> <span class='id identifier rubyid_right_value'>right_value</span>
+              <span class='kw'>return</span> <span class='kw'>nil</span>
+            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_arrays'>unify_arrays</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='comment'># :nocov: NOT REACHED
+</span>          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+          <span class='comment'># :nocov:
+</span>        <span class='kw'>end</span>
         
         <span class='id identifier rubyid_merged'>merged</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
       <span class='kw'>else</span>
         <span class='comment'># -- Not All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
+</span>        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
           <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
           <span class='kw'>if</span> <span class='id identifier rubyid_unification'>unification</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_unifications'>unifications</span>
             <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -1158,26 +1196,26 @@
           <span class='kw'>end</span>
         <span class='rbrace'>}</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_unifications'>unifications</span>
-          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
             <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
               <span class='kw'>else</span>                              <span class='int'>0</span>
             <span class='kw'>end</span>
-          <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+          <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/MultipleValuesError.html" title="Porolog::Variable::MultipleValuesError (class)">MultipleValuesError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple values detected for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>else</span>
       <span class='comment'># -- One (or None) Value Found --
-</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
         <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
           <span class='kw'>else</span>                              <span class='int'>0</span>
         <span class='kw'>end</span>
-      <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+      <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
     <span class='kw'>end</span>
     
     <span class='comment'># -- Splat Tail --
@@ -1354,6 +1392,7 @@
       <pre class="lines">
 
 
+26
 27
 28
 29
@@ -1632,10 +1671,28 @@
 302
 303
 304
-305</pre>
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 26</span>
 
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span>
   
@@ -1682,7 +1739,7 @@
   <span class='comment'># Converts a Variable back to a Symbol.
 </span>  <span class='comment'># @return [Symbol, nil] the name of the Variable.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='ivar'>@name</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='ivar'>@name</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
   
   <span class='comment'># @return [Symbol] the type of the Variable, which should be :variable.
@@ -1748,21 +1805,40 @@
     <span class='comment'># -- Condense Values --
 </span>    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
       <span class='comment'># -- Potentially Multiple Values Found --
-</span>      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>      <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
         <span class='comment'># -- All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        
+</span>        <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_values_goals'>values_goals</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
         <span class='rbrace'>}</span>
 
-        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>elsif</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_no_variables'>no_variables</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_no_variables'>no_variables</span>
+            <span class='id identifier rubyid_left_value'>left_value</span>  <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='id identifier rubyid_right_value'>right_value</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='kw'>if</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_left_value'>left_value</span> <span class='op'>!=</span> <span class='id identifier rubyid_right_value'>right_value</span>
+              <span class='kw'>return</span> <span class='kw'>nil</span>
+            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_arrays'>unify_arrays</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='comment'># :nocov: NOT REACHED
+</span>          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+          <span class='comment'># :nocov:
+</span>        <span class='kw'>end</span>
         
         <span class='id identifier rubyid_merged'>merged</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
       <span class='kw'>else</span>
         <span class='comment'># -- Not All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
+</span>        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
           <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
           <span class='kw'>if</span> <span class='id identifier rubyid_unification'>unification</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_unifications'>unifications</span>
             <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -1771,26 +1847,26 @@
           <span class='kw'>end</span>
         <span class='rbrace'>}</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_unifications'>unifications</span>
-          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
             <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
               <span class='kw'>else</span>                              <span class='int'>0</span>
             <span class='kw'>end</span>
-          <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+          <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/MultipleValuesError.html" title="Porolog::Variable::MultipleValuesError (class)">MultipleValuesError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple values detected for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>else</span>
       <span class='comment'># -- One (or None) Value Found --
-</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
         <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
           <span class='kw'>else</span>                              <span class='int'>0</span>
         <span class='kw'>end</span>
-      <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+      <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
     <span class='kw'>end</span>
     
     <span class='comment'># -- Splat Tail --
@@ -1967,6 +2043,7 @@
       <pre class="lines">
 
 
+26
 27
 28
 29
@@ -2245,10 +2322,28 @@
 302
 303
 304
-305</pre>
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 26</span>
 
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span>
   
@@ -2295,7 +2390,7 @@
   <span class='comment'># Converts a Variable back to a Symbol.
 </span>  <span class='comment'># @return [Symbol, nil] the name of the Variable.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='ivar'>@name</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='ivar'>@name</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
   
   <span class='comment'># @return [Symbol] the type of the Variable, which should be :variable.
@@ -2361,21 +2456,40 @@
     <span class='comment'># -- Condense Values --
 </span>    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
       <span class='comment'># -- Potentially Multiple Values Found --
-</span>      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>      <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
         <span class='comment'># -- All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        
+</span>        <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_values_goals'>values_goals</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
         <span class='rbrace'>}</span>
 
-        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>elsif</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_no_variables'>no_variables</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_no_variables'>no_variables</span>
+            <span class='id identifier rubyid_left_value'>left_value</span>  <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='id identifier rubyid_right_value'>right_value</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='kw'>if</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_left_value'>left_value</span> <span class='op'>!=</span> <span class='id identifier rubyid_right_value'>right_value</span>
+              <span class='kw'>return</span> <span class='kw'>nil</span>
+            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_arrays'>unify_arrays</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='comment'># :nocov: NOT REACHED
+</span>          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+          <span class='comment'># :nocov:
+</span>        <span class='kw'>end</span>
         
         <span class='id identifier rubyid_merged'>merged</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
       <span class='kw'>else</span>
         <span class='comment'># -- Not All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
+</span>        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
           <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
           <span class='kw'>if</span> <span class='id identifier rubyid_unification'>unification</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_unifications'>unifications</span>
             <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -2384,26 +2498,26 @@
           <span class='kw'>end</span>
         <span class='rbrace'>}</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_unifications'>unifications</span>
-          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
             <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
               <span class='kw'>else</span>                              <span class='int'>0</span>
             <span class='kw'>end</span>
-          <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+          <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/MultipleValuesError.html" title="Porolog::Variable::MultipleValuesError (class)">MultipleValuesError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple values detected for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>else</span>
       <span class='comment'># -- One (or None) Value Found --
-</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
         <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
           <span class='kw'>else</span>                              <span class='int'>0</span>
         <span class='kw'>end</span>
-      <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+      <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
     <span class='kw'>end</span>
     
     <span class='comment'># -- Splat Tail --
@@ -2580,6 +2694,7 @@
       <pre class="lines">
 
 
+26
 27
 28
 29
@@ -2858,10 +2973,28 @@
 302
 303
 304
-305</pre>
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 26</span>
 
 <span class='kw'>class</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span>
   
@@ -2908,7 +3041,7 @@
   <span class='comment'># Converts a Variable back to a Symbol.
 </span>  <span class='comment'># @return [Symbol, nil] the name of the Variable.
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
-    <span class='ivar'>@name</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='ivar'>@name</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
   
   <span class='comment'># @return [Symbol] the type of the Variable, which should be :variable.
@@ -2974,21 +3107,40 @@
     <span class='comment'># -- Condense Values --
 </span>    <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
       <span class='comment'># -- Potentially Multiple Values Found --
-</span>      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>      <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
         <span class='comment'># -- All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        
+</span>        <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rparen'>)</span>
         <span class='id identifier rubyid_values_goals'>values_goals</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+          <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
         <span class='rbrace'>}</span>
 
-        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>elsif</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>2</span>
+          <span class='id identifier rubyid_no_variables'>no_variables</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_no_variables'>no_variables</span>
+            <span class='id identifier rubyid_left_value'>left_value</span>  <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='id identifier rubyid_right_value'>right_value</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+            <span class='kw'>if</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+              <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+            <span class='kw'>elsif</span> <span class='id identifier rubyid_left_value'>left_value</span> <span class='op'>!=</span> <span class='id identifier rubyid_right_value'>right_value</span>
+              <span class='kw'>return</span> <span class='kw'>nil</span>
+            <span class='kw'>end</span>
+          <span class='kw'>end</span>
+          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_arrays'>unify_arrays</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+        <span class='kw'>else</span>
+          <span class='comment'># :nocov: NOT REACHED
+</span>          <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+          <span class='comment'># :nocov:
+</span>        <span class='kw'>end</span>
         
         <span class='id identifier rubyid_merged'>merged</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
       <span class='kw'>else</span>
         <span class='comment'># -- Not All Values Are Arrays --
-</span>        <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
+</span>        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
           <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
           <span class='kw'>if</span> <span class='id identifier rubyid_unification'>unification</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_unifications'>unifications</span>
             <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -2997,26 +3149,26 @@
           <span class='kw'>end</span>
         <span class='rbrace'>}</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_unifications'>unifications</span>
-          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+          <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
             <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
               <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
               <span class='kw'>else</span>                              <span class='int'>0</span>
             <span class='kw'>end</span>
-          <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+          <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
         <span class='kw'>else</span>
           <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/MultipleValuesError.html" title="Porolog::Variable::MultipleValuesError (class)">MultipleValuesError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple values detected for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
         <span class='kw'>end</span>
       <span class='kw'>end</span>
     <span class='kw'>else</span>
       <span class='comment'># -- One (or None) Value Found --
-</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
         <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
           <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
           <span class='kw'>else</span>                              <span class='int'>0</span>
         <span class='kw'>end</span>
-      <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+      <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
     <span class='kw'>end</span>
     
     <span class='comment'># -- Splat Tail --
@@ -3218,12 +3370,12 @@
       <pre class="lines">
 
 
-301
-302
-303</pre>
+319
+320
+321</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 301</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 319</span>
 
 <span class='kw'>def</span> <span class='op'>==</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@name</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@goal</span> <span class='op'>==</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span>
@@ -3297,34 +3449,34 @@
       <pre class="lines">
 
 
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
 285
 286
 287
 288
 289
 290
-291</pre>
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 285</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
@@ -3400,12 +3552,12 @@
       <pre class="lines">
 
 
+80
 81
-82
-83</pre>
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect'>inspect</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@goal</span><span class='period'>.</span><span class='id identifier rubyid_myid'>myid</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -3535,6 +3687,7 @@
       <pre class="lines">
 
 
+89
 90
 91
 92
@@ -3554,11 +3707,10 @@
 106
 107
 108
-109
-110</pre>
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_inspect_with_instantiations'>inspect_with_instantiations</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_depth'>depth</span> <span class='op'>=</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_self_index'>self_index</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_visited'>visited</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -3721,24 +3873,6 @@
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
 225
 226
 227
@@ -3756,10 +3890,28 @@
 239
 240
 241
-242</pre>
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 225</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_instantiate'>instantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='comma'>,</span> <span class='id identifier rubyid_index_into_other'>index_into_other</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_index_into_self'>index_into_self</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/SelfReferentialError.html" title="Porolog::Variable::SelfReferentialError (class)">SelfReferentialError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot instantiate self-referential definition for </span><span class='embexpr_beg'>#{</span><span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>  <span class='kw'>unless</span> <span class='lparen'>(</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span> <span class='op'>&amp;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -3846,14 +3998,14 @@
       <pre class="lines">
 
 
-246
-247
-248
-249
-250</pre>
+264
+265
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 264</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span>
   <span class='ivar'>@instantiations</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:remove</span><span class='rparen'>)</span>
@@ -3909,15 +4061,15 @@
       <pre class="lines">
 
 
+70
 71
-72
-73</pre>
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_sym'>to_sym</span>
-  <span class='ivar'>@name</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='ivar'>@name</span><span class='op'>&amp;.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -3968,12 +4120,12 @@
       <pre class="lines">
 
 
+75
 76
-77
-78</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='symbol'>:variable</span>
@@ -4047,17 +4199,17 @@
       <pre class="lines">
 
 
-255
-256
-257
-258
-259
-260
-261
-262</pre>
+273
+274
+275
+276
+277
+278
+279
+280</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 255</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninstantiate'>uninstantiate</span><span class='lparen'>(</span><span class='id identifier rubyid_other_goal'>other_goal</span><span class='rparen'>)</span>
   <span class='ivar'>@instantiations</span><span class='period'>.</span><span class='id identifier rubyid_delete_if'>delete_if</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_instantiation'>instantiation</span><span class='op'>|</span>
@@ -4138,6 +4290,7 @@
       <pre class="lines">
 
 
+114
 115
 116
 117
@@ -4212,10 +4365,28 @@
 186
 187
 188
-189</pre>
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_visited'>visited</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -4240,21 +4411,40 @@
   <span class='comment'># -- Condense Values --
 </span>  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
     <span class='comment'># -- Potentially Multiple Values Found --
-</span>    <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+</span>    <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_values_values'>values_values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Array.html" title="Array (class)">Array</a></span></span><span class='rparen'>)</span> <span class='rbrace'>}</span>
       <span class='comment'># -- All Values Are Arrays --
-</span>      <span class='id identifier rubyid_unifications'>unifications</span>  <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-      
+</span>      <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span><span class='rparen'>)</span>
       <span class='id identifier rubyid_values_goals'>values_goals</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
-        <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+        <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:goal</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_goal'>goal</span> <span class='op'>||</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:goal</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
       <span class='rbrace'>}</span>
 
-      <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>2</span>
+        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_many_arrays'>unify_many_arrays</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+      <span class='kw'>elsif</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>2</span>
+        <span class='id identifier rubyid_no_variables'>no_variables</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:variables</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_no_variables'>no_variables</span>
+          <span class='id identifier rubyid_left_value'>left_value</span>  <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+          <span class='id identifier rubyid_right_value'>right_value</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span>
+          <span class='kw'>if</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+            <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+          <span class='kw'>elsif</span> <span class='id identifier rubyid_right_value'>right_value</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_left_value'>left_value</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span>
+            <span class='kw'>return</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_right_value'>right_value</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>...</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_left_value'>left_value</span><span class='lbracket'>[</span><span class='int'>1</span><span class='op'>..</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+          <span class='kw'>elsif</span> <span class='id identifier rubyid_left_value'>left_value</span> <span class='op'>!=</span> <span class='id identifier rubyid_right_value'>right_value</span>
+            <span class='kw'>return</span> <span class='kw'>nil</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_unify_arrays'>unify_arrays</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_values'>values</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_values_goals'>values_goals</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='comment'># :nocov: NOT REACHED
+</span>        <span class='id identifier rubyid_merged'>merged</span><span class='comma'>,</span> <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+        <span class='comment'># :nocov:
+</span>      <span class='kw'>end</span>
       
       <span class='id identifier rubyid_merged'>merged</span><span class='period'>.</span><span class='id identifier rubyid_value'>value</span><span class='lparen'>(</span><span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
     <span class='kw'>else</span>
       <span class='comment'># -- Not All Values Are Arrays --
-</span>      <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
+</span>      <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each_cons'>each_cons</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span><span class='id identifier rubyid_right'>right</span><span class='op'>|</span>
         <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_left'>left</span><span class='comma'>,</span> <span class='id identifier rubyid_right'>right</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='ivar'>@goal</span><span class='comma'>,</span> <span class='id identifier rubyid_visited'>visited</span><span class='rparen'>)</span>
         <span class='kw'>if</span> <span class='id identifier rubyid_unification'>unification</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_unifications'>unifications</span>
           <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -4263,26 +4453,26 @@
         <span class='kw'>end</span>
       <span class='rbrace'>}</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unifications'>unifications</span>
-        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+        <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
           <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
             <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
             <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
             <span class='kw'>else</span>                              <span class='int'>0</span>
           <span class='kw'>end</span>
-        <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+        <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
       <span class='kw'>else</span>
         <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Variable/MultipleValuesError.html" title="Porolog::Variable::MultipleValuesError (class)">MultipleValuesError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Multiple values detected for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
       <span class='kw'>end</span>
     <span class='kw'>end</span>
   <span class='kw'>else</span>
     <span class='comment'># -- One (or None) Value Found --
-</span>    <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+</span>    <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_min_by'>min_by</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
       <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
         <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="" title="Porolog::Variable (class)">Variable</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Symbol.html" title="Symbol (class)">Symbol</a></span></span>             <span class='kw'>then</span>  <span class='int'>2</span>
         <span class='kw'>when</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_TAIL-constant" title="Porolog::UNKNOWN_TAIL (constant)">UNKNOWN_TAIL</a></span></span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="../Porolog.html#UNKNOWN_ARRAY-constant" title="Porolog::UNKNOWN_ARRAY (constant)">UNKNOWN_ARRAY</a></span></span>  <span class='kw'>then</span>  <span class='int'>9</span>
         <span class='kw'>else</span>                              <span class='int'>0</span>
       <span class='kw'>end</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span> <span class='op'>||</span> <span class='kw'>self</span>
+    <span class='rbrace'>}</span> <span class='op'>||</span> <span class='kw'>self</span>
   <span class='kw'>end</span>
   
   <span class='comment'># -- Splat Tail --
@@ -4341,12 +4531,12 @@
       <pre class="lines">
 
 
-294
-295
-296</pre>
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'lib/porolog/variable.rb', line 312</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_variables'>variables</span>
   <span class='lbracket'>[</span><span class='kw'>self</span><span class='rbracket'>]</span>
@@ -4361,7 +4551,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul  6 22:54:46 2020 by
+  Generated on Sun Aug  2 18:05:24 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.6.5).
 </div>

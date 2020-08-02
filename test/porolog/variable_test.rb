@@ -122,6 +122,7 @@ describe 'Porolog' do
       
       it 'should return variable from instantiated variables' do
         variable = Variable.new 'v', goal1
+        variable.instantiate 'string value'
         
         assert_equal        :variable,  variable.type
       end
@@ -310,7 +311,13 @@ describe 'Porolog' do
         assert_equal    headtail,   goal1.value_of(:x)
         assert_equal    headtail,   goal1.value_of(:y)
         assert_equal    headtail,   goal1.value_of(:z)
-        assert_Goal_variables       goal1, { m: nil, n: nil, x: headtail, y: headtail, z: headtail }, [
+        assert_Goal_variables       goal1, {
+          m: nil,
+          n: nil,
+          x: [nil, UNKNOWN_TAIL],
+          y: [nil, UNKNOWN_TAIL],
+          z: [nil, UNKNOWN_TAIL]
+        }, [
           'Goal1.:m',
           '  Goal1.:y[:head]',
           '    Goal1.:x',
@@ -450,59 +457,6 @@ describe 'Porolog' do
         ].join("\n")
       end
       
-      it 'should raise an exception when multiple values are detected' do
-        skip 'because multiple unequal values are avoided'
-        
-        # :nocov:
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        variable3 = Variable.new :z, goal3
-        
-        value1    = Value.new [1,2,3], goal2
-        value2    = Value.new 'word',  goal3
-        
-        i1 = variable1.instantiate variable2
-        i2 = variable1.instantiate variable3
-        i3 = variable2.instantiate value1
-        i4 = variable3.instantiate value2
-        
-        assert_Instantiation    i1,     variable1,  variable2,  nil,  nil
-        assert_Instantiation    i2,     variable1,  variable3,  nil,  nil
-        assert_Instantiation    i3,     variable2,  value1,     nil,  nil
-        assert_Instantiation    i4,     variable3,  value2,     nil,  nil
-        
-        assert_raises Variable::MultipleValuesError do
-          assert_equal    value1.value,   variable1.value
-          assert_equal    value2.value,   variable1.value
-        end
-        
-        assert_Goal_variables   goal1, { m: nil, n: nil, x: [1,2,3] }, [
-          'Goal1.:m',
-          'Goal1.:n',
-          'Goal1.:x',
-          '  Goal2.:y',
-          '    Goal2.[1, 2, 3]',
-          '  Goal3.:z',
-        ].join("\n")
-        assert_Goal_variables   goal2, { m: nil, n: nil, y: [1,2,3] }, [
-          'Goal2.:m',
-          'Goal2.:n',
-          'Goal2.:y',
-          '  Goal1.:x',
-          '    Goal3.:z',
-          '  Goal2.[1, 2, 3]',
-        ].join("\n")
-        assert_Goal_variables   goal3, { m: nil, n: nil, z: [1,2,3] }, [
-          'Goal3.:m',
-          'Goal3.:n',
-          'Goal3.:z',
-          '  Goal1.:x',
-          '    Goal2.:y',
-          '      Goal2.[1, 2, 3]',
-        ].join("\n")
-        # :nocov:
-      end
-      
       it 'should not raise an exception when multiple values are equal' do
         variable1 = Variable.new :x, goal1
         variable2 = Variable.new :y, goal2
@@ -569,6 +523,42 @@ describe 'Porolog' do
         variable1.values << UNKNOWN_ARRAY
         
         assert_equal    :variable1,     variable1.value
+      end
+      
+      it 'should unify a matching flathead and flattail pair' do
+        variable1 = Variable.new :x, goal1
+        
+        variable1.values << [1,2,UNKNOWN_TAIL]
+        variable1.values << [UNKNOWN_TAIL,3,4]
+        
+        assert_equal    [1,2,3,4],     variable1.value
+      end
+      
+      it 'should unify a matching flattail and flathead pair' do
+        variable1 = Variable.new :x, goal1
+        
+        variable1.values << [UNKNOWN_TAIL,3,4]
+        variable1.values << [1,2,UNKNOWN_TAIL]
+        
+        assert_equal    [1,2,3,4],     variable1.value
+      end
+      
+      it 'should return nil when the values are incompatible' do
+        variable1 = Variable.new :x, goal1
+        
+        variable1.values << [1,3,4]
+        variable1.values << [1,2,UNKNOWN_TAIL]
+        
+        assert_nil                     variable1.value
+      end
+      
+      it 'should unify a special case' do
+        variable1 = Variable.new :x, goal1
+        
+        variable1.values << [1,[3,4]]
+        variable1.values << goal1[:h]/goal1[:t]
+        
+        assert_equal    [1,[3,4]],     variable1.value
       end
       
     end
@@ -671,7 +661,6 @@ describe 'Porolog' do
         # -- Assert Values --
         assert_equal        13,                     variable1.value
         assert_equal        [7,11,13,23,29],        variable2.value
-        #assert_nil                                  variable3.value
         assert_equal        variable3,              variable3.value
         
         # -- Assert instantiations --

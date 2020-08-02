@@ -121,7 +121,7 @@ module Porolog
       return nil unless variables.include?(variable)
       
       other_variable = (variables - [variable]).first
-      other_variable && other_variable.goal
+      other_variable&.goal
     end
     
     # @return [Array<Porolog::Goal>] the Goals of the Variables of the Instantiation.
@@ -139,10 +139,10 @@ module Porolog
     def values(visited = [])
       return [] if visited.include?(self)
       
-      vv1 = values_for(@variable1, visited)
-      vv2 = values_for(@variable2, visited)
+      values_for_variable1 = values_for(@variable1, visited)
+      values_for_variable2 = values_for(@variable2, visited)
       
-      (vv1 + vv2).uniq
+      (values_for_variable1 + values_for_variable2).uniq
     end
     
     # @param value [Object] the provided value.
@@ -174,7 +174,21 @@ module Porolog
         
         when Symbol
           value_value = value.value(visited)
-          if value_value.respond_to?(index)
+          if index == :flathead
+            # value_value = [..., 4, 5, 6]
+            if value_value.first == UNKNOWN_TAIL
+              UNKNOWN_ARRAY
+            else
+              nil
+            end
+          elsif index == :flattail
+            # value_value = [1, 2, 3, ...]
+            if value_value.first == UNKNOWN_TAIL
+              nil
+            elsif value_value.last == UNKNOWN_TAIL
+              UNKNOWN_ARRAY
+            end
+          elsif value_value.respond_to?(index)
             value_value.send(index)
           else
             value
@@ -204,6 +218,22 @@ module Porolog
       visited = visited + [self]
       
       if variable == @variable1
+        if @index1 == :flathead
+          flathead = value_at_index(value_indexed(@variable2.value(visited), @index2, visited), @index1).value.value
+          if flathead
+            return [[*flathead]]
+          else
+            return []
+          end
+        end
+        if @index1 == :flattail
+          flattail = value_at_index(value_indexed(@variable2.value(visited), @index2, visited), @index1).value.value
+          if flattail
+            return [[UNKNOWN_TAIL, *flattail]]
+          else
+            return []
+          end
+        end
         if @index1
           [value_at_index(value_indexed(@variable2.value(visited), @index2, visited), @index1)]
         else
@@ -214,6 +244,22 @@ module Porolog
           end
         end
       elsif variable == @variable2
+        if @index2 == :flathead
+          flathead = value_at_index(value_indexed(@variable1.value(visited), @index1, visited), @index2).value.value
+          if flathead
+            return [[*flathead]]
+          else
+            return []
+          end
+        end
+        if @index2 == :flattail
+          flattail = value_at_index(value_indexed(@variable1.value(visited), @index1, visited), @index2).value.value
+          if flattail
+            return [[UNKNOWN_TAIL, *flattail]]
+          else
+            return []
+          end
+        end
         if @index2
           [value_at_index(value_indexed(@variable1.value(visited), @index1, visited), @index2)]
         else
@@ -241,10 +287,14 @@ module Porolog
         
         when Symbol
           case index
+            when :flathead
+              [*value, UNKNOWN_TAIL]
             when :head
               [value, UNKNOWN_TAIL]
             when :tail
               [nil, *value]
+            when :flattail
+              value
             else
               raise UnhandledIndexError, "Unhandled index: #{index.inspect} for #{value.inspect}"
           end
@@ -253,10 +303,6 @@ module Porolog
           if index.empty?
             [nil, *value]
           else
-            #result                 = []
-            #result[0..index.first] = value
-            #result
-            #[*([*value][0..index.first]), UNKNOWN_TAIL]
             [value, UNKNOWN_TAIL]
           end
         

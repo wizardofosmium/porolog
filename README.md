@@ -20,7 +20,8 @@ program using native Ruby objects (POROs); hence the name Porolog.
 The goal was to implement a minimal logic engine in the style of Prolog where
 Ruby objects could be passed in and Ruby objects were passed back.
 
-This version completes the minimal/generic logic engine.
+This version completes the minimal/generic logic engine along with some standard builtin predicates.
+Custom builtin predicates can be easily added.
 
 ## Dependencies
 
@@ -42,6 +43,15 @@ gem install porolog
 * solving goals
 
 It is entirely possible to create a Ruby program that is effectively just a Prolog program.
+The main purpose of Porolog though is to add declarative logic programming to Ruby and
+allow hybrid programming, in the same way that Ruby allows hybrid programming in the
+functional programming paradigm.
+
+This then Ruby programs to be written spanning all the major programming paradigms:
+- Imperative
+- Functional
+- Object Oriented
+- Declarative Logic
 
 ### Basic Usage
 

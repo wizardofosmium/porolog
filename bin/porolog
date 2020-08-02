@@ -4,28 +4,49 @@
 #
 #     Luis Esteban  19 April 2019
 #       created
+#     Luis Esteban  2 August 2020
+#       added builtin predicates
 #
 
-require_relative '../lib/porolog'
-#require 'porolog'
+require 'porolog'
 
 include Porolog
 
 puts '-- Sample Porolog Program --'
 
 
-# -- Predicate Facts --
-predicate :alpha
+# -- Predicate Facts and Rules --
+builtin   :gtr, :is, :noteq, :between
+predicate :prime, :search_prime
 
-alpha(2).fact!
-alpha(3).fact!
-alpha(5).fact!
-alpha(7).fact!
+prime(2).fact!
+prime(3).fact!
+prime(:X) << [
+  between(:X, 4, 20000),
+  is(:X_mod_2, :X) {|x| x % 2 },
+  noteq(:X_mod_2, 0),
+  :CUT,
+  search_prime(:X, 3),
+]
+
+search_prime(:X, :N) << [
+  is(:N_squared, :N) {|n| n ** 2 },
+  gtr(:N_squared, :X),
+  :CUT
+]
+
+search_prime(:X, :N) << [
+  is(:X_mod_N, :X, :N) {|x,n| x % n },
+  noteq(:X_mod_N, 0),
+  is(:M, :N) {|n| n + 2 },
+  :CUT,
+  search_prime(:X, :M),
+]
 
 
 # -- Validation Queries --
-(0..10).each do |i|
-  query = alpha(i)
+(0..23).each do |i|
+  query = prime(i)
 
   if query.valid?
     puts "#{query.inspect} is valid"
@@ -36,12 +57,12 @@ end
 
 
 # -- Solution Queries --
-query = alpha(:X)
+query = prime(:X)
 
-solutions = query.solve
+solutions = query.solve(50)
 puts solutions.inspect
 
 solutions_for_x = query.solve_for(:X)
 solutions_for_x.each do |x|
-  puts "#{x.inspect} is alpha"
+  puts "#{x.inspect} is prime"
 end

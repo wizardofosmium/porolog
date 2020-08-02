@@ -73,7 +73,7 @@ module Porolog
     # @param predicate [Porolog::Predicate] a Predicate to be assigned to the Scope.
     # @return [Porolog::Predicate] the Predicate assigned to the Scope.
     # @raise [NotPredicateError] when provided predicate is not actually a Predicate.
-    def []=(name,predicate)
+    def []=(name, predicate)
       raise NotPredicateError, "#{predicate.inspect} is not a Predicate" unless predicate.is_a?(Predicate)
       @predicates[name.to_sym] = predicate
     end

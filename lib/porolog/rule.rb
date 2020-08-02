@@ -122,39 +122,23 @@ module Porolog
           end
           
           if arguments == :CUT
-            subgoal.calling_goal.terminate!
-            subgoal.calling_goal.log << "TERMINATED by #{subgoal.inspect}"
+            goal.terminate!
+            goal.log << "TERMINATED after #{subgoal.inspect}"
           end
           
           return result
           
         when false
           return false
-      end
-      
-      # -- Unify Subgoal --
-      subsubgoal   = arguments.goal(subgoal)
-      variables    = (subgoal.arguments.variables + subsubgoal.arguments.variables).map(&:to_sym).uniq
-      unified      = true
-      unifications = []
-      
-      variables.each do |variable|
-        name = variable
         
-        unification = unify(name, name, subgoal, subsubgoal)
-        unified   &&= !!unification
-        if unified
-          unifications += unification
-        else
-          #:nocov:
-          subsubgoal.log << "Couldn't unify: #{name.inspect} WITH #{subgoal.myid} AND #{subsubgoal.myid}"
-          break
-          #:nocov:
-        end
+        when nil
+          block.call(subgoal)
+          return true
       end
       
-      # -- Instantiate Unifications --
-      unified &&= instantiate_unifications(unifications) if unified
+      # -- Unify Subsubgoal --
+      subsubgoal = arguments.goal(subgoal)
+      unified    = subsubgoal.inherit_variables(subgoal)
       
       # -- Satisfy Subgoal --
       result = false

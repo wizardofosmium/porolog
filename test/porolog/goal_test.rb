@@ -644,10 +644,10 @@ describe 'Porolog' do
         assert_equal  [{}],  solutions
       end
       
-      it 'should not solve a falicy' do
+      it 'should not solve a fallacy' do
         predicate :fact
         
-        fact(42).falicy!
+        fact(42).fallacy!
         
         solutions = fact(42).solve
         

@@ -96,11 +96,11 @@
 
 <p>It is entirely possible to create a Ruby program that is effectively just a Prolog program. The main purpose of Porolog though is to add declarative logic programming to Ruby and allow hybrid programming, in the same way that Ruby allows hybrid programming in the functional programming paradigm.</p>
 
-<p>This then Ruby programs to be written spanning all the major programming paradigms: - Imperative - Functional - Object Oriented - Declarative Logic</p>
+<p>This then enables Ruby programs to be written spanning all the major programming paradigms: - Imperative - Functional - Object Oriented - Declarative Logic</p>
 
 <h3 id="label-Basic+Usage">Basic Usage</h3>
 
-<p>Using <code>porolog</code> involves creating logic from facts and rules. An example, of the most basic usage uses just facts.</p>
+<p>Using <code>porolog</code> involves creating logic from facts and rules. An example of the most basic usage, using just facts.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>porolog</span><span class='tstring_end'>&#39;</span></span>
 
@@ -129,7 +129,7 @@
 <span class='kw'>class</span> <span class='const'>Numbers</span>
 
   <span class='const'>Predicate</span><span class='period'>.</span><span class='id identifier rubyid_scope'>scope</span> <span class='kw'>self</span>
-  <span class='id identifier rubyid_predicate'>predicate</span> <span class='symbol'>:prime</span>
+  <span class='id identifier rubyid_predicate'>predicate</span> <span class='symbol'>:prime</span><span class='comma'>,</span> <span class='label'>class_base:</span> <span class='kw'>self</span>
 
   <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fact!'>fact!</span>
   <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fact!'>fact!</span>
@@ -160,7 +160,7 @@
 
 <p>A Predicate represents a Prolog predicate. They form the basis for rules and queries.</p>
 
-<p>The Scope class enables you to have multiple logic programs embedded in the same Ruby program. A Scope object defines a scope for the predicates of a logic programme.</p>
+<p>The Scope class enables you to have multiple logic programs embedded in the same Ruby program. A Scope object defines a scope for the predicates of a logic programme. This allows you to have different predicates with the same name.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>porolog</span><span class='tstring_end'>&#39;</span></span>
 
@@ -182,14 +182,9 @@
 <span class='id identifier rubyid_prime'>prime</span><span class='period'>.</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pump D</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fact!'>fact!</span>
 
 <span class='comment'># -- Assertions --
-</span><span class='id identifier rubyid_assert_equal'>assert_equal</span>        <span class='lbracket'>[</span><span class='symbol'>:default</span><span class='comma'>,</span><span class='symbol'>:numbers</span><span class='comma'>,</span><span class='symbol'>:pumps</span><span class='rbracket'>]</span><span class='comma'>,</span>     <span class='const'>Scope</span><span class='period'>.</span><span class='id identifier rubyid_scopes'>scopes</span>
-
-<span class='id identifier rubyid_assert_scope'>assert_scope</span>        <span class='const'><span class='object_link'><a href="Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span></span><span class='lbracket'>[</span><span class='symbol'>:default</span><span class='rbracket'>]</span><span class='comma'>,</span>  <span class='symbol'>:default</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='id identifier rubyid_assert_scope'>assert_scope</span>        <span class='const'><span class='object_link'><a href="Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span></span><span class='lbracket'>[</span><span class='symbol'>:numbers</span><span class='rbracket'>]</span><span class='comma'>,</span>  <span class='symbol'>:first</span><span class='comma'>,</span>   <span class='lbracket'>[</span><span class='id identifier rubyid_prime1'>prime1</span><span class='rbracket'>]</span>
-<span class='id identifier rubyid_assert_scope'>assert_scope</span>        <span class='const'><span class='object_link'><a href="Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Porolog/Scope.html" title="Porolog::Scope (class)">Scope</a></span></span><span class='lbracket'>[</span><span class='symbol'>:pumps</span><span class='rbracket'>]</span><span class='comma'>,</span>    <span class='symbol'>:second</span><span class='comma'>,</span>  <span class='lbracket'>[</span><span class='id identifier rubyid_prime2'>prime2</span><span class='rbracket'>]</span>
-
-<span class='id identifier rubyid_assert_equal'>assert_equal</span>        <span class='symbol'>:prime</span><span class='comma'>,</span>     <span class='id identifier rubyid_prime1'>prime1</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
-<span class='id identifier rubyid_assert_equal'>assert_equal</span>        <span class='symbol'>:prime</span><span class='comma'>,</span>     <span class='id identifier rubyid_prime2'>prime2</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+</span><span class='id identifier rubyid_assert_equal'>assert_equal</span>  <span class='lbracket'>[</span><span class='symbol'>:default</span><span class='comma'>,</span><span class='symbol'>:numbers</span><span class='comma'>,</span><span class='symbol'>:pumps</span><span class='rbracket'>]</span><span class='comma'>,</span>     <span class='const'>Scope</span><span class='period'>.</span><span class='id identifier rubyid_scopes'>scopes</span>
+<span class='id identifier rubyid_assert_equal'>assert_equal</span>  <span class='symbol'>:prime</span><span class='comma'>,</span>                         <span class='id identifier rubyid_prime1'>prime1</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+<span class='id identifier rubyid_assert_equal'>assert_equal</span>  <span class='symbol'>:prime</span><span class='comma'>,</span>                         <span class='id identifier rubyid_prime2'>prime2</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
 
 <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='lbracket'>[</span>
   <span class='lbrace'>{</span> <span class='label'>X:</span>  <span class='int'>2</span> <span class='rbrace'>}</span><span class='comma'>,</span>
@@ -198,7 +193,7 @@
   <span class='lbrace'>{</span> <span class='label'>X:</span>  <span class='int'>7</span> <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='lbrace'>{</span> <span class='label'>X:</span> <span class='int'>11</span> <span class='rbrace'>}</span><span class='comma'>,</span>
 <span class='rbracket'>]</span>
-<span class='id identifier rubyid_assert_equal'>assert_equal</span>        <span class='id identifier rubyid_solutions'>solutions</span><span class='comma'>,</span>                <span class='id identifier rubyid_prime1'>prime1</span><span class='period'>.</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span>
+<span class='id identifier rubyid_assert_equal'>assert_equal</span>  <span class='id identifier rubyid_solutions'>solutions</span><span class='comma'>,</span>  <span class='id identifier rubyid_prime1'>prime1</span><span class='period'>.</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span>
 
 <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='lbracket'>[</span>
   <span class='lbrace'>{</span> <span class='label'>X:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pump A</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
@@ -206,8 +201,104 @@
   <span class='lbrace'>{</span> <span class='label'>X:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pump C</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='lbrace'>{</span> <span class='label'>X:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pump D</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
 <span class='rbracket'>]</span>
-<span class='id identifier rubyid_assert_equal'>assert_equal</span>        <span class='id identifier rubyid_solutions'>solutions</span><span class='comma'>,</span>                <span class='id identifier rubyid_prime2'>prime2</span><span class='period'>.</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span>
+<span class='id identifier rubyid_assert_equal'>assert_equal</span>  <span class='id identifier rubyid_solutions'>solutions</span><span class='comma'>,</span>  <span class='id identifier rubyid_prime2'>prime2</span><span class='period'>.</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span>
 </code></pre>
+
+<h3 id="label-A+Complete+Example">A Complete Example</h3>
+
+<p>This example shows:</p>
+<ul><li>
+<p>how to define facts,</p>
+</li><li>
+<p>how to define rules,</p>
+</li><li>
+<p>how to encapsulate predicates within a class,</p>
+</li><li>
+<p>how to specify a cut,</p>
+</li><li>
+<p>how to use builtin predicates, and</p>
+</li><li>
+<p>how to initiate queries.</p>
+</li></ul>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>porolog</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_include'>include</span> <span class='const'><span class='object_link'><a href="Porolog.html" title="Porolog (module)">Porolog</a></span></span>
+
+<span class='kw'>class</span> <span class='const'>Numbers</span>
+
+  <span class='const'>Predicate</span><span class='period'>.</span><span class='id identifier rubyid_scope'>scope</span> <span class='kw'>self</span>
+  <span class='id identifier rubyid_builtin'>builtin</span>   <span class='symbol'>:gtr</span><span class='comma'>,</span> <span class='symbol'>:is</span><span class='comma'>,</span> <span class='symbol'>:noteq</span><span class='comma'>,</span> <span class='symbol'>:between</span><span class='comma'>,</span>  <span class='label'>class_base:</span> <span class='kw'>self</span>
+  <span class='id identifier rubyid_predicate'>predicate</span> <span class='symbol'>:prime</span><span class='comma'>,</span> <span class='symbol'>:search_prime</span><span class='comma'>,</span>        <span class='label'>class_base:</span> <span class='kw'>self</span>
+
+  <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fact!'>fact!</span>
+  <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fact!'>fact!</span>
+  <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span>
+    <span class='id identifier rubyid_between'>between</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='comma'>,</span> <span class='int'>4</span><span class='comma'>,</span> <span class='int'>100</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_is'>is</span><span class='lparen'>(</span><span class='symbol'>:X_mod_2</span><span class='comma'>,</span> <span class='symbol'>:X</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>%</span> <span class='int'>2</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_noteq'>noteq</span><span class='lparen'>(</span><span class='symbol'>:X_mod_2</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='symbol'>:CUT</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_search_prime'>search_prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='comma'>,</span> <span class='int'>3</span><span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_search_prime'>search_prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='comma'>,</span> <span class='symbol'>:N</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span>
+    <span class='id identifier rubyid_is'>is</span><span class='lparen'>(</span><span class='symbol'>:N_squared</span><span class='comma'>,</span> <span class='symbol'>:N</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_n'>n</span> <span class='op'>**</span> <span class='int'>2</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_gtr'>gtr</span><span class='lparen'>(</span><span class='symbol'>:N_squared</span><span class='comma'>,</span> <span class='symbol'>:X</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='symbol'>:CUT</span>
+  <span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_search_prime'>search_prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='comma'>,</span> <span class='symbol'>:N</span><span class='rparen'>)</span> <span class='op'>&lt;&lt;</span> <span class='lbracket'>[</span>
+    <span class='id identifier rubyid_is'>is</span><span class='lparen'>(</span><span class='symbol'>:X_mod_N</span><span class='comma'>,</span> <span class='symbol'>:X</span><span class='comma'>,</span> <span class='symbol'>:N</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>%</span> <span class='id identifier rubyid_n'>n</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_noteq'>noteq</span><span class='lparen'>(</span><span class='symbol'>:X_mod_N</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_is'>is</span><span class='lparen'>(</span><span class='symbol'>:M</span><span class='comma'>,</span> <span class='symbol'>:N</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_n'>n</span><span class='op'>|</span> <span class='id identifier rubyid_n'>n</span> <span class='op'>+</span> <span class='int'>2</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='symbol'>:CUT</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_search_prime'>search_prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='comma'>,</span> <span class='symbol'>:M</span><span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='rbracket'>]</span>
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_show_primes'>show_primes</span>
+    <span class='id identifier rubyid_solutions'>solutions</span> <span class='op'>=</span> <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_solve'>solve</span>
+
+    <span class='id identifier rubyid_solutions'>solutions</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_solution'>solution</span><span class='op'>|</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_solution'>solution</span><span class='lbracket'>[</span><span class='symbol'>:X</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'> is prime</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_primes'>primes</span>
+    <span class='const'>Numbers</span><span class='period'>.</span><span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_solve_for'>solve_for</span><span class='lparen'>(</span><span class='symbol'>:X</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_kind'>kind</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>prime</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>not prime</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_number'>number</span><span class='rparen'>)</span>
+    <span class='ivar'>@number</span> <span class='op'>=</span> <span class='id identifier rubyid_number'>number</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_kind'>kind</span>
+    <span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='ivar'>@number</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span> <span class='op'>?</span> <span class='symbol'>:prime</span> <span class='op'>:</span> <span class='symbol'>:not_prime</span>
+  <span class='kw'>end</span>
+
+<span class='kw'>end</span>
+
+
+<span class='id identifier rubyid_numbers'>numbers</span> <span class='op'>=</span> <span class='const'>Numbers</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='int'>23</span>
+<span class='id identifier rubyid_numbers'>numbers</span><span class='period'>.</span><span class='id identifier rubyid_show_primes'>show_primes</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_numbers'>numbers</span><span class='period'>.</span><span class='id identifier rubyid_primes'>primes</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+
+<span class='id identifier rubyid_puts'>puts</span> <span class='const'>Numbers</span><span class='period'>.</span><span class='id identifier rubyid_prime'>prime</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+
+<span class='id identifier rubyid_puts'>puts</span> <span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+<span class='const'>ARGV</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:to_i</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_arg'>arg</span><span class='op'>|</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_arg'>arg</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> is </span><span class='embexpr_beg'>#{</span><span class='const'>Numbers</span><span class='period'>.</span><span class='id identifier rubyid_kind'>kind</span><span class='lparen'>(</span><span class='id identifier rubyid_arg'>arg</span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_number'>number</span> <span class='op'>=</span> <span class='const'>Numbers</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='id identifier rubyid_arg'>arg</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_kind'>kind</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h3 id="label-Porolog+Wiki">Porolog Wiki</h3>
+
+<p>See the Wiki for further details. <a href="https://github.com/wizardofosmium/porolog/wiki">github.com/wizardofosmium/porolog/wiki</a></p>
 
 <h2 id="label-Testing">Testing</h2>
 
@@ -235,7 +326,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Sun Aug  2 19:24:16 2020 by
+  Generated on Thu Aug  6 22:13:57 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.6.5).
 </div>

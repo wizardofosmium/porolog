@@ -166,12 +166,12 @@ describe 'Porolog' do
       
     end
     
-    describe '#falicy!' do
+    describe '#fallacy!' do
       
-      it 'should create a falicy for its predicate' do
+      it 'should create a fallacy for its predicate' do
         arguments1 = pred.(1,'a',0.1)
         
-        arguments1.falicy!
+        arguments1.fallacy!
         
         assert_equal '[  pred(1,"a",0.1):- false]', pred.rules.inspect
       end
@@ -190,12 +190,12 @@ describe 'Porolog' do
       
     end
     
-    describe '#cut_falicy!' do
+    describe '#cut_fallacy!' do
       
-      it 'should create a falicy for its predicate and terminate solving the goal' do
+      it 'should create a fallacy for its predicate and terminate solving the goal' do
         arguments1 = pred.(1,'a',0.1)
         
-        arguments1.cut_falicy!
+        arguments1.cut_fallacy!
         
         assert_equal '[  pred(1,"a",0.1):- [:CUT, false]]', pred.rules.inspect
       end
@@ -772,10 +772,10 @@ describe 'Porolog' do
         refute    f(3).valid?, name
       end
       
-      it 'should return false when a falicy is found' do
+      it 'should return false when a fallacy is found' do
         predicate :f
         
-        f(3).falicy!
+        f(3).fallacy!
         
         refute    f(3).valid?, name
       end

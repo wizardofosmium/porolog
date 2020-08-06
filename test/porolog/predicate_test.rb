@@ -254,10 +254,10 @@ describe 'Porolog' do
         assert_Predicate  alpha, :alpha, [alpha.rules.first]
       end
       
-      it 'should add new falicies to a predicate' do
+      it 'should add new fallacies to a predicate' do
         alpha = Predicate.new 'alpha'
         
-        alpha.('p','q').falicy!
+        alpha.('p','q').fallacy!
         
         assert_equal    1,                                  alpha.rules.size
         assert_equal    false,                              alpha.rules.first.definition

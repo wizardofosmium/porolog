@@ -116,7 +116,7 @@ module Porolog
           subgoal.log << "CUTTING #{goal.inspect}..."
           result = true
           if conjunction.empty?
-            block.call(subgoal)
+            !goal.terminated? && block.call(subgoal)
           else
             result = satisfy_conjunction(goal, subgoal, conjunction, &block)
           end
@@ -132,7 +132,7 @@ module Porolog
           return false
         
         when nil
-          block.call(subgoal)
+          !goal.terminated? && block.call(subgoal)
           return true
       end
       
@@ -145,16 +145,16 @@ module Porolog
       unified && subsubgoal.satisfy() do
         result = true
         if conjunction.empty?
-          block.call(goal)
+          !goal.terminated? && block.call(goal)
         else
-          result = satisfy_conjunction(goal, subsubgoal, conjunction, &block)
+          result = !goal.terminated? && satisfy_conjunction(goal, subsubgoal, conjunction, &block)
         end
       end
       
       # -- Uninstantiate --
       subsubgoal.delete!
       
-      result
+      result && !goal.terminated?
     end
     
   end

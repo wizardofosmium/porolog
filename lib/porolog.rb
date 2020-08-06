@@ -11,9 +11,9 @@
 module Porolog
 
   # The most recent version of the Porolog gem.
-  VERSION      = '1.0.0'.freeze
+  VERSION      = '1.0.1'.freeze
   # The most recent date of when the VERSION changed.
-  VERSION_DATE = '2020-08-02'.freeze
+  VERSION_DATE = '2020-08-06'.freeze
   
   # Represents an unknown tail of a list.
   UNKNOWN_TAIL = Object.new

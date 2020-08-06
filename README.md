@@ -47,7 +47,7 @@ The main purpose of Porolog though is to add declarative logic programming to Ru
 allow hybrid programming, in the same way that Ruby allows hybrid programming in the
 functional programming paradigm.
 
-This then Ruby programs to be written spanning all the major programming paradigms:
+This then enables Ruby programs to be written spanning all the major programming paradigms:
 - Imperative
 - Functional
 - Object Oriented
@@ -56,7 +56,7 @@ This then Ruby programs to be written spanning all the major programming paradig
 ### Basic Usage
 
 Using `porolog` involves creating logic from facts and rules.
-An example, of the most basic usage uses just facts.
+An example of the most basic usage, using just facts.
 
 ```ruby
 require 'porolog'
@@ -87,7 +87,7 @@ include Porolog
 class Numbers
 
   Predicate.scope self
-  predicate :prime
+  predicate :prime, class_base: self
 
   prime(2).fact!
   prime(3).fact!
@@ -120,6 +120,7 @@ A Predicate represents a Prolog predicate.  They form the basis for rules and qu
 
 The Scope class enables you to have multiple logic programs embedded in the same
 Ruby program.  A Scope object defines a scope for the predicates of a logic programme.
+This allows you to have different predicates with the same name.
 
 ```ruby
 require 'porolog'
@@ -142,14 +143,9 @@ prime.('pump C').fact!
 prime.('pump D').fact!
 
 # -- Assertions --
-assert_equal        [:default,:numbers,:pumps],     Scope.scopes
-
-assert_scope        Porolog::Scope[:default],  :default, []
-assert_scope        Porolog::Scope[:numbers],  :first,   [prime1]
-assert_scope        Porolog::Scope[:pumps],    :second,  [prime2]
-
-assert_equal        :prime,     prime1.name
-assert_equal        :prime,     prime2.name
+assert_equal  [:default,:numbers,:pumps],     Scope.scopes
+assert_equal  :prime,                         prime1.name
+assert_equal  :prime,                         prime2.name
 
 solutions = [
   { X:  2 },
@@ -158,7 +154,7 @@ solutions = [
   { X:  7 },
   { X: 11 },
 ]
-assert_equal        solutions,                prime1.(:X).solve
+assert_equal  solutions,  prime1.(:X).solve
 
 solutions = [
   { X: 'pump A' },
@@ -166,8 +162,100 @@ solutions = [
   { X: 'pump C' },
   { X: 'pump D' },
 ]
-assert_equal        solutions,                prime2.(:X).solve
+assert_equal  solutions,  prime2.(:X).solve
 ```
+
+### A Complete Example
+
+This example shows:
+
+* how to define facts,
+* how to define rules,
+* how to encapsulate predicates within a class,
+* how to specify a cut,
+* how to use builtin predicates, and
+* how to initiate queries.
+
+```ruby
+require 'porolog'
+
+include Porolog
+
+class Numbers
+
+  Predicate.scope self
+  builtin   :gtr, :is, :noteq, :between,  class_base: self
+  predicate :prime, :search_prime,        class_base: self
+
+  prime(2).fact!
+  prime(3).fact!
+  prime(:X) << [
+    between(:X, 4, 100),
+    is(:X_mod_2, :X) {|x| x % 2 },
+    noteq(:X_mod_2, 0),
+    :CUT,
+    search_prime(:X, 3),
+  ]
+
+  search_prime(:X, :N) << [
+    is(:N_squared, :N) {|n| n ** 2 },
+    gtr(:N_squared, :X),
+    :CUT
+  ]
+
+  search_prime(:X, :N) << [
+    is(:X_mod_N, :X, :N) {|x,n| x % n },
+    noteq(:X_mod_N, 0),
+    is(:M, :N) {|n| n + 2 },
+    :CUT,
+    search_prime(:X, :M),
+  ]
+
+  def show_primes
+    solutions = prime(:X).solve
+
+    solutions.each do |solution|
+      puts "#{solution[:X]} is prime"
+    end
+  end
+
+  def primes
+    Numbers.prime(:X).solve_for(:X)
+  end
+
+  def self.kind(number)
+    prime(number).valid? ? 'prime' : 'not prime'
+  end
+
+  def initialize(number)
+    @number = number
+  end
+
+  def kind
+    prime(@number).valid? ? :prime : :not_prime
+  end
+
+end
+
+
+numbers = Numbers.new 23
+numbers.show_primes
+puts numbers.primes.inspect
+
+puts Numbers.prime(3).valid?.inspect
+
+puts ARGV.inspect
+ARGV.map(&:to_i).each do |arg|
+  puts "#{arg.inspect} is #{Numbers.kind(arg)}"
+  number = Numbers.new arg
+  puts number.kind.inspect
+end
+```
+
+### Porolog Wiki
+
+See the Wiki for further details.
+https://github.com/wizardofosmium/porolog/wiki
 
 ## Testing
 

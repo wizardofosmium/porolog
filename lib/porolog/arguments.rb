@@ -68,7 +68,7 @@ module Porolog
     
     # Creates a fact rule that states that these arguments do not satisfy the Predicate.
     # @return [Porolog::Arguments] the Arguments
-    def falicy!
+    def fallacy!
       @predicate << Rule.new(self, false)
       self
     end
@@ -82,7 +82,7 @@ module Porolog
     
     # Creates a fact rule that states that these arguments do not satisfy the Predicate and terminates solving the predicate.
     # @return [Porolog::Arguments] the Arguments
-    def cut_falicy!
+    def cut_fallacy!
       @predicate << Rule.new(self, [:CUT, false])
       self
     end

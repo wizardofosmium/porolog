@@ -393,31 +393,31 @@ describe 'Porolog' do
       
       describe '#noteq' do
         
-        it 'should return no solutions when given unequal values' do
+        it 'should return a solution when given unequal values' do
           builtin :noteq
           
           assert_solutions  noteq([3,2,1,4], [1,2,3,4]), [{}]
         end
         
-        it 'should return a solution when given equal values' do
+        it 'should return no solutions when given equal values' do
           builtin :noteq
           
           assert_solutions  noteq([1,2,3,4], [1,2,3,4]), []
         end
         
-        it 'should return a solution with an unbound variable when given the same unbound variable' do
+        it 'should return no solutions with an unbound variable when given the same unbound variable' do
           builtin :noteq
           
           assert_solutions  noteq(:X, :X), []
         end
         
-        it 'should return no solutions when given two unbound variables' do
+        it 'should return a solution when given two unbound variables' do
           builtin :noteq
           
           assert_solutions  noteq(:X, :Y), [{ X: nil, Y: nil }]
         end
         
-        it 'should return one solution with unbound variables when given given two uninstantiated variables that are bound to each other' do
+        it 'should return no solutions with unbound variables when given given two uninstantiated variables that are bound to each other' do
           builtin :noteq, :is
           predicate :bind_and_noteq
           
@@ -429,7 +429,7 @@ describe 'Porolog' do
           assert_solutions  bind_and_noteq(:X, :Y), []
         end
         
-        it 'should return no solutions when given two uninstantiated variables that are not bound to each other' do
+        it 'should return a solution when given two uninstantiated variables that are not bound to each other' do
           builtin :noteq, :is
           predicate :bind_and_noteq
           

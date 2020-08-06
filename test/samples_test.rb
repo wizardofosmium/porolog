@@ -120,7 +120,7 @@ describe 'Porolog' do
 
     same(:X,:X).fact!
 
-    not_same(:X,:X).cut_falicy!
+    not_same(:X,:X).cut_fallacy!
     not_same(:X,:Y).fact!
 
     (1..5).to_a.each_cons(2) do |left, right|

@@ -18,7 +18,6 @@ Gem::Specification.new do |gem|
   gem.license                   = 'Unlicense'
   gem.email                     = ['luis.esteban.consulting@gmail.com']
   gem.homepage                  = 'https://github.com/wizardofosmium/porolog'
-  gem.default_executable        = 'porolog'
   gem.require_paths             = ['lib']
   gem.required_rubygems_version = Gem::Requirement.new('>= 0') if gem.respond_to? :required_rubygems_version=
   

@@ -83,8 +83,9 @@ module Porolog
     end
     
     # Creates a new Predicate, or returns an existing Predicate if one already exists with the given name in the current scope.
+    # @param args the args to be passed to initialize, first of which is the name of the predicate.
     # @return [Porolog::Predicate] a new or existing Predicate.
-    def self.new(*args)
+    def self.new(*args, **)
       scope[args.first.to_sym] || super
     end
     
@@ -99,6 +100,8 @@ module Porolog
     end
     
     # Create Arguments for the Predicate.
+    # @param args the args of the Predicate.
+    # @param block [Proc,nil] the block to be called when satisfying the Predicate.
     # @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.
     def arguments(*args, &block)
       Arguments.new(self, args, &block)

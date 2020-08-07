@@ -14,7 +14,7 @@
       <img src="./assets/0.10.2/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2020-08-06T22:13:52+10:00">2020-08-06T22:13:52+10:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2020-08-08T08:28:15+10:00">2020-08-08T08:28:15+10:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -25,7 +25,7 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         17764.4
+         17764.41
        </span>
     </span> hits/line)
   </h2>
@@ -97,7 +97,7 @@
         <td>146</td>
         <td>146</td>
         <td>0</td>
-        <td>14712.7</td>
+        <td>14712.8</td>
       </tr>
       
       <tr>
@@ -113,7 +113,7 @@
       <tr>
         <td class="strong"><a href="#6a9b9f605540e91937c2e20600638e425bfd765f" class="src_link" title="lib/porolog/predicate.rb">lib/porolog/predicate.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>178</td>
+        <td>181</td>
         <td>60</td>
         <td>60</td>
         <td>0</td>
@@ -10570,14 +10570,14 @@
           <code class="ruby">    def deleted?</code>
         </li>
       
-        <li class="covered" data-hits="7414" data-linenumber="125">
-          <span class="hits">7414</span>
+        <li class="covered" data-hits="7415" data-linenumber="125">
+          <span class="hits">7415</span>
           
           <code class="ruby">      @deleted ||= check_deleted</code>
         </li>
       
-        <li class="covered" data-hits="7414" data-linenumber="126">
-          <span class="hits">7414</span>
+        <li class="covered" data-hits="7415" data-linenumber="126">
+          <span class="hits">7415</span>
           
           <code class="ruby">      @deleted</code>
         </li>
@@ -10612,8 +10612,8 @@
           <code class="ruby">    def check_deleted</code>
         </li>
       
-        <li class="covered" data-hits="7406" data-linenumber="132">
-          <span class="hits">7406</span>
+        <li class="covered" data-hits="7407" data-linenumber="132">
+          <span class="hits">7407</span>
           
           <code class="ruby">      return false if @@goals.include?(self)</code>
         </li>
@@ -10624,20 +10624,20 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="7391" data-linenumber="134">
-          <span class="hits">7391</span>
+        <li class="covered" data-hits="7392" data-linenumber="134">
+          <span class="hits">7392</span>
           
           <code class="ruby">      @variables.delete_if do |_name,variable|</code>
         </li>
       
-        <li class="covered" data-hits="31379" data-linenumber="135">
-          <span class="hits">31379</span>
+        <li class="covered" data-hits="31382" data-linenumber="135">
+          <span class="hits">31382</span>
           
           <code class="ruby">        variable.remove</code>
         </li>
       
-        <li class="covered" data-hits="31379" data-linenumber="136">
-          <span class="hits">31379</span>
+        <li class="covered" data-hits="31382" data-linenumber="136">
+          <span class="hits">31382</span>
           
           <code class="ruby">        true</code>
         </li>
@@ -10654,8 +10654,8 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="7391" data-linenumber="139">
-          <span class="hits">7391</span>
+        <li class="covered" data-hits="7392" data-linenumber="139">
+          <span class="hits">7392</span>
           
           <code class="ruby">      @values.delete_if do |_name,value|</code>
         </li>
@@ -10684,8 +10684,8 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="7391" data-linenumber="144">
-          <span class="hits">7391</span>
+        <li class="covered" data-hits="7392" data-linenumber="144">
+          <span class="hits">7392</span>
           
           <code class="ruby">      true</code>
         </li>
@@ -12545,14 +12545,14 @@
           <code class="ruby">    def signature</code>
         </li>
       
-        <li class="covered" data-hits="59862" data-linenumber="94">
-          <span class="hits">59862</span>
+        <li class="covered" data-hits="59863" data-linenumber="94">
+          <span class="hits">59863</span>
           
           <code class="ruby">      @signature ||= [@variable1, @index1, @variable2, @index2].freeze</code>
         </li>
       
-        <li class="covered" data-hits="59862" data-linenumber="95">
-          <span class="hits">59862</span>
+        <li class="covered" data-hits="59863" data-linenumber="95">
+          <span class="hits">59863</span>
           
           <code class="ruby">      @signature</code>
         </li>
@@ -12635,14 +12635,14 @@
           <code class="ruby">    def remove</code>
         </li>
       
-        <li class="covered" data-hits="29925" data-linenumber="109">
-          <span class="hits">29925</span>
+        <li class="covered" data-hits="29926" data-linenumber="109">
+          <span class="hits">29926</span>
           
           <code class="ruby">      @variable1.instantiations.delete(self)  if @variable1.is_a?(Variable) || @variable1.is_a?(Value)</code>
         </li>
       
-        <li class="covered" data-hits="29925" data-linenumber="110">
-          <span class="hits">29925</span>
+        <li class="covered" data-hits="29926" data-linenumber="110">
+          <span class="hits">29926</span>
           
           <code class="ruby">      @variable2.instantiations.delete(self)  if @variable2.is_a?(Variable) || @variable2.is_a?(Value)</code>
         </li>
@@ -12653,20 +12653,20 @@
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="29925" data-linenumber="112">
-          <span class="hits">29925</span>
+        <li class="covered" data-hits="29926" data-linenumber="112">
+          <span class="hits">29926</span>
           
           <code class="ruby">      @deleted = true</code>
         </li>
       
-        <li class="covered" data-hits="29925" data-linenumber="113">
-          <span class="hits">29925</span>
+        <li class="covered" data-hits="29926" data-linenumber="113">
+          <span class="hits">29926</span>
           
           <code class="ruby">      @@instantiations.delete(signature)</code>
         </li>
       
-        <li class="covered" data-hits="29925" data-linenumber="114">
-          <span class="hits">29925</span>
+        <li class="covered" data-hits="29926" data-linenumber="114">
+          <span class="hits">29926</span>
           
           <code class="ruby">      @deleted</code>
         </li>
@@ -14595,556 +14595,574 @@
         <li class="never" data-hits="" data-linenumber="86">
           
           
+          <code class="ruby">    # @param args the args to be passed to initialize, first of which is the name of the predicate.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="87">
+          
+          
           <code class="ruby">    # @return [Porolog::Predicate] a new or existing Predicate.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="87">
+        <li class="covered" data-hits="1" data-linenumber="88">
           <span class="hits">1</span>
           
-          <code class="ruby">    def self.new(*args)</code>
+          <code class="ruby">    def self.new(*args, **)</code>
         </li>
       
-        <li class="covered" data-hits="1172" data-linenumber="88">
+        <li class="covered" data-hits="1172" data-linenumber="89">
           <span class="hits">1172</span>
           
           <code class="ruby">      scope[args.first.to_sym] || super</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="89">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="90">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="91">
           
           
-          <code class="ruby">    # Create Arguments for the Predicate.</code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="92">
           
           
-          <code class="ruby">    # Provides the syntax option:</code>
+          <code class="ruby">    # Create Arguments for the Predicate.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="93">
           
           
-          <code class="ruby">    #     p.(x,y,z)</code>
+          <code class="ruby">    # Provides the syntax option:</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="94">
           
           
-          <code class="ruby">    # for</code>
+          <code class="ruby">    #     p.(x,y,z)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="95">
           
           
-          <code class="ruby">    #     p.arguments(x,y,z)</code>
+          <code class="ruby">    # for</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="96">
           
           
+          <code class="ruby">    #     p.arguments(x,y,z)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="97">
+          
+          
           <code class="ruby">    # @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="97">
+        <li class="covered" data-hits="1" data-linenumber="98">
           <span class="hits">1</span>
           
           <code class="ruby">    def call(*args, &amp;block)</code>
         </li>
       
-        <li class="covered" data-hits="619" data-linenumber="98">
+        <li class="covered" data-hits="619" data-linenumber="99">
           <span class="hits">619</span>
           
           <code class="ruby">      Arguments.new(self, args, &amp;block)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="99">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="100">
           
           
-          <code class="ruby">    </code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="101">
           
           
-          <code class="ruby">    # Create Arguments for the Predicate.</code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="102">
           
           
-          <code class="ruby">    # @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.</code>
+          <code class="ruby">    # Create Arguments for the Predicate.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="103">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="103">
           
-          <code class="ruby">    def arguments(*args, &amp;block)</code>
+          
+          <code class="ruby">    # @param args the args of the Predicate.</code>
         </li>
       
-        <li class="covered" data-hits="743" data-linenumber="104">
-          <span class="hits">743</span>
+        <li class="never" data-hits="" data-linenumber="104">
           
-          <code class="ruby">      Arguments.new(self, args, &amp;block)</code>
+          
+          <code class="ruby">    # @param block [Proc,nil] the block to be called when satisfying the Predicate.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="105">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby">    # @return [Porolog::Arguments] Arguments of the Predicate with the given arguments.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="106">
+        <li class="covered" data-hits="1" data-linenumber="106">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">    </code>
+          <code class="ruby">    def arguments(*args, &amp;block)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="107">
+        <li class="covered" data-hits="743" data-linenumber="107">
+          <span class="hits">743</span>
           
-          
-          <code class="ruby">    # Add a Rule to the Predicate.</code>
+          <code class="ruby">      Arguments.new(self, args, &amp;block)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="108">
           
           
-          <code class="ruby">    # @param rule [Object] a rule to add to the Predicate.</code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="109">
           
           
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="110">
+          
+          
+          <code class="ruby">    # Add a Rule to the Predicate.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="111">
+          
+          
+          <code class="ruby">    # @param rule [Object] a rule to add to the Predicate.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="112">
+          
+          
           <code class="ruby">    # @return [Porolog::Predicate] the Predicate.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="110">
+        <li class="covered" data-hits="1" data-linenumber="113">
           <span class="hits">1</span>
           
           <code class="ruby">    def &lt;&lt;(rule)</code>
         </li>
       
-        <li class="covered" data-hits="160" data-linenumber="111">
+        <li class="covered" data-hits="160" data-linenumber="114">
           <span class="hits">160</span>
           
           <code class="ruby">      @rules &lt;&lt; rule</code>
         </li>
       
-        <li class="covered" data-hits="160" data-linenumber="112">
+        <li class="covered" data-hits="160" data-linenumber="115">
           <span class="hits">160</span>
           
           <code class="ruby">      self</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="113">
+        <li class="never" data-hits="" data-linenumber="116">
           
           
           <code class="ruby">    end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="114">
+        <li class="never" data-hits="" data-linenumber="117">
           
           
           <code class="ruby">    </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="115">
+        <li class="never" data-hits="" data-linenumber="118">
           
           
           <code class="ruby">    # A pretty print String of the Predicate.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="116">
+        <li class="never" data-hits="" data-linenumber="119">
           
           
           <code class="ruby">    # @return [String] the Predicate as a String.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="117">
+        <li class="covered" data-hits="1" data-linenumber="120">
           <span class="hits">1</span>
           
           <code class="ruby">    def inspect</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="118">
+        <li class="covered" data-hits="5" data-linenumber="121">
           <span class="hits">5</span>
           
           <code class="ruby">      if @rules.size == 1</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="119">
+        <li class="covered" data-hits="3" data-linenumber="122">
           <span class="hits">3</span>
           
           <code class="ruby">        &quot;#{@name}:-#{@rules.first.inspect}&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="120">
+        <li class="never" data-hits="" data-linenumber="123">
           
           
           <code class="ruby">      else</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="121">
+        <li class="covered" data-hits="2" data-linenumber="124">
           <span class="hits">2</span>
           
           <code class="ruby">        @rules.each_with_object([&quot;#{@name}:-&quot;]) do |rule, lines|</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="122">
+        <li class="covered" data-hits="2" data-linenumber="125">
           <span class="hits">2</span>
           
           <code class="ruby">          lines &lt;&lt; rule.inspect</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="123">
+        <li class="never" data-hits="" data-linenumber="126">
           
           
           <code class="ruby">        end.join(&quot;\n&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="124">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="125">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="126">
-          
-          
-          <code class="ruby">    </code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="127">
           
           
-          <code class="ruby">    # Satisfy the Predicate within the supplied Goal.</code>
+          <code class="ruby">      end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="128">
           
           
-          <code class="ruby">    # Satisfy of each rule of the Predicate is called with the Goal and success block.</code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="129">
           
           
-          <code class="ruby">    # @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.</code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="130">
           
           
-          <code class="ruby">    # @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.</code>
+          <code class="ruby">    # Satisfy the Predicate within the supplied Goal.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="131">
           
           
-          <code class="ruby">    # @return [Boolean] whether any Rule was satisfied.</code>
+          <code class="ruby">    # Satisfy of each rule of the Predicate is called with the Goal and success block.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="132">
-          <span class="hits">1</span>
-          
-          <code class="ruby">    def satisfy(goal, &amp;block)</code>
-        </li>
-      
-        <li class="covered" data-hits="3934" data-linenumber="133">
-          <span class="hits">3934</span>
-          
-          <code class="ruby">      if builtin?</code>
-        </li>
-      
-        <li class="covered" data-hits="2497" data-linenumber="134">
-          <span class="hits">2497</span>
-          
-          <code class="ruby">        satisfy_builtin(goal, &amp;block)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="135">
-          
-          
-          <code class="ruby">      else</code>
-        </li>
-      
-        <li class="covered" data-hits="1437" data-linenumber="136">
-          <span class="hits">1437</span>
-          
-          <code class="ruby">        satisfied = false</code>
-        </li>
-      
-        <li class="covered" data-hits="1437" data-linenumber="137">
-          <span class="hits">1437</span>
-          
-          <code class="ruby">        @rules.each do |rule|</code>
-        </li>
-      
-        <li class="covered" data-hits="2588" data-linenumber="138">
-          <span class="hits">2588</span>
-          
-          <code class="ruby">          rule.satisfy(goal) do |subgoal|</code>
-        </li>
-      
-        <li class="covered" data-hits="1464" data-linenumber="139">
-          <span class="hits">1464</span>
-          
-          <code class="ruby">            satisfied = true</code>
-        </li>
-      
-        <li class="covered" data-hits="1464" data-linenumber="140">
-          <span class="hits">1464</span>
-          
-          <code class="ruby">            block.call(subgoal)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="141">
-          
-          
-          <code class="ruby">          end</code>
-        </li>
-      
-        <li class="covered" data-hits="2574" data-linenumber="142">
-          <span class="hits">2574</span>
-          
-          <code class="ruby">          break if goal.terminated?</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="143">
-          
-          
-          <code class="ruby">        end</code>
-        </li>
-      
-        <li class="covered" data-hits="1423" data-linenumber="144">
-          <span class="hits">1423</span>
-          
-          <code class="ruby">        satisfied</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="145">
-          
-          
-          <code class="ruby">      end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="146">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="147">
-          
-          
-          <code class="ruby">    </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="148">
-          
-          
-          <code class="ruby">    # @return [Boolean] whether the Predicate is a builtin predicate.</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="149">
-          <span class="hits">1</span>
-          
-          <code class="ruby">    def builtin?</code>
-        </li>
-      
-        <li class="covered" data-hits="3936" data-linenumber="150">
-          <span class="hits">3936</span>
-          
-          <code class="ruby">      @builtin</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="151">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="152">
-          
-          
-          <code class="ruby">    </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="153">
-          
-          
-          <code class="ruby">    # Satisfy the builtin Predicate within the supplied Goal.</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="154">
-          
-          
-          <code class="ruby">    # Call the builtin Predicate method with the Goal and success block.</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="155">
-          
-          
-          <code class="ruby">    # The arguments and block are extracted from the Goal&#39;s Arguments.</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="156">
+        <li class="never" data-hits="" data-linenumber="132">
           
           
           <code class="ruby">    # @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="157">
+        <li class="never" data-hits="" data-linenumber="133">
           
           
           <code class="ruby">    # @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="158">
+        <li class="never" data-hits="" data-linenumber="134">
           
           
           <code class="ruby">    # @return [Boolean] whether any Rule was satisfied.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="159">
+        <li class="covered" data-hits="1" data-linenumber="135">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def satisfy(goal, &amp;block)</code>
+        </li>
+      
+        <li class="covered" data-hits="3934" data-linenumber="136">
+          <span class="hits">3934</span>
+          
+          <code class="ruby">      if builtin?</code>
+        </li>
+      
+        <li class="covered" data-hits="2497" data-linenumber="137">
+          <span class="hits">2497</span>
+          
+          <code class="ruby">        satisfy_builtin(goal, &amp;block)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="138">
+          
+          
+          <code class="ruby">      else</code>
+        </li>
+      
+        <li class="covered" data-hits="1437" data-linenumber="139">
+          <span class="hits">1437</span>
+          
+          <code class="ruby">        satisfied = false</code>
+        </li>
+      
+        <li class="covered" data-hits="1437" data-linenumber="140">
+          <span class="hits">1437</span>
+          
+          <code class="ruby">        @rules.each do |rule|</code>
+        </li>
+      
+        <li class="covered" data-hits="2588" data-linenumber="141">
+          <span class="hits">2588</span>
+          
+          <code class="ruby">          rule.satisfy(goal) do |subgoal|</code>
+        </li>
+      
+        <li class="covered" data-hits="1464" data-linenumber="142">
+          <span class="hits">1464</span>
+          
+          <code class="ruby">            satisfied = true</code>
+        </li>
+      
+        <li class="covered" data-hits="1464" data-linenumber="143">
+          <span class="hits">1464</span>
+          
+          <code class="ruby">            block.call(subgoal)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="144">
+          
+          
+          <code class="ruby">          end</code>
+        </li>
+      
+        <li class="covered" data-hits="2574" data-linenumber="145">
+          <span class="hits">2574</span>
+          
+          <code class="ruby">          break if goal.terminated?</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="146">
+          
+          
+          <code class="ruby">        end</code>
+        </li>
+      
+        <li class="covered" data-hits="1423" data-linenumber="147">
+          <span class="hits">1423</span>
+          
+          <code class="ruby">        satisfied</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="148">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="149">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="150">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="151">
+          
+          
+          <code class="ruby">    # @return [Boolean] whether the Predicate is a builtin predicate.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="152">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    def builtin?</code>
+        </li>
+      
+        <li class="covered" data-hits="3936" data-linenumber="153">
+          <span class="hits">3936</span>
+          
+          <code class="ruby">      @builtin</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="154">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="155">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="156">
+          
+          
+          <code class="ruby">    # Satisfy the builtin Predicate within the supplied Goal.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="157">
+          
+          
+          <code class="ruby">    # Call the builtin Predicate method with the Goal and success block.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="158">
+          
+          
+          <code class="ruby">    # The arguments and block are extracted from the Goal&#39;s Arguments.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="159">
+          
+          
+          <code class="ruby">    # @param goal [Porolog::Goal] the Goal within which to satisfy the Predicate.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="160">
+          
+          
+          <code class="ruby">    # @param block [Proc] the block to be called each time a Rule of the Predicate is satisfied.</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="161">
+          
+          
+          <code class="ruby">    # @return [Boolean] whether any Rule was satisfied.</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="162">
           <span class="hits">1</span>
           
           <code class="ruby">    def satisfy_builtin(goal, &amp;block)</code>
         </li>
       
-        <li class="covered" data-hits="2498" data-linenumber="160">
+        <li class="covered" data-hits="2498" data-linenumber="163">
           <span class="hits">2498</span>
           
           <code class="ruby">      predicate = goal.arguments.predicate.name</code>
         </li>
       
-        <li class="covered" data-hits="2498" data-linenumber="161">
+        <li class="covered" data-hits="2498" data-linenumber="164">
           <span class="hits">2498</span>
           
           <code class="ruby">      arguments = goal.arguments.arguments</code>
         </li>
       
-        <li class="covered" data-hits="2498" data-linenumber="162">
+        <li class="covered" data-hits="2498" data-linenumber="165">
           <span class="hits">2498</span>
           
           <code class="ruby">      arg_block = goal.arguments.block</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="163">
+        <li class="never" data-hits="" data-linenumber="166">
           
           
           <code class="ruby">      </code>
         </li>
       
-        <li class="covered" data-hits="2498" data-linenumber="164">
+        <li class="covered" data-hits="2498" data-linenumber="167">
           <span class="hits">2498</span>
           
           <code class="ruby">      Predicate.call_builtin(predicate, goal, block, *arguments, &amp;arg_block)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="165">
-          
-          
-          <code class="ruby">    end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="166">
-          
-          
-          <code class="ruby">    </code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="167">
-          
-          
-          <code class="ruby">    # Call a builtin predicate</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="168">
           
           
-          <code class="ruby">    # @param predicate [Symbol] the name of the predicate to call.</code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="169">
           
           
-          <code class="ruby">    # @param args [Array&lt;Object&gt;] arguments for the predicate call.</code>
+          <code class="ruby">    </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="170">
           
           
-          <code class="ruby">    # @param arg_block [Proc] the block provided in the Arguments of the Predicate.</code>
+          <code class="ruby">    # Call a builtin predicate</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="171">
           
           
-          <code class="ruby">    # @return [Boolean] whether the predicate was satisfied.</code>
+          <code class="ruby">    # @param predicate [Symbol] the name of the predicate to call.</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="172">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="172">
           
-          <code class="ruby">    def self.call_builtin(predicate, *args, &amp;arg_block)</code>
+          
+          <code class="ruby">    # @param args [Array&lt;Object&gt;] arguments for the predicate call.</code>
         </li>
       
-        <li class="covered" data-hits="2562" data-linenumber="173">
-          <span class="hits">2562</span>
+        <li class="never" data-hits="" data-linenumber="173">
           
-          <code class="ruby">      Porolog::Predicate::Builtin.instance_method(predicate).bind(self).call(*args, &amp;arg_block)</code>
+          
+          <code class="ruby">    # @param arg_block [Proc] the block provided in the Arguments of the Predicate.</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="174">
           
           
-          <code class="ruby">    end</code>
+          <code class="ruby">    # @return [Boolean] whether the predicate was satisfied.</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="175">
+        <li class="covered" data-hits="1" data-linenumber="175">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">    </code>
+          <code class="ruby">    def self.call_builtin(predicate, *args, &amp;arg_block)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="176">
+        <li class="covered" data-hits="2562" data-linenumber="176">
+          <span class="hits">2562</span>
           
-          
-          <code class="ruby">  end</code>
+          <code class="ruby">      Porolog::Predicate::Builtin.instance_method(predicate).bind(self).call(*args, &amp;arg_block)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="177">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="178">
+          
+          
+          <code class="ruby">    </code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="179">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="180">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="181">
           
           
           <code class="ruby">end</code>
@@ -24276,20 +24294,20 @@
           <code class="ruby">    def remove</code>
         </li>
       
-        <li class="covered" data-hits="31379" data-linenumber="265">
-          <span class="hits">31379</span>
+        <li class="covered" data-hits="31382" data-linenumber="265">
+          <span class="hits">31382</span>
           
           <code class="ruby">      @instantiations.dup.each(&amp;:remove)</code>
         </li>
       
-        <li class="covered" data-hits="31379" data-linenumber="266">
-          <span class="hits">31379</span>
+        <li class="covered" data-hits="31382" data-linenumber="266">
+          <span class="hits">31382</span>
           
           <code class="ruby">      @instantiations[0..-1] = []</code>
         </li>
       
-        <li class="covered" data-hits="31379" data-linenumber="267">
-          <span class="hits">31379</span>
+        <li class="covered" data-hits="31382" data-linenumber="267">
+          <span class="hits">31382</span>
           
           <code class="ruby">      true</code>
         </li>

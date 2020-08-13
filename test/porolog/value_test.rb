@@ -16,12 +16,12 @@ describe 'Porolog' do
   describe 'Value' do
     
     let(:goal) { new_goal :generic, [:m, :n] }
-    let(:v)    { Value.new 456.123, goal }
+    let(:v)    { Porolog::Value.new 456.123, goal }
     
     describe '.new' do
       
       it 'should create a new value' do
-        assert_instance_of  Value,      v
+        assert_instance_of  Porolog::Value,   v
       end
       
     end
@@ -29,22 +29,22 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize value and goal' do
-        assert_equal        456.123,    v.value
-        assert_equal        goal,       v.goal
+        assert_equal        456.123,          v.value
+        assert_equal        goal,             v.goal
       end
       
       it 'should raise an error when a goal is not provided' do
-        assert_raises Value::GoalError do
-          Value.new 456.789, 'goal'
+        assert_raises Porolog::Value::GoalError do
+          Porolog::Value.new 456.789, 'goal'
         end
       end
       
       it 'should copy the value of another Value' do
-        other = Value.new 123.456, goal
-        v     = Value.new other,   goal
+        other = Porolog::Value.new 123.456, goal
+        v     = Porolog::Value.new other,   goal
         
-        refute_instance_of  Value,      v.value
-        assert_equal        123.456,    v.value
+        refute_instance_of  Porolog::Value,   v.value
+        assert_equal        123.456,          v.value
       end
       
     end
@@ -52,7 +52,7 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should show the goal and the value' do
-        assert_equal        'Goal1.456.123',                            v.inspect
+        assert_equal        'Goal1.456.123',  v.inspect
       end
       
     end
@@ -60,7 +60,7 @@ describe 'Porolog' do
     describe '#instantiations' do
       
       it 'should return no instantiations' do
-        assert_equal        [],                                         v.instantiations
+        assert_equal        [],               v.instantiations
       end
       
     end
@@ -90,19 +90,19 @@ describe 'Porolog' do
     
     describe '#remove' do
       
-      let(:predicate1) { Predicate.new :removal }
+      let(:predicate1) { Porolog::Predicate.new :removal }
       let(:arguments1) { predicate1.arguments(:m,:n) }
       let(:goal1)      { arguments1.goal }
       let(:goal2)      { arguments1.goal }
       let(:goal3)      { arguments1.goal }
       let(:goal4)      { arguments1.goal }
       
-      let(:variable1)  { Variable.new :x,  goal1 }
-      let(:variable2)  { Variable.new :y,  goal2 }
-      let(:variable3)  { Variable.new :z,  goal3 }
-      let(:variable4)  { Variable.new :a,  goal1 }
-      let(:value1)     { Value.new 'word', goal2 }
-      let(:value2)     { Value.new 'draw', goal4 }
+      let(:variable1)  { Porolog::Variable.new :x,  goal1 }
+      let(:variable2)  { Porolog::Variable.new :y,  goal2 }
+      let(:variable3)  { Porolog::Variable.new :z,  goal3 }
+      let(:variable4)  { Porolog::Variable.new :a,  goal1 }
+      let(:value1)     { Porolog::Value.new 'word', goal2 }
+      let(:value2)     { Porolog::Value.new 'draw', goal4 }
       
       before do
         reset
@@ -142,7 +142,6 @@ describe 'Porolog' do
       end
       
       it 'should remove all instantiations case 1: remove value1' do
-        
         value1.remove
         
         assert_Goal_variables     goal1,  { m: nil, n: nil, x: nil, a: 'draw' }, [
@@ -174,7 +173,6 @@ describe 'Porolog' do
       end
       
       it 'should remove all instantiations case 2: remove value2' do
-        
         value2.remove
         
         assert_Goal_variables     goal1,  { m: nil, n: nil, x: 'word', a: nil }, [
@@ -241,11 +239,11 @@ describe 'Porolog' do
     
     describe '#type' do
       
-      let(:float)   { Value.new 456.789,    goal }
-      let(:integer) { Value.new 456,        goal }
-      let(:string)  { Value.new 'average',  goal }
-      let(:array)   { Value.new [1,2,3],    goal }
-      let(:object)  { Value.new Object.new, goal }
+      let(:float)   { Porolog::Value.new 456.789,    goal }
+      let(:integer) { Porolog::Value.new 456,        goal }
+      let(:string)  { Porolog::Value.new 'average',  goal }
+      let(:array)   { Porolog::Value.new [1,2,3],    goal }
+      let(:object)  { Porolog::Value.new Object.new, goal }
       
       it 'should return atomic for Float' do
         assert_equal        :atomic,    float.type
@@ -272,22 +270,22 @@ describe 'Porolog' do
     describe '#==' do
       
       it 'should return false for Values of different types' do
-        v1 = Value.new 456.789,   goal
-        v2 = Value.new 'average', goal
+        v1 = Porolog::Value.new 456.789,   goal
+        v2 = Porolog::Value.new 'average', goal
         
         refute      v1 == v2,     "#{name}: #{v1.value.inspect} == #{v2.value.inspect}"
       end
       
       it 'should return false for Values of the same type but different values' do
-        v1 = Value.new 456.789,   goal
-        v2 = Value.new 123.456,   goal
+        v1 = Porolog::Value.new 456.789,   goal
+        v2 = Porolog::Value.new 123.456,   goal
         
         refute      v1 == v2,     "#{name}: #{v1.value.inspect} == #{v2.value.inspect}"
       end
       
       it 'should return true for Values of the same type and the same value' do
-        v1 = Value.new 456.789,   goal
-        v2 = Value.new 456.789,   goal
+        v1 = Porolog::Value.new 456.789,   goal
+        v2 = Porolog::Value.new 456.789,   goal
         
         assert      v1 == v2,     "#{name}: #{v1.value.inspect} == #{v2.value.inspect}"
       end
@@ -297,13 +295,13 @@ describe 'Porolog' do
     describe '#variables' do
       
       it 'should return an empty Array for a Float value' do
-        float = Value.new 456.789, goal
+        float = Porolog::Value.new 456.789, goal
         
         assert_equal        [],             float.variables
       end
       
       it 'should return an Array of Symbols for embedded Variables' do
-        array = Value.new [1, :b, 3, ['four', :e, 6], [[:g, 8]]], goal
+        array = Porolog::Value.new [1, :b, 3, ['four', :e, 6], [[:g, 8]]], goal
         
         assert_equal        [:b, :e, :g],   array.variables
       end

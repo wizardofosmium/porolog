@@ -280,7 +280,7 @@ module Porolog
         all_values = all_values.map(&:value).map(&:value)
         exclusions = exclusions.map(&:value).map(&:value)
         
-        possible_values = goal[anonymous]
+        possible_values = goal[Porolog::anonymous]
         
         if exclusions.uniq.size == exclusions.size
           !!possible_values.instantiate(all_values - exclusions) && Predicate.call_builtin(:member, goal, block, variable, possible_values) || false
@@ -435,7 +435,7 @@ module Porolog
           when [:array, :atomic]
             list.length == length
           when [:variable, :atomic]
-            list.instantiate(Array.new(length){goal[_]})
+            list.instantiate(Array.new(length){goal[Porolog::anonymous]})
           when [:array, :variable]
             length.instantiate(list.length)
           else
@@ -533,9 +533,9 @@ module Porolog
           when [:atomic, :array], [:array, :array]
             satisfied = false
             list.each do |i|
-              unifications   = unify(element_value, i, goal)
+              unifications = Porolog::unify(element_value, i, goal)
               if unifications
-                instantiations = instantiate_unifications(unifications)
+                instantiations = Porolog::instantiate_unifications(unifications)
                 if instantiations
                   block.call(goal) && (satisfied = true)
                   instantiations.each(&:remove)
@@ -560,7 +560,7 @@ module Porolog
           when [:variable, :variable], [:atomic, :variable], [:array, :variable]
             satisfied = false
             limit.times do |i|
-              instantiation = list.instantiate([*Array.new(i){goal[_]}, element, UNKNOWN_TAIL])
+              instantiation = list.instantiate([*Array.new(i){goal[Porolog::anonymous]}, element, Porolog::UNKNOWN_TAIL])
               instantiation && block.call(goal) && (satisfied = true)
               instantiation&.remove
               return satisfied if goal.terminated?
@@ -600,8 +600,8 @@ module Porolog
           when [:array, :array, :array]
             satisfied = false
             if front.length + back.length == front_back.length
-              unifications   = unify(front + back, front_back, goal)
-              instantiations = instantiate_unifications(unifications) if unifications
+              unifications   = Porolog::unify(front + back, front_back, goal)
+              instantiations = Porolog::instantiate_unifications(unifications) if unifications
               instantiations && block.call(goal) && (satisfied = true)
               instantiations&.each(&:remove)
             end
@@ -609,8 +609,8 @@ module Porolog
             
           when [:array, :array, :variable]
             satisfied = false
-            unifications   = unify(front + back, front_back, goal)
-            instantiations = instantiate_unifications(unifications) if unifications
+            unifications   = Porolog::unify(front + back, front_back, goal)
+            instantiations = Porolog::instantiate_unifications(unifications) if unifications
             instantiations && block.call(goal) && (satisfied = true)
             instantiations&.each(&:remove)
             satisfied
@@ -621,9 +621,9 @@ module Porolog
               expected_front = front_back[0...front.length]
               expected_back  = front_back[front.length..-1]
               
-              unifications   = unify(front, expected_front, goal)
-              unifications  += unify(back,  expected_back,  goal)     if unifications
-              instantiations = instantiate_unifications(unifications) if unifications
+              unifications   = Porolog::unify(front, expected_front, goal)
+              unifications  += Porolog::unify(back,  expected_back,  goal)     if unifications
+              instantiations = Porolog::instantiate_unifications(unifications) if unifications
               instantiations && block.call(goal) && (satisfied = true)
               instantiations&.each(&:remove)
             end
@@ -635,9 +635,9 @@ module Porolog
               expected_front = front_back[0...-back.length]
               expected_back  = front_back[-back.length..-1]
               
-              unifications   = unify(front, expected_front, goal)
-              unifications  += unify(back,  expected_back,  goal)     if unifications
-              instantiations = instantiate_unifications(unifications) if unifications
+              unifications   = Porolog::unify(front, expected_front, goal)
+              unifications  += Porolog::unify(back,  expected_back,  goal)     if unifications
+              instantiations = Porolog::instantiate_unifications(unifications) if unifications
               instantiations && block.call(goal) && (satisfied = true)
               instantiations&.each(&:remove)
             end
@@ -649,9 +649,9 @@ module Porolog
               expected_front = front_back[0...i]
               expected_back  = front_back[i..-1]
               
-              unifications   = unify(front, expected_front, goal)
-              unifications  += unify(back,  expected_back,  goal)     if unifications
-              instantiations = instantiate_unifications(unifications) if unifications
+              unifications   = Porolog::unify(front, expected_front, goal)
+              unifications  += Porolog::unify(back,  expected_back,  goal)     if unifications
+              instantiations = Porolog::instantiate_unifications(unifications) if unifications
               instantiations && block.call(goal) && (satisfied = true)
               instantiations&.each(&:remove)
               return satisfied if goal.terminated?
@@ -660,8 +660,8 @@ module Porolog
             
           when [:array, :variable, :variable]
             satisfied = false
-            unifications   = unify(front / back, front_back, goal)
-            instantiations = instantiate_unifications(unifications) if unifications
+            unifications   = Porolog::unify(front / back, front_back, goal)
+            instantiations = Porolog::instantiate_unifications(unifications) if unifications
             instantiations && block.call(goal) && (satisfied = true)
             instantiations&.each(&:remove)
             satisfied
@@ -720,16 +720,16 @@ module Porolog
                 list1 = list1.sort_by(&:inspect)
                 list2 = list2.sort_by(&:inspect)
                 
-                unifications   = unify(list1, list2, goal)
-                instantiations = instantiate_unifications(unifications) if unifications
+                unifications   = Porolog::unify(list1, list2, goal)
+                instantiations = Porolog::instantiate_unifications(unifications) if unifications
                 instantiations && block.call(goal) && (satisfied = true)
                 instantiations&.each(&:remove)
               
               when [false, true], [false, false]
                 list2.permutation do |p|
-                  unifications   = unify(list1, p, goal)
+                  unifications   = Porolog::unify(list1, p, goal)
                   instantiations = nil
-                  instantiations = instantiate_unifications(unifications) if unifications
+                  instantiations = Porolog::instantiate_unifications(unifications) if unifications
                   instantiations && block.call(goal) && (satisfied = true)
                   instantiations&.each(&:remove)
                   return satisfied if goal.terminated?
@@ -737,9 +737,9 @@ module Porolog
               
               when [true, false]
                 list1.permutation do |p|
-                  unifications   = unify(list2, p, goal)
+                  unifications   = Porolog::unify(list2, p, goal)
                   instantiations = nil
-                  instantiations = instantiate_unifications(unifications) if unifications
+                  instantiations = Porolog::instantiate_unifications(unifications) if unifications
                   instantiations && block.call(goal) && (satisfied = true)
                   instantiations&.each(&:remove)
                   return satisfied if goal.terminated?
@@ -750,8 +750,8 @@ module Porolog
           when [:array, :variable]
             satisfied = false
             list1.permutation do |p|
-              unifications   = unify(p, list2, goal)
-              instantiations = instantiate_unifications(unifications) if unifications
+              unifications   = Porolog::unify(p, list2, goal)
+              instantiations = Porolog::instantiate_unifications(unifications) if unifications
               instantiations && block.call(goal) && (satisfied = true)
               instantiations&.each(&:remove)
               return satisfied if goal.terminated?
@@ -761,9 +761,9 @@ module Porolog
           when [:variable, :array]
             satisfied = false
             list2.permutation do |p|
-              unifications   = unify(list1, p, goal)
+              unifications   = Porolog::unify(list1, p, goal)
               instantiations = nil
-              instantiations = instantiate_unifications(unifications) if unifications
+              instantiations = Porolog::instantiate_unifications(unifications) if unifications
               instantiations && block.call(goal) && (satisfied = true)
               instantiations&.each(&:remove)
               return satisfied if goal.terminated?
@@ -799,16 +799,16 @@ module Porolog
         case [list1.type, list2.type]
           when [:array, :array], [:variable, :array]
             satisfied = false
-            unifications   = unify(list1, list2.reverse, goal)
-            instantiations = instantiate_unifications(unifications) if unifications
+            unifications   = Porolog::unify(list1, list2.reverse, goal)
+            instantiations = Porolog::instantiate_unifications(unifications) if unifications
             instantiations && block.call(goal) && (satisfied = true)
             instantiations&.each(&:remove)
             satisfied
             
           when [:array, :variable]
             satisfied = false
-            unifications   = unify(list1.reverse, list2, goal)
-            instantiations = instantiate_unifications(unifications) if unifications
+            unifications   = Porolog::unify(list1.reverse, list2, goal)
+            instantiations = Porolog::instantiate_unifications(unifications) if unifications
             instantiations && block.call(goal) && (satisfied = true)
             instantiations&.each(&:remove)
             satisfied

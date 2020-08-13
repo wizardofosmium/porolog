@@ -19,21 +19,21 @@ describe 'Porolog' do
     describe '.reset' do
       
       it 'should delete/unregister all rules' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [1,2,3]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [1,2,3]
         
-        rule1 = Rule.new args, [1,2]
-        rule2 = Rule.new args, [3,4,5]
-        rule3 = Rule.new args, [6]
+        rule1 = Porolog::Rule.new args, [1,2]
+        rule2 = Porolog::Rule.new args, [3,4,5]
+        rule3 = Porolog::Rule.new args, [6]
         
         assert_equal  'Rule1',    rule1.myid
         assert_equal  'Rule2',    rule2.myid
         assert_equal  'Rule3',    rule3.myid
         
-        Rule.reset
+        Porolog::Rule.reset
         
-        rule4 = Rule.new args, [7,8,9,0]
-        rule5 = Rule.new args, [:CUT,false]
+        rule4 = Porolog::Rule.new args, [7,8,9,0]
+        rule5 = Porolog::Rule.new args, [:CUT,false]
         
         assert_equal  'Rule-999', rule1.myid
         assert_equal  'Rule-999', rule2.myid
@@ -47,10 +47,10 @@ describe 'Porolog' do
     describe '.new' do
       
       it 'should create a new rule' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [1,2,3]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [1,2,3]
         defn = [true]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
         assert_Rule         rule, :pred, [1,2,3], [true]
       end
@@ -60,10 +60,10 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize arguments and definition' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [1,2,3]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [1,2,3]
         defn = [:CUT,false]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
         assert_Rule   rule,   :pred, [1,2,3], [:CUT,false]
         assert_equal  args,   rule.arguments
@@ -75,21 +75,21 @@ describe 'Porolog' do
     describe '#myid' do
       
       it 'should show the rule index' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [1,2,3]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [1,2,3]
         defn = [:CUT,false]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
         assert_equal  'Rule1',    rule.myid
       end
       
       it 'should show -999 when deleted/unregistered' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [1,2,3]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [1,2,3]
         defn = [:CUT,false]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
-        Rule.reset
+        Porolog::Rule.reset
         
         assert_equal  'Rule-999', rule.myid
       end
@@ -99,10 +99,10 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should show the predicate, arguments, and definition' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [1,2,3]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [1,2,3]
         defn = [:CUT,false]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
         assert_equal  '  pred(1,2,3):- [:CUT, false]',    rule.inspect
       end
@@ -112,10 +112,10 @@ describe 'Porolog' do
     describe '#satisfy' do
       
       it 'should create a subgoal and unify with the goal' do
-        pred = Predicate.new :pred
-        args = Arguments.new pred, [:a,:b,:c]
+        pred = Porolog::Predicate.new :pred
+        args = Porolog::Arguments.new pred, [:a,:b,:c]
         defn = [true]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
         goal = new_goal :pred, :x, :y, :z
         
@@ -140,16 +140,16 @@ describe 'Porolog' do
       end
       
       it 'should delete the subgoal even if it does not unify with the goal' do
-        pred = Predicate.new :alpha
-        args = Arguments.new pred, [1,2,3,4]
+        pred = Porolog::Predicate.new :alpha
+        args = Porolog::Arguments.new pred, [1,2,3,4]
         defn = [true]
-        rule = Rule.new args, defn
+        rule = Porolog::Rule.new args, defn
         
         goal    = new_goal :beta, :x, :y
         
         subgoal = new_goal :gamma, :x, :y
         subgoal.expects(:delete!).with().times(1)
-        subgoal_spy = Spy.on(Goal, :new).and_return(subgoal)
+        subgoal_spy = Spy.on(Porolog::Goal, :new).and_return(subgoal)
         called      = false
         
         rule.satisfy(goal) do |solution_goal|
@@ -166,9 +166,9 @@ describe 'Porolog' do
     describe '#satisfy_definition' do
       
       it 'should call block with subgoal and return true when the definition is true' do
-        pred = Predicate.new :normal
-        args = Arguments.new pred, [12]
-        rule = Rule.new args, true
+        pred = Porolog::Predicate.new :normal
+        args = Porolog::Arguments.new pred, [12]
+        rule = Porolog::Rule.new args, true
         
         check  = 56
         result = rule.satisfy_definition(12, 34) do |subgoal|
@@ -180,9 +180,9 @@ describe 'Porolog' do
       end
       
       it 'should not call block but return false when the definition is false' do
-        pred = Predicate.new :negative
-        args = Arguments.new pred, [12]
-        rule = Rule.new args, false
+        pred = Porolog::Predicate.new :negative
+        args = Porolog::Arguments.new pred, [12]
+        rule = Porolog::Rule.new args, false
         
         check  = 56
         result = rule.satisfy_definition(12, 34) do |subgoal|
@@ -195,13 +195,13 @@ describe 'Porolog' do
       end
       
       it 'should call block with subgoal when the definition is an Array' do
-        pred1 = Predicate.new :success
-        args1 = Arguments.new pred1, [:any]
-        Rule.new args1, true
+        pred1 = Porolog::Predicate.new :success
+        args1 = Porolog::Arguments.new pred1, [:any]
+        Porolog::Rule.new args1, true
         
-        pred2 = Predicate.new :conjunction
-        args2 = Arguments.new pred2, [12]
-        rule2 = Rule.new args2, [true,true,true]
+        pred2 = Porolog::Predicate.new :conjunction
+        args2 = Porolog::Arguments.new pred2, [12]
+        rule2 = Porolog::Rule.new args2, [true,true,true]
         
         check  = 56
         result = rule2.satisfy_definition(args1.goal, args2.goal) do |subgoal|
@@ -212,11 +212,11 @@ describe 'Porolog' do
       end
       
       it 'should raise an exception when the definition is unknown' do
-        predicate :strange
+        Porolog::predicate :strange
         
         strange(12) << 3.4
         
-        exception = assert_raises Rule::DefinitionError do
+        exception = assert_raises Porolog::Rule::DefinitionError do
           strange(:X).solve
         end
         assert_equal  'UNEXPECTED TYPE OF DEFINITION: 3.4 (Float)',  exception.message
@@ -226,15 +226,15 @@ describe 'Porolog' do
     
     describe '#satisfy_conjunction' do
       
-      let(:pred1  ) { Predicate.new :parent }
-      let(:pred2  ) { Predicate.new :child }
-      let(:args1  ) { Arguments.new pred1, [1,2,3,4] }
-      let(:args2  ) { Arguments.new pred2, [:x,:y] }
-      let(:goal   ) { Goal.new args1, nil }
-      let(:subgoal) { Goal.new args2, goal }
+      let(:pred1  ) { Porolog::Predicate.new :parent }
+      let(:pred2  ) { Porolog::Predicate.new :child }
+      let(:args1  ) { Porolog::Arguments.new pred1, [1,2,3,4] }
+      let(:args2  ) { Porolog::Arguments.new pred2, [:x,:y] }
+      let(:goal   ) { Porolog::Goal.new args1, nil }
+      let(:subgoal) { Porolog::Goal.new args2, goal }
       
       it 'should handle CUT expression' do
-        rule = Rule.new args1, [:CUT,true]
+        rule = Porolog::Rule.new args1, [:CUT,true]
         
         goal.expects(:terminate!).with().times(1)
         rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
@@ -252,7 +252,7 @@ describe 'Porolog' do
       end
       
       it 'should handle CUT expression at the end of a conjunction' do
-        rule = Rule.new args1, [:CUT]
+        rule = Porolog::Rule.new args1, [:CUT]
         
         goal.expects(:terminate!).with().times(1)
         rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
@@ -269,7 +269,7 @@ describe 'Porolog' do
       end
       
       it 'should handle true expression' do
-        rule = Rule.new args1, [true]
+        rule = Porolog::Rule.new args1, [true]
         
         goal.expects(:terminate!).with().times(0)
         rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
@@ -286,7 +286,7 @@ describe 'Porolog' do
       end
       
       it 'should handle false expression' do
-        rule = Rule.new args1, [false]
+        rule = Porolog::Rule.new args1, [false]
         
         goal.expects(:terminate!).with().times(0)
         rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
@@ -305,7 +305,7 @@ describe 'Porolog' do
       end
       
       it 'should handle nil expression' do
-        rule = Rule.new args1, []
+        rule = Porolog::Rule.new args1, []
         
         goal.expects(:terminate!).with().times(0)
         rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
@@ -325,7 +325,7 @@ describe 'Porolog' do
       
       it 'should evaluate conjunctions until a fail' do
         conjunction = [true, true, true, false, true, :CUT, true]
-        rule = Rule.new args1, conjunction
+        rule = Porolog::Rule.new args1, conjunction
         
         goal.expects(:terminate!).with().times(0)
         rule_spy = Spy.on(rule, :satisfy_conjunction).and_call_through
@@ -347,18 +347,18 @@ describe 'Porolog' do
       end
       
       it 'should unify and instantiate variables with a subgoal and satisfy the subgoal and uninstantiate the instantiations' do
-        goal    = Goal.new args1, nil
-        subgoal = Goal.new args2, goal
+        goal    = Porolog::Goal.new args1, nil
+        subgoal = Porolog::Goal.new args2, goal
         
-        predicate :gamma
+        Porolog::predicate :gamma
         
         gamma(8,5).fact!
         
-        rule = Rule.new args1, [gamma(:j,:k)]
+        rule = Porolog::Rule.new args1, [gamma(:j,:k)]
         
         subsubgoal = new_goal :gamma, :y, :z
-        subsubgoal_spy = Spy.on(Goal, :new).and_return do |*args|
-          Spy.off(Goal, :new)
+        subsubgoal_spy = Spy.on(Porolog::Goal, :new).and_return do |*args|
+          Spy.off(Porolog::Goal, :new)
           subsubgoal
         end
         
@@ -425,8 +425,8 @@ describe 'Porolog' do
       
       it 'should not unify and not instantiate variables with a subgoal nor satisfy the subgoal when it cannot be unified' do
         # -- Create Goals --
-        goal    = Goal.new args1, nil
-        subgoal = Goal.new args2, goal
+        goal    = Porolog::Goal.new args1, nil
+        subgoal = Porolog::Goal.new args2, goal
         subgoal.instantiate :y, 7
         
         # -- Create goal for satisfy_conjunction() --
@@ -454,15 +454,15 @@ describe 'Porolog' do
         ].join("\n")
         
         # -- Define Predicate --
-        predicate :gamma
+        Porolog::predicate :gamma
         
         gamma(8,5).fact!
         
-        rule = Rule.new args1, [gamma(:j,:k)]
+        rule = Porolog::Rule.new args1, [gamma(:j,:k)]
         
         # -- Prepare Checks for satisfy_conjunction() --
-        subsubgoal_spy = Spy.on(Goal, :new).and_return do |*args|
-          Spy.off(Goal, :new)
+        subsubgoal_spy = Spy.on(Porolog::Goal, :new).and_return do |*args|
+          Spy.off(Porolog::Goal, :new)
           subsubgoal
         end
         

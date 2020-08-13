@@ -129,8 +129,8 @@ describe 'Array' do
   
   let(:array1) { [1, 2, :A, 4, [:B, 6, 7, :C], 9] }
   let(:array2) { [] }
-  let(:array3) { UNKNOWN_ARRAY }
-  let(:array4) { [1, :B, 3, UNKNOWN_TAIL] }
+  let(:array3) { Porolog::UNKNOWN_ARRAY }
+  let(:array4) { [1, :B, 3, Porolog::UNKNOWN_TAIL] }
   
   describe '#/' do
     
@@ -173,12 +173,12 @@ describe 'Array' do
     it 'should return simple Arrays as is' do
       assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],     array1.value
       assert_equal    [],                                   array2.value
-      assert_equal    [UNKNOWN_TAIL],                       array3.value
-      assert_equal    [1, :B, 3, UNKNOWN_TAIL],             array4.value
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.value
+      assert_equal    [1, :B, 3, Porolog::UNKNOWN_TAIL],    array4.value
     end
     
     it 'should expand Tails that are an Array' do
-      array = [1,2,3,Tail.new([7,8,9])]
+      array = [1, 2, 3, Porolog::Tail.new([7, 8, 9])]
       
       assert_equal    [1,2,3,7,8,9],                        array.value
     end
@@ -194,7 +194,7 @@ describe 'Array' do
     
     it 'should return the value of instantiated variables in a Tail' do
       goal  = new_goal :taylor, :head, :tail
-      array = [Tail.new(goal.value([5,6,7,8]))]
+      array = [Porolog::Tail.new(goal.value([5, 6, 7, 8]))]
       
       assert_equal    [5,6,7,8],                            array.value
     end
@@ -204,10 +204,10 @@ describe 'Array' do
   describe '#type' do
     
     it 'should return :variable for symbols' do
-      assert_equal    :array,           array1.type
-      assert_equal    :array,           array2.type
-      assert_equal    :array,           array3.type
-      assert_equal    :array,           array4.type
+      assert_equal    :array,                               array1.type
+      assert_equal    :array,                               array2.type
+      assert_equal    :array,                               array3.type
+      assert_equal    :array,                               array4.type
     end
     
   end
@@ -215,24 +215,24 @@ describe 'Array' do
   describe '#head' do
     
     it 'should return the first element when no headsize is provided' do
-      assert_equal    1,                array1.head
-      assert_nil                        array2.head
-      assert_nil                        array3.head
-      assert_equal    1,                array4.head
+      assert_equal    1,                                    array1.head
+      assert_nil                                            array2.head
+      assert_nil                                            array3.head
+      assert_equal    1,                                    array4.head
     end
     
     it 'should return the first headsize elements' do
-      assert_equal    [1, 2],           array1.head(2)
-      assert_equal    [],               array2.head(2)
-      assert_equal    [UNKNOWN_TAIL],   array3.head(2)
-      assert_equal    [1, :B],          array4.head(2)
+      assert_equal    [1, 2],                               array1.head(2)
+      assert_equal    [],                                   array2.head(2)
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.head(2)
+      assert_equal    [1, :B],                              array4.head(2)
     end
     
     it 'should return an extended head if the tail is uninstantiated' do
-      assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],   array1.head(9)
-      assert_equal    [],                                 array2.head(9)
-      assert_equal    [UNKNOWN_TAIL],                     array3.head(9)
-      assert_equal    [1, :B, 3, UNKNOWN_TAIL],           array4.head(9)
+      assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],     array1.head(9)
+      assert_equal    [],                                   array2.head(9)
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.head(9)
+      assert_equal    [1, :B, 3, Porolog::UNKNOWN_TAIL],    array4.head(9)
     end
     
   end
@@ -240,31 +240,31 @@ describe 'Array' do
   describe '#tail' do
     
     it 'should return the tail after the first element when no headsize is provided' do
-      assert_equal    [2, :A, 4, [:B, 6, 7, :C], 9],      array1.tail
-      assert_equal    [],                                 array2.tail
-      assert_equal    [UNKNOWN_TAIL],                     array3.tail
-      assert_equal    [:B, 3, UNKNOWN_TAIL],              array4.tail
+      assert_equal    [2, :A, 4, [:B, 6, 7, :C], 9],        array1.tail
+      assert_equal    [],                                   array2.tail
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.tail
+      assert_equal    [:B, 3, Porolog::UNKNOWN_TAIL],       array4.tail
     end
     
     it 'should return the tail after the first headsize elements' do
-      assert_equal    [:A, 4, [:B, 6, 7, :C], 9],         array1.tail(2)
-      assert_equal    [],                                 array2.tail(2)
-      assert_equal    [UNKNOWN_TAIL],                     array3.tail(2)
-      assert_equal    [3, UNKNOWN_TAIL],                  array4.tail(2)
+      assert_equal    [:A, 4, [:B, 6, 7, :C], 9],           array1.tail(2)
+      assert_equal    [],                                   array2.tail(2)
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.tail(2)
+      assert_equal    [3, Porolog::UNKNOWN_TAIL],           array4.tail(2)
     end
     
     it 'should return an extended tail if the tail is uninstantiated' do
-      assert_equal    [],                                 array1.tail(9)
-      assert_equal    [],                                 array2.tail(9)
-      assert_equal    [UNKNOWN_TAIL],                     array3.tail(9)
-      assert_equal    [UNKNOWN_TAIL],                     array4.tail(9)
+      assert_equal    [],                                   array1.tail(9)
+      assert_equal    [],                                   array2.tail(9)
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.tail(9)
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array4.tail(9)
     end
     
   end
   
   describe '#clean' do
     
-    let(:predicate1)  { Predicate.new :generic }
+    let(:predicate1)  { Porolog::Predicate.new :generic }
     let(:arguments1)  { predicate1.arguments(:m,:n) }
     let(:goal1)       { arguments1.goal }
     
@@ -275,14 +275,14 @@ describe 'Array' do
     it 'should return simple Arrays as is' do
       assert_equal    [1, 2, :A, 4, [:B, 6, 7, :C], 9],     array1.clean
       assert_equal    [],                                   array2.clean
-      assert_equal    [UNKNOWN_TAIL],                       array3.clean
-      assert_equal    [1, :B, 3, UNKNOWN_TAIL],             array4.clean
+      assert_equal    [Porolog::UNKNOWN_TAIL],              array3.clean
+      assert_equal    [1, :B, 3, Porolog::UNKNOWN_TAIL],    array4.clean
     end
     
     it 'should return the values of its elements with variables replaced by nil and Tails replaced by UNKNOWN_TAIL' do
       assert_equal    [1, 2, nil, 4, [nil, 6, 7, nil], 9],  array5.clean
-      assert_equal    [1, nil, 3, UNKNOWN_TAIL],            array6.clean
-      assert_equal    [1, nil, 3, UNKNOWN_TAIL],            array7.clean
+      assert_equal    [1, nil, 3, Porolog::UNKNOWN_TAIL],   array6.clean
+      assert_equal    [1, nil, 3, Porolog::UNKNOWN_TAIL],   array7.clean
     end
     
   end

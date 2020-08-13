@@ -14,27 +14,27 @@ describe 'Porolog' do
   end
   
   let(:pred_name)   { :pred }
-  let(:pred)        { Predicate.new pred_name }
-  let(:pred1)       { Predicate.new :p }
-  let(:pred2)       { Predicate.new :q }
+  let(:pred)        { Porolog::Predicate.new pred_name }
+  let(:pred1)       { Porolog::Predicate.new :p }
+  let(:pred2)       { Porolog::Predicate.new :q }
   
   describe 'Arguments' do
     
     describe '.reset' do
       
       it 'should delete/unregister all Arguments' do
-        args1 = Arguments.new pred, [1,:x,'word',[2,:y,0.3]]
-        args2 = Arguments.new pred, [2]
-        args3 = Arguments.new pred, [3,:x,:y,:z]
+        args1 = Porolog::Arguments.new pred, [1,:x,'word',[2,:y,0.3]]
+        args2 = Porolog::Arguments.new pred, [2]
+        args3 = Porolog::Arguments.new pred, [3,:x,:y,:z]
         
         assert_equal    'Arguments1',       args1.myid
         assert_equal    'Arguments2',       args2.myid
         assert_equal    'Arguments3',       args3.myid
         
-        Arguments.reset
+        Porolog::Arguments.reset
         
-        args4 = Arguments.new pred, [4,[1,2,3]]
-        args5 = Arguments.new pred, [5,[]]
+        args4 = Porolog::Arguments.new pred, [4,[1,2,3]]
+        args5 = Porolog::Arguments.new pred, [5,[]]
         
         assert_equal    'Arguments-999',    args1.myid
         assert_equal    'Arguments-999',    args2.myid
@@ -42,7 +42,7 @@ describe 'Porolog' do
         assert_equal    'Arguments1',       args4.myid
         assert_equal    'Arguments2',       args5.myid
         
-        Arguments.reset
+        Porolog::Arguments.reset
         
         assert_equal    'Arguments-999',    args1.myid
         assert_equal    'Arguments-999',    args2.myid
@@ -56,7 +56,7 @@ describe 'Porolog' do
     describe '.new' do
       
       it 'should create a new Arguments' do
-        arguments = Arguments.new pred, [1, :x, 'word', [2, :y, 0.3]]
+        arguments = Porolog::Arguments.new pred, [1, :x, 'word', [2, :y, 0.3]]
         
         assert_Arguments    arguments, :pred, [1, :x, 'word', [2, :y, 0.3]]
       end
@@ -67,22 +67,22 @@ describe 'Porolog' do
       
       it 'should return all registered arguments' do
         # -- No Arguments --
-        assert_equal        0,    Arguments.arguments.size
+        assert_equal        0,    Porolog::Arguments.arguments.size
         
         # -- One Arguments --
-        arguments1 = Arguments.new pred1, [:x,:y,:z]
+        arguments1 = Porolog::Arguments.new pred1, [:x,:y,:z]
         
-        assert_equal        1,    Arguments.arguments.size
-        assert_Arguments    Arguments.arguments.last, :p, [:x,:y,:z]
+        assert_equal        1,    Porolog::Arguments.arguments.size
+        assert_Arguments    Porolog::Arguments.arguments.last, :p, [:x,:y,:z]
         
         # -- Two Arguments --
-        arguments2 = Arguments.new pred2, [:a,:b,:c,:d]
+        arguments2 = Porolog::Arguments.new pred2, [:a,:b,:c,:d]
         
-        assert_equal        2,    Arguments.arguments.size
-        assert_Arguments    Arguments.arguments.last, :q, [:a,:b,:c,:d]
+        assert_equal        2,    Porolog::Arguments.arguments.size
+        assert_Arguments    Porolog::Arguments.arguments.last, :q, [:a,:b,:c,:d]
         
         
-        assert_equal        [arguments1, arguments2],     Arguments.arguments
+        assert_equal        [arguments1, arguments2],     Porolog::Arguments.arguments
       end
       
     end
@@ -90,22 +90,22 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize predicate and arguments' do
-        arguments = Arguments.new pred, [:x,:y,:z]
+        arguments = Porolog::Arguments.new pred, [:x,:y,:z]
         
         assert_equal  pred,           arguments.predicate
         assert_equal  [:x,:y,:z],     arguments.arguments
       end
       
       it 'should register the arguments' do
-        arguments1 = Arguments.new pred, [:x]
-        arguments2 = Arguments.new pred, [:x,:y]
-        arguments3 = Arguments.new pred, [:x,:y,:z]
+        arguments1 = Porolog::Arguments.new pred, [:x]
+        arguments2 = Porolog::Arguments.new pred, [:x,:y]
+        arguments3 = Porolog::Arguments.new pred, [:x,:y,:z]
         
         assert_equal  [
           arguments1,
           arguments2,
           arguments3,
-        ],      Arguments.arguments
+        ],      Porolog::Arguments.arguments
       end
       
     end
@@ -113,9 +113,9 @@ describe 'Porolog' do
     describe '#myid' do
       
       it 'should return its class and index as a String' do
-        arguments1 = Arguments.new pred, [:x]
-        arguments2 = Arguments.new pred, [:x,:y]
-        arguments3 = Arguments.new pred, [:x,:y,:z]
+        arguments1 = Porolog::Arguments.new pred, [:x]
+        arguments2 = Porolog::Arguments.new pred, [:x,:y]
+        arguments3 = Porolog::Arguments.new pred, [:x,:y,:z]
         
         assert_equal  'Arguments1',     arguments1.myid
         assert_equal  'Arguments2',     arguments2.myid
@@ -123,11 +123,11 @@ describe 'Porolog' do
       end
       
       it 'should return its class and -999 as a String when deleted/reset' do
-        arguments1 = Arguments.new pred, [:x]
-        arguments2 = Arguments.new pred, [:x,:y]
-        arguments3 = Arguments.new pred, [:x,:y,:z]
+        arguments1 = Porolog::Arguments.new pred, [:x]
+        arguments2 = Porolog::Arguments.new pred, [:x,:y]
+        arguments3 = Porolog::Arguments.new pred, [:x,:y,:z]
         
-        Arguments.reset
+        Porolog::Arguments.reset
         
         assert_equal  'Arguments-999',  arguments1.myid
         assert_equal  'Arguments-999',  arguments2.myid
@@ -139,13 +139,13 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should show the predicate and arguments' do
-        predicate1 = Predicate.new :p
-        predicate2 = Predicate.new :q
-        predicate3 = Predicate.new :generic
+        predicate1 = Porolog::Predicate.new :p
+        predicate2 = Porolog::Predicate.new :q
+        predicate3 = Porolog::Predicate.new :generic
         
-        arguments1 = Arguments.new predicate1, [:x]
-        arguments2 = Arguments.new predicate2, [:list, [1,2,3]]
-        arguments3 = Arguments.new predicate3, [:a,:b,:c]
+        arguments1 = Porolog::Arguments.new predicate1, [:x]
+        arguments2 = Porolog::Arguments.new predicate2, [:list, [1,2,3]]
+        arguments3 = Porolog::Arguments.new predicate3, [:a,:b,:c]
         
         assert_equal  'p(:x)',                  arguments1.inspect
         assert_equal  'q(:list,[1, 2, 3])',     arguments2.inspect
@@ -227,7 +227,7 @@ describe 'Porolog' do
           #:nocov:
         end
         
-        assert_instance_of  Arguments,  arguments2
+        assert_instance_of  Porolog::Arguments,  arguments2
         
         part1 = "[  pred(1,\"a\",0.1):- #<Proc:0x"
         part2 = "@#{__FILE__}:#{line}>]"
@@ -283,8 +283,8 @@ describe 'Porolog' do
     describe '#solutions' do
       
       it 'should memoize solutions' do
-        args1 = Arguments.new pred, [1,2]
-        args2 = Arguments.new pred, [:p,:q]
+        args1 = Porolog::Arguments.new pred, [1,2]
+        args2 = Porolog::Arguments.new pred, [:p,:q]
         
         args1.fact!
         
@@ -304,8 +304,8 @@ describe 'Porolog' do
     describe '#solve' do
       
       it 'should unify and solve a simple predicate' do
-        args1 = Arguments.new pred, [1,2]
-        args2 = Arguments.new pred, [:p,:q]
+        args1 = Porolog::Arguments.new pred, [1,2]
+        args2 = Porolog::Arguments.new pred, [:p,:q]
         
         args1.fact!
         
@@ -315,7 +315,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a simple predicate with multiple solutions' do
-        predicate :simple
+        Porolog::predicate :simple
         
         simple(1,2).fact!
         simple(3,4).fact!
@@ -329,7 +329,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a simple predicate with multiple solutions involving a head and tail' do
-        predicate :basic
+        Porolog::predicate :basic
         
         basic([1,2,3]).fact!
         basic([3,4,5]).fact!
@@ -343,7 +343,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a normal predicate' do
-        predicate :likes
+        Porolog::predicate :likes
 
         likes('mary','food').fact!
         likes('mary','wine').fact!
@@ -365,7 +365,7 @@ describe 'Porolog' do
       end
       
       it 'should allow isnt to be defined' do
-        predicate :isnt
+        Porolog::predicate :isnt
         
         isnt(:A,:A) << [:CUT, false]
         isnt(:A,:B) << [:CUT, true]
@@ -378,7 +378,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a deeper predicate' do
-        predicate :male, :female, :parent
+        Porolog::predicate :male, :female, :parent
 
         male('james1').fact!
         male('charles1').fact!
@@ -415,7 +415,7 @@ describe 'Porolog' do
         ], solutions
         
         
-        predicate :mother, :father, :sibling, :isnt
+        Porolog::predicate :mother, :father, :sibling, :isnt
 
         mother(:X,:M) << [
           parent(:X,:M),
@@ -468,7 +468,7 @@ describe 'Porolog' do
       end
       
       it 'should unify and solve a predicate involving a head and tail' do
-        predicate :join, :split, :head, :tail
+        Porolog::predicate :join, :split, :head, :tail
         
         head(1).fact!
         head(4).fact!
@@ -504,8 +504,8 @@ describe 'Porolog' do
       end
       
       it 'should call a builtin predicate' do
-        builtin :write
-        predicate :callwrite
+        Porolog::builtin :write
+        Porolog::predicate :callwrite
         
         callwrite(:MESSAGE) << [
           write(:MESSAGE,"\n")
@@ -521,8 +521,8 @@ describe 'Porolog' do
       end
       
       it 'should pass on instantiations between goals' do
-        builtin :write
-        predicate :passon, :copy
+        Porolog::builtin :write
+        Porolog::predicate :passon, :copy
 
         copy(:A,:A).fact!
 
@@ -546,8 +546,8 @@ describe 'Porolog' do
       end
       
       it 'should implement simple recursion' do
-        builtin :write, :is, :gtr
-        predicate :count
+        Porolog::builtin :write, :is, :gtr
+        Porolog::predicate :count
         
         count(1) << [
           write("1: END\n"),
@@ -585,8 +585,8 @@ describe 'Porolog' do
       end
       
       it 'should solve tower of Hanoi' do
-        builtin :gtr, :is, :write
-        predicate :move
+        Porolog::builtin :gtr, :is, :write
+        Porolog::predicate :move
 
         move(1,:X,:Y,:Z) << [
           write('Move top disk from ', :X, ' to ', :Y, "\n"),
@@ -627,8 +627,8 @@ describe 'Porolog' do
       end
       
       it 'should solve a peeling off predicate' do
-        builtin :is
-        predicate :peel
+        Porolog::builtin :is
+        Porolog::predicate :peel
 
         peel([],0).cut_fact!
         peel(:H/:T,:N) << [
@@ -652,8 +652,8 @@ describe 'Porolog' do
       it 'should solve tower of Hanoi with list representation' do
         # TODO: convert to list representation
         
-        builtin :gtr, :is, :append, :write
-        predicate :tower, :move
+        Porolog::builtin :gtr, :is, :append, :write
+        Porolog::predicate :tower, :move
         
         tower(1, :X, :Y, :Z, [[:X,:Z]]).fact!
         tower(:N, :X, :Y, :Z, :S) << [
@@ -716,7 +716,7 @@ describe 'Porolog' do
     describe '#solve_for' do
       
       it 'should solve a predicate for specified variables' do
-        predicate :alpha
+        Porolog::predicate :alpha
         
         alpha(1,2).fact!
         
@@ -726,7 +726,7 @@ describe 'Porolog' do
       end
       
       it 'should solve a predicate for a specified variable' do
-        predicate :alpha
+        Porolog::predicate :alpha
         
         alpha(1,2).fact!
         alpha(3,5).fact!
@@ -737,7 +737,7 @@ describe 'Porolog' do
       end
       
       it 'should solve a predicate with multiple solutions for specified variables' do
-        predicate :alpha
+        Porolog::predicate :alpha
         
         alpha(1,2).fact!
         alpha(3,4).fact!
@@ -754,7 +754,7 @@ describe 'Porolog' do
     describe '#valid?' do
       
       it 'should return true when a solution is found' do
-        predicate :f
+        Porolog::predicate :f
         
         f(3).fact!
         
@@ -762,7 +762,7 @@ describe 'Porolog' do
       end
       
       it 'should return false when no solution is found' do
-        predicate :f
+        Porolog::predicate :f
         
         f(1).fact!
         f(2).fact!
@@ -773,7 +773,7 @@ describe 'Porolog' do
       end
       
       it 'should return false when a fallacy is found' do
-        predicate :f
+        Porolog::predicate :f
         
         f(3).fallacy!
         
@@ -803,30 +803,30 @@ describe 'Porolog' do
     describe '#==' do
       
       it 'should return true for Arguments with identical predicates and arguments' do
-        predicate1 = Predicate.new :omega
+        predicate1 = Porolog::Predicate.new :omega
         arguments1 = predicate1.(1,'a',0.1)
         
-        predicate2 = Predicate.new :omega
+        predicate2 = Porolog::Predicate.new :omega
         arguments2 = predicate2.(1,'a',0.1)
         
         assert    arguments1 == arguments2, 'Arguments with identical predicates and arguments should return true'
       end
       
       it 'should return false for Arguments with non-identical arguments' do
-        predicate1 = Predicate.new :omega
+        predicate1 = Porolog::Predicate.new :omega
         arguments1 = predicate1.(1,'a',0.1)
         
-        predicate2 = Predicate.new :omega
+        predicate2 = Porolog::Predicate.new :omega
         arguments2 = predicate2.(1,'a',0.2)
         
         refute    arguments1 == arguments2, 'Arguments with non-identical arguments should return false'
       end
       
       it 'should return false for Arguments with non-identical predicates' do
-        predicate1 = Predicate.new :omega
+        predicate1 = Porolog::Predicate.new :omega
         arguments1 = predicate1.(1,'a',0.1)
         
-        predicate2 = Predicate.new :omegb
+        predicate2 = Porolog::Predicate.new :omegb
         arguments2 = predicate2.(1,'a',0.1)
         
         refute    arguments1 == arguments2, 'Arguments with non-identical predicates should return false'

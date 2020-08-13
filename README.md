@@ -6,7 +6,9 @@ Plain Old Ruby Objects Prolog
 
 [![Gem Version](https://badge.fury.io/rb/porolog.svg)](https://badge.fury.io/rb/porolog)
 [![Build Status](https://travis-ci.com/wizardofosmium/porolog.svg?branch=master)](https://travis-ci.com/wizardofosmium/porolog)
-[![Coverage](https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg)](https://github.com/wizardofosmium/porolog)
+[![Coverage](https://github.com/wizardofosmium/porolog/blob/master/coverage/badge.svg)](https://htmlpreview.github.io/?https://github.com/wizardofosmium/porolog/blob/master/coverage/index.html)
+[![Documentation](https://img.shields.io/badge/documentation-100%2E0%25-brightgreen.svg)](https://www.rubydoc.info/gems/porolog)
+[![Wiki](https://img.shields.io/badge/wiki-in%20progress-brightgreen.svg)](https://github.com/wizardofosmium/porolog/wiki)
 
 ## Introduction
 
@@ -20,8 +22,7 @@ program using native Ruby objects (POROs); hence the name Porolog.
 The goal was to implement a minimal logic engine in the style of Prolog where
 Ruby objects could be passed in and Ruby objects were passed back.
 
-This version completes the minimal/generic logic engine along with some standard builtin predicates.
-Custom builtin predicates can be easily added.
+This version completes modularisation, so that `include Porolog` is no longer required.
 
 ## Dependencies
 
@@ -82,10 +83,11 @@ Common usage is expected to be including Porolog in a class and encapsulating th
 ```ruby
 require 'porolog'
 
-include Porolog
-
 class Numbers
 
+  include Porolog
+  extend  Porolog
+  
   Predicate.scope self
   predicate :prime, class_base: self
 
@@ -179,13 +181,11 @@ This example shows:
 ```ruby
 require 'porolog'
 
-include Porolog
-
 class Numbers
 
-  Predicate.scope self
-  builtin   :gtr, :is, :noteq, :between,  class_base: self
-  predicate :prime, :search_prime,        class_base: self
+  Porolog::Predicate.scope self
+  Porolog::builtin   :gtr, :is, :noteq, :between,  class_base: self
+  Porolog::predicate :prime, :search_prime,        class_base: self
 
   prime(2).fact!
   prime(3).fact!
@@ -210,6 +210,10 @@ class Numbers
     :CUT,
     search_prime(:X, :M),
   ]
+  
+  # Unexpose `search_prime`
+  private               :search_prime
+  private_class_method  :search_prime
 
   def show_primes
     solutions = prime(:X).solve
@@ -238,11 +242,15 @@ class Numbers
 end
 
 
-numbers = Numbers.new 23
-numbers.show_primes
-puts numbers.primes.inspect
+Numbers.show_primes
+number = Numbers.new 23
+puts number.primes.inspect
 
+# `prime` predicate is exposed as a class method
 puts Numbers.prime(3).valid?.inspect
+
+# `prime` predicate is exposed as an instance method
+puts number.prime(3).valid?.inspect
 
 puts ARGV.inspect
 ARGV.map(&:to_i).each do |arg|
@@ -277,6 +285,7 @@ rake variable_test
 rake value_test
 rake tail_test
 rake instantiation_test
+rake samples_test
 ```
 
 ## Author

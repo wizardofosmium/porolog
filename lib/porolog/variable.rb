@@ -143,7 +143,7 @@ module Porolog
           }
 
           if values.size > 2
-            merged, unifications = unify_many_arrays(values, values_goals, visited)
+            merged, unifications = Porolog::unify_many_arrays(values, values_goals, visited)
           elsif values.size == 2
             no_variables = values.map(&:variables).flatten.empty?
             if no_variables
@@ -157,7 +157,7 @@ module Porolog
                 return nil
               end
             end
-            merged, unifications = unify_arrays(*values, *values_goals, visited)
+            merged, unifications = Porolog::unify_arrays(*values, *values_goals, visited)
           else
             # :nocov: NOT REACHED
             merged, unifications = values.first, []
@@ -168,7 +168,7 @@ module Porolog
         else
           # -- Not All Values Are Arrays --
           values.each_cons(2){|left,right|
-            unification = unify(left, right, @goal, @goal, visited)
+            unification = Porolog::unify(left, right, @goal, @goal, visited)
             if unification && unifications
               unifications += unification
             else
@@ -178,9 +178,9 @@ module Porolog
           if unifications
             values.min_by{|value|
               case value
-                when Variable, Symbol             then  2
-                when UNKNOWN_TAIL, UNKNOWN_ARRAY  then  9
-                else                              0
+                when Porolog::Variable, Symbol                      then  2
+                when Porolog::UNKNOWN_TAIL, Porolog::UNKNOWN_ARRAY  then  9
+                else                                                      0
               end
             } || self
           else
@@ -233,7 +233,7 @@ module Porolog
         other_goal ||= self.goal
         
         # -- Check Unification --
-        unless unify(self, other, self.goal, other_goal)
+        unless Porolog::unify(self, other, self.goal, other_goal)
           self.goal.log << "Cannot unify: #{self.inspect} and #{other.inspect}"
           return nil
         end

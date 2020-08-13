@@ -21,7 +21,7 @@ describe 'Porolog' do
         
         it 'should output an atom' do
           assert_output 'hello' do
-            builtin :write
+            Porolog::builtin :write
             
             assert_solutions    write('hello'), [{}]
           end
@@ -29,7 +29,7 @@ describe 'Porolog' do
         
         it 'should output an integer' do
           assert_output '456' do
-            builtin :write
+            Porolog::builtin :write
             
             assert_solutions    write(456), [{}]
           end
@@ -37,7 +37,7 @@ describe 'Porolog' do
         
         it 'should output an uninstantiated variable' do
           assert_output ':X' do
-            builtin :write
+            Porolog::builtin :write
             
             assert_solutions    write(:X), [{ X: nil }]
           end
@@ -45,8 +45,8 @@ describe 'Porolog' do
         
         it 'should output an instantiated variable' do
           assert_output '72' do
-            builtin :write, :is
-            predicate :inst
+            Porolog::builtin :write, :is
+            Porolog::predicate :inst
             
             inst(:X, :Y) << [
               is(:Y, :X) {|x| x + 4 },
@@ -63,7 +63,7 @@ describe 'Porolog' do
         
         it 'should output an atom and a new line' do
           assert_output "hello\n" do
-            builtin :writenl
+            Porolog::builtin :writenl
             
             assert_solutions    writenl('hello'), [{}]
           end
@@ -71,7 +71,7 @@ describe 'Porolog' do
         
         it 'should output an integer and a new line' do
           assert_output "456\n" do
-            builtin :writenl
+            Porolog::builtin :writenl
             
             assert_solutions    writenl(456), [{}]
           end
@@ -79,7 +79,7 @@ describe 'Porolog' do
         
         it 'should output an uninstantiated variable and a new line' do
           assert_output ":X\n" do
-            builtin :writenl
+            Porolog::builtin :writenl
             
             assert_solutions    writenl(:X), [{ X: nil }]
           end
@@ -87,8 +87,8 @@ describe 'Porolog' do
         
         it 'should output an instantiated variable and a new line' do
           assert_output "72\n" do
-            builtin :writenl, :is
-            predicate :inst
+            Porolog::builtin :writenl, :is
+            Porolog::predicate :inst
             
             inst(:X, :Y) << [
               is(:Y, :X) {|x| x + 4 },
@@ -105,8 +105,8 @@ describe 'Porolog' do
         
         it 'should output a newline' do
           assert_output "\n\n\n" do
-            builtin :nl
-            predicate :f, :n
+            Porolog::builtin :nl
+            Porolog::predicate :f, :n
             
             n(1).fact!
             n(5).fact!
@@ -130,8 +130,8 @@ describe 'Porolog' do
       describe '#is' do
         
         it 'should raise an exception when not provided with a variable' do
-          builtin :is
-          predicate :is_test
+          Porolog::builtin :is
+          Porolog::predicate :is_test
           
           is_test(:variable) << [
             # :nocov:
@@ -139,14 +139,14 @@ describe 'Porolog' do
             # :nocov:
           ]
           
-          assert_raises NonVariableError do
+          assert_raises Porolog::NonVariableError do
             assert_solutions    is_test(6),  [{}]
           end
         end
         
         it 'should not raise an exception when provided with an instantiated variable' do
-          builtin :is
-          predicate :is_test
+          Porolog::builtin :is
+          Porolog::predicate :is_test
           
           is_test(:variable) << [
             is(:variable) { 6 }
@@ -156,8 +156,8 @@ describe 'Porolog' do
         end
         
         it 'should call the block provided and instantiate the variable to the result of the provided block' do
-          builtin :is
-          predicate :is_test
+          Porolog::builtin :is
+          Porolog::predicate :is_test
           
           calls = []
           
@@ -180,8 +180,8 @@ describe 'Porolog' do
         end
         
         it 'should return false when the variable cannot be instantiated' do
-          builtin :is
-          predicate :is_test
+          Porolog::builtin :is
+          Porolog::predicate :is_test
           
           calls = []
           
@@ -209,32 +209,32 @@ describe 'Porolog' do
       describe '#eq' do
         
         it 'should return no solutions when given unequal values' do
-          builtin :eq
+          Porolog::builtin :eq
           
           assert_solutions  eq([3,2,1,4], [1,2,3,4]), []
         end
         
         it 'should return a solution when given equal values' do
-          builtin :eq
+          Porolog::builtin :eq
           
           assert_solutions  eq([1,2,3,4], [1,2,3,4]), [{}]
         end
         
         it 'should return a solution with an unbound variable when given the same unbound variable' do
-          builtin :eq
+          Porolog::builtin :eq
           
           assert_solutions  eq(:X, :X), [{ X: nil}]
         end
         
         it 'should return no solutions when given two unbound variables' do
-          builtin :eq
+          Porolog::builtin :eq
           
           assert_solutions  eq(:X, :Y), []
         end
         
         it 'should return one solution with unbound variables when given given two uninstantiated variables that are bound to each other' do
-          builtin :eq, :is
-          predicate :bind_and_eq
+          Porolog::builtin :eq, :is
+          Porolog::predicate :bind_and_eq
           
           bind_and_eq(:X, :Y) << [
             is(:X, :Y) { |y| y },
@@ -245,8 +245,8 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions when given two uninstantiated variables that are not bound to each other' do
-          builtin :eq, :is
-          predicate :bind_and_eq
+          Porolog::builtin :eq, :is
+          Porolog::predicate :bind_and_eq
           
           bind_and_eq(:X, :Y) << [
             is(:X, :P) { |p| p },
@@ -258,7 +258,7 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions when given a value and an uninstantiated variable' do
-          builtin :eq
+          Porolog::builtin :eq
           
           assert_solutions  eq([1,2,3,4], :L), []
           assert_solutions  eq(:L, [1,2,3,4]), []
@@ -269,32 +269,32 @@ describe 'Porolog' do
       describe '#is_eq' do
         
         it 'should return no solutions when given unequal values' do
-          builtin :is_eq
+          Porolog::builtin :is_eq
           
           assert_solutions  is_eq([3,2,1,4], [1,2,3,4]), []
         end
         
         it 'should return a solution when given equal values' do
-          builtin :is_eq
+          Porolog::builtin :is_eq
           
           assert_solutions  is_eq([1,2,3,4], [1,2,3,4]), []
         end
         
         it 'should return a solution with an unbound variable when given the same unbound variable' do
-          builtin :is_eq
+          Porolog::builtin :is_eq
           
           assert_solutions  is_eq(:X, :X), [{ X: nil}]
         end
         
         it 'should return no solutions when given given two unbound variables' do
-          builtin :is_eq
+          Porolog::builtin :is_eq
           
           assert_solutions  is_eq(:X, :Y), [{ X: nil, Y: nil }]
         end
         
         it 'should return one solution with unbound variables when given given two uninstantiated variables that are bound to each other' do
-          builtin :is_eq, :is
-          predicate :bind_and_eq
+          Porolog::builtin :is_eq, :is
+          Porolog::predicate :bind_and_eq
           
           bind_and_eq(:X, :Y) << [
             is(:X, :Y) { |y| y },
@@ -305,8 +305,8 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions when given given two uninstantiated variables that are not bound to each other' do
-          builtin :is_eq, :is
-          predicate :bind_and_eq
+          Porolog::builtin :is_eq, :is
+          Porolog::predicate :bind_and_eq
           
           bind_and_eq(:X, :Y) << [
             is(:X, :P) { |p| p },
@@ -318,13 +318,13 @@ describe 'Porolog' do
         end
         
         it 'should not instantiate the right hand side when not given a left hand side variable' do
-          builtin :is_eq
+          Porolog::builtin :is_eq
           
           assert_solutions  is_eq([1,2,3,4], :L), []
         end
         
         it 'should instantiate the left hand side variable' do
-          builtin :is_eq
+          Porolog::builtin :is_eq
           
           assert_solutions  is_eq(:L, [1,2,3,4]), [{ L: [1,2,3,4] }]
         end
@@ -334,8 +334,8 @@ describe 'Porolog' do
       describe '#ruby' do
         
         it 'should execute ruby code' do
-          builtin :ruby
-          predicate :logic, :data
+          Porolog::builtin :ruby
+          Porolog::predicate :logic, :data
           
           data(1).fact!
           data(5).fact!
@@ -363,8 +363,8 @@ describe 'Porolog' do
         end
         
         it 'should execute ruby code which triggers a failure' do
-          builtin :ruby
-          predicate :logic, :data
+          Porolog::builtin :ruby
+          Porolog::predicate :logic, :data
           
           data(1).fact!
           data(5).fact!
@@ -394,32 +394,32 @@ describe 'Porolog' do
       describe '#noteq' do
         
         it 'should return a solution when given unequal values' do
-          builtin :noteq
+          Porolog::builtin :noteq
           
           assert_solutions  noteq([3,2,1,4], [1,2,3,4]), [{}]
         end
         
         it 'should return no solutions when given equal values' do
-          builtin :noteq
+          Porolog::builtin :noteq
           
           assert_solutions  noteq([1,2,3,4], [1,2,3,4]), []
         end
         
         it 'should return no solutions with an unbound variable when given the same unbound variable' do
-          builtin :noteq
+          Porolog::builtin :noteq
           
           assert_solutions  noteq(:X, :X), []
         end
         
         it 'should return a solution when given two unbound variables' do
-          builtin :noteq
+          Porolog::builtin :noteq
           
           assert_solutions  noteq(:X, :Y), [{ X: nil, Y: nil }]
         end
         
         it 'should return no solutions with unbound variables when given given two uninstantiated variables that are bound to each other' do
-          builtin :noteq, :is
-          predicate :bind_and_noteq
+          Porolog::builtin :noteq, :is
+          Porolog::predicate :bind_and_noteq
           
           bind_and_noteq(:X, :Y) << [
             is(:X, :Y) { |y| y },
@@ -430,8 +430,8 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given two uninstantiated variables that are not bound to each other' do
-          builtin :noteq, :is
-          predicate :bind_and_noteq
+          Porolog::builtin :noteq, :is
+          Porolog::predicate :bind_and_noteq
           
           bind_and_noteq(:X, :Y) << [
             is(:X, :P) { |p| p },
@@ -443,7 +443,7 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given an unbound variable' do
-          builtin :noteq
+          Porolog::builtin :noteq
           
           assert_solutions  noteq([1,2,3,4], :L), [{ L: nil }]
           assert_solutions  noteq(:L, [1,2,3,4]), [{ L: nil }]
@@ -454,7 +454,7 @@ describe 'Porolog' do
       describe '#is_noteq' do
         
         it 'should return solutions without the exclusions' do
-          builtin :is_noteq
+          Porolog::builtin :is_noteq
           
           assert_solutions  is_noteq(:X, [1,2,3,4,5], 2, 5), [
             { X: 1, _a: [1,3,4] },
@@ -464,13 +464,13 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions when the exclusions are not unique' do
-          builtin :is_noteq
+          Porolog::builtin :is_noteq
           
           assert_solutions  is_noteq(:X, [1,2,3,4,5], 2, 5, 2), []
         end
         
         it 'should return no solutions when the target is not a variable' do
-          builtin :is_noteq
+          Porolog::builtin :is_noteq
           
           assert_solutions  is_noteq(7, [1,2,3,4,5], 2, 5, 2), []
         end
@@ -480,7 +480,7 @@ describe 'Porolog' do
       describe '#less' do
         
         it 'should return no solutions when given a greater value' do
-          builtin :less
+          Porolog::builtin :less
           
           assert_solutions  less(7, 4), []
           assert_solutions  less('h', 'b'), []
@@ -488,7 +488,7 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions when given equal values' do
-          builtin :less
+          Porolog::builtin :less
           
           assert_solutions  less(4, 4), []
           assert_solutions  less('b', 'b'), []
@@ -496,19 +496,19 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given lesser values' do
-          builtin :less
+          Porolog::builtin :less
           
           assert_solutions  less(2, 4), [{}]
         end
         
         it 'should return no solutions with an unbound variable when given the same unbound variable' do
-          builtin :less
+          Porolog::builtin :less
           
           assert_solutions  less(:X, :X), []
         end
         
         it 'should return no solutions when given two unbound variables' do
-          builtin :less
+          Porolog::builtin :less
           
           assert_solutions  less(:X, :Y), []
         end
@@ -518,7 +518,7 @@ describe 'Porolog' do
       describe '#gtr' do
         
         it 'should return no solutions when given a lesser value' do
-          builtin :gtr
+          Porolog::builtin :gtr
           
           assert_solutions  gtr(4, 7), []
           assert_solutions  gtr('b', 'h'), []
@@ -526,7 +526,7 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions when given equal values' do
-          builtin :gtr
+          Porolog::builtin :gtr
           
           assert_solutions  gtr(4, 4), []
           assert_solutions  gtr('b', 'b'), []
@@ -534,19 +534,19 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given greater values' do
-          builtin :gtr
+          Porolog::builtin :gtr
           
           assert_solutions  gtr(4, 2), [{}]
         end
         
         it 'should return no solutions with an unbound variable when given the same unbound variable' do
-          builtin :gtr
+          Porolog::builtin :gtr
           
           assert_solutions  gtr(:X, :X), []
         end
         
         it 'should return no solutions when given two unbound variables' do
-          builtin :gtr
+          Porolog::builtin :gtr
           
           assert_solutions  gtr(:X, :Y), []
         end
@@ -556,7 +556,7 @@ describe 'Porolog' do
       describe '#lesseq' do
         
         it 'should return no solutions when given a greater value' do
-          builtin :lesseq
+          Porolog::builtin :lesseq
           
           assert_solutions  lesseq(7, 4), []
           assert_solutions  lesseq('h', 'b'), []
@@ -564,7 +564,7 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given equal values' do
-          builtin :lesseq
+          Porolog::builtin :lesseq
           
           assert_solutions  lesseq(4, 4), [{}]
           assert_solutions  lesseq('b', 'b'), [{}]
@@ -572,7 +572,7 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given lesser values' do
-          builtin :lesseq
+          Porolog::builtin :lesseq
           
           assert_solutions  lesseq(2, 4), [{}]
           assert_solutions  lesseq('b', 'h'), [{}]
@@ -580,19 +580,19 @@ describe 'Porolog' do
         end
         
         it 'should return a solution with an unbound variable when given the same unbound variable' do
-          builtin :lesseq
+          Porolog::builtin :lesseq
           
           assert_solutions  lesseq(:X, :X), [{ X: nil }]
         end
         
         it 'should return no solutions when given two unbound variables' do
-          builtin :lesseq
+          Porolog::builtin :lesseq
           
           assert_solutions  lesseq(:X, :Y), []
         end
         
         it 'should return no solutions when given one unbound variable' do
-          builtin :lesseq
+          Porolog::builtin :lesseq
           
           assert_solutions  lesseq(:X, 11), []
         end
@@ -602,7 +602,7 @@ describe 'Porolog' do
       describe '#gtreq' do
         
         it 'should return no solutions when given a lesser value' do
-          builtin :gtreq
+          Porolog::builtin :gtreq
           
           assert_solutions  gtreq(4, 7), []
           assert_solutions  gtreq('b', 'h'), []
@@ -610,7 +610,7 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given equal values' do
-          builtin :gtreq
+          Porolog::builtin :gtreq
           
           assert_solutions  gtreq(4, 4), [{}]
           assert_solutions  gtreq('b', 'b'), [{}]
@@ -618,7 +618,7 @@ describe 'Porolog' do
         end
         
         it 'should return a solution when given gtreqer values' do
-          builtin :gtreq
+          Porolog::builtin :gtreq
           
           assert_solutions  gtreq(4, 2), [{}]
           assert_solutions  gtreq('h', 'b'), [{}]
@@ -626,19 +626,19 @@ describe 'Porolog' do
         end
         
         it 'should return a solution with an unbound variable when given the same unbound variable' do
-          builtin :gtreq
+          Porolog::builtin :gtreq
           
           assert_solutions  gtreq(:X, :X), [{ X: nil }]
         end
         
         it 'should return no solutions when given two unbound variables' do
-          builtin :gtreq
+          Porolog::builtin :gtreq
           
           assert_solutions  gtreq(:X, :Y), []
         end
         
         it 'should return no solutions when given one unbound variable' do
-          builtin :gtreq
+          Porolog::builtin :gtreq
           
           assert_solutions  gtreq(:X, 11), []
         end
@@ -648,25 +648,25 @@ describe 'Porolog' do
       describe '#length' do
         
         it 'should return a solution for an array and an integer' do
-          builtin :length
+          Porolog::builtin :length
           
           assert_solutions  length([1,2,3,4,5], 5),   [{}]
         end
         
         it 'should return no solutions for an array and an integer that do not satisy the length' do
-          builtin :length
+          Porolog::builtin :length
           
           assert_solutions  length([1,2,3,4,5], 2),   []
         end
         
         it 'should instaniate the length of the list' do
-          builtin :length
+          Porolog::builtin :length
           
           assert_solutions  length([1,2,3,4,5], :N),   [{ N: 5 }]
         end
         
         it 'should instaniate the list' do
-          builtin :length
+          Porolog::builtin :length
           
           assert_solutions  length(:L, 4),   [
             { L: [nil, nil, nil, nil], _a: nil, _b: nil, _c: nil, _d: nil }
@@ -674,13 +674,13 @@ describe 'Porolog' do
         end
         
         it 'should return no solutions for a variable array and length' do
-          builtin :length
+          Porolog::builtin :length
           
           assert_solutions  length(:L, :N),   []
         end
         
         it 'should return no solutions for invalid types' do
-          builtin :length
+          Porolog::builtin :length
           
           assert_solutions  length(3, [1,2,3]),   []
         end
@@ -690,26 +690,26 @@ describe 'Porolog' do
       describe '#between' do
         
         it 'should return a solution when the value is in range' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(3, 1, 10),  [{}]
         end
         
         it 'should return no solutions when the value is not in range' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(-40, 1, 10),  []
         end
         
         it 'should return no solutions when given an uninstantiated variable for the range' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(:X, 1, :Ten),  []
           assert_solutions  between(:X, :One, 10), []
         end
         
         it 'should return solutions for instantiating' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(:X, 1, 10),  [
             { X: 1 },
@@ -726,31 +726,31 @@ describe 'Porolog' do
         end
         
         it 'should instantiate the minimum possible when the value is above the lower bound' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(4, 1, :upper),  [{ upper: 4}]
         end
         
         it 'should instantiate the maximum possible when the value is below the upper bound' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(4, :lower, 10), [{ lower: 4}]
         end
         
         it 'should return no solutions the value is below the lower bound' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(-7, 1, :upper), []
         end
         
         it 'should return no solutions the value is above the upper bound' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(24, :lower, 10), []
         end
         
         it 'should instantiate both bounds when given a value' do
-          builtin :between
+          Porolog::builtin :between
           
           assert_solutions  between(24, :lower, :upper),  [{ lower: 24, upper: 24 }]
         end
@@ -760,55 +760,55 @@ describe 'Porolog' do
       describe '#member' do
         
         it 'should return no solutions for a non-member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(5, [1,2,3,4]),   []
         end
         
         it 'should return no solutions for a non-list' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(5, 5),   []
         end
         
         it 'should return a solution for a member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(3, [1,2,3,4]),   [{}]
         end
         
         it 'should return a solution for an array member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member([2,3], [[1,2],[2,3],[3,4]]),   [{}]
         end
         
         it 'should return a solution for a member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(3, [1,2,3,4]),   [{}]
         end
         
         it 'should return a solution for a member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(3, [1,2,:C,4]),   [{ C: 3 }]
         end
         
         it 'should return a solution for an array member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member([:A,3], [[1,2],[2,3],[3,4]]),   [{ A: 2 }]
         end
         
         it 'should return a solution for an array member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member([2,3], [[1,:B],[:B,3],[3,4]]),   [{ B: 2 }]
         end
         
         it 'should return solutions for each member' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(:M, [[1,2],[2,3],[3,4]]),   [
             { M: [1,2] },
@@ -818,11 +818,11 @@ describe 'Porolog' do
         end
         
         it 'should return limited solutions for variables' do
-          builtin :member
+          Porolog::builtin :member
           
           assert_solutions  member(:M, :L, 12),   Array.new(12){|i|
             v = '_a'
-            { M: nil, L: [*([nil] * (i+1)), UNKNOWN_TAIL] }.merge((1..(i * (i + 1) / 2)).map{ m = v.dup ; v.succ! ; [m.to_sym, nil] }.to_h)
+            { M: nil, L: [*([nil] * (i+1)), Porolog::UNKNOWN_TAIL] }.merge((1..(i * (i + 1) / 2)).map{ m = v.dup ; v.succ! ; [m.to_sym, nil] }.to_h)
           }
         end
         
@@ -831,37 +831,37 @@ describe 'Porolog' do
       describe '#append' do
         
         it 'should return no solutions for a non-append' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([1,2,3], [4,5,6], [1,2,7,4,5,6]),   []
         end
         
         it 'should return a solution for a valid append' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([1,2,3], [4,5,6], [1,2,3,4,5,6]),   [{}]
         end
         
         it 'should return no solutions for a non-list' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append(5, 5, 55),   []
         end
         
         it 'should return a solution for a valid append' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([1,2,3], [4,5,6], [1,2,3,4,5,6]),   [{}]
         end
         
         it 'should return a solution for an array append' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([[1,2],[2,3],[3,4]], [[4,5],[5,6],[6,7]], [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]),   [{}]
         end
         
         it 'should instantiate prefix variable' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append(:prefix, [[4,5],[5,6],[6,7]], [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]),   [
             { prefix: [[1, 2], [2, 3], [3, 4]] }
@@ -869,7 +869,7 @@ describe 'Porolog' do
         end
         
         it 'should instantiate suffix variable' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([[1,2],[2,3],[3,4]], :suffix, [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]),   [
             { suffix: [[4, 5], [5, 6], [6, 7]] }
@@ -877,7 +877,7 @@ describe 'Porolog' do
         end
         
         it 'should instantiate embedded variables' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([[:A,:B],[:C,:D],[:E,:F]], [:G,:H,:I], [[1,2],[2,3],[3,4],[4,5],[5,6],[6,7]]),   [
             { A: 1, B: 2, C: 2, D: 3, E: 3, F: 4, G: [4, 5], H: [5, 6], I: [6, 7] }
@@ -885,7 +885,7 @@ describe 'Porolog' do
         end
         
         it 'should instantiate embedded variables' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append([1,2,3,4], ['apple','banana','carrot'], :L),   [
             { L: [1, 2, 3, 4, 'apple', 'banana', 'carrot'] }
@@ -893,7 +893,7 @@ describe 'Porolog' do
         end
         
         it 'should return solutions for all possible splits of a list' do
-          builtin :append
+          Porolog::builtin :append
           
           assert_solutions  append(:M, :L, [1,2,3,4,5]),   [
             { M: [],              L: [1, 2, 3, 4, 5] },
@@ -906,8 +906,8 @@ describe 'Porolog' do
         end
         
         it 'should instantiate using a head and tail for an unbound variable and an array' do
-          builtin :append, :is_eq
-          predicate :append_is_eq
+          Porolog::builtin :append, :is_eq
+          Porolog::predicate :append_is_eq
           
           append_is_eq(:A, :B, :C) << [
             append(:A, :B, :C),
@@ -920,8 +920,8 @@ describe 'Porolog' do
         end
         
         it 'should instantiate using a head and tail for unbound variables' do
-          builtin :append, :is_eq
-          predicate :append_is_eq
+          Porolog::builtin :append, :is_eq
+          Porolog::predicate :append_is_eq
           
           append_is_eq(:A, :B, :C) << [
             append(:A, :B, :C),
@@ -934,8 +934,8 @@ describe 'Porolog' do
         end
         
         it 'should instantiate using a head and tail for unbound variables' do
-          builtin :append, :is_eq
-          predicate :append_is_eq
+          Porolog::builtin :append, :is_eq
+          Porolog::predicate :append_is_eq
           
           append_is_eq(:A, :B, :C) << [
             append(:A, :B, :C),
@@ -953,31 +953,31 @@ describe 'Porolog' do
       describe '#permutation' do
         
         it 'returns no solutions for non-arrays' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation('1234', '1234'), []
         end
         
         it 'returns a solution for identical arrays without variables' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([1,2,3,4], [1,2,3,4]), [{}]
         end
         
         it 'returns a solutions for rearranged arrays without variables' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([3,2,1,4], [1,2,3,4]), [{}]
         end
         
         it 'returns a solution and instantiates a variable' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([3,2,:A,4], [1,2,3,4]), [{ A: 1 }]
         end
         
         it 'returns solutions of permutations of instantiations' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([3,2,:A,:B], [1,2,3,4]), [
             { A: 1, B: 4 },
@@ -986,7 +986,7 @@ describe 'Porolog' do
         end
         
         it 'returns solutions of permutations of instantiations in the other list' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([3,2,1,4], [:A,2,3,:B]), [
             { A: 1, B: 4 },
@@ -995,7 +995,7 @@ describe 'Porolog' do
         end
         
         it 'infers instantiations of variables in both arrays' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([3,2,:A,4], [1,2,:C,4]), [
             { A: 1, C: 3 }
@@ -1003,7 +1003,7 @@ describe 'Porolog' do
         end
         
         it 'infers instantiations of variables in both arrays when they represent the same value' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([:A,2,1,4], [1,2,:C,4]), [
             { A: 1, C: 1 },
@@ -1014,7 +1014,7 @@ describe 'Porolog' do
         end
         
         it 'returns all permutations of an array' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation([3,2,1,4], :L), [
             { L: [3, 2, 1, 4] },
@@ -1045,7 +1045,7 @@ describe 'Porolog' do
         end
         
         it 'returns all permutations of an array when arguments are swapped' do
-          builtin :permutation
+          Porolog::builtin :permutation
           
           assert_solutions  permutation(:L, [3,2,1,4]), [
             { L: [3, 2, 1, 4] },
@@ -1080,25 +1080,25 @@ describe 'Porolog' do
       describe '#reverse' do
         
         it 'returns no solutions for non-arrays' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse('1234', '1234'), []
         end
         
         it 'returns a solution for mirrored arrays without variables' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([1,2,3,4], [4,3,2,1]), [{}]
         end
         
         it 'returns a solution and instantiates a variable' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([4,3,:A,1], [1,2,3,4]), [{ A: 2 }]
         end
         
         it 'returns a solution and instantiates multiple variables' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([4,3,:A,:B], [1,2,3,4]), [
             { A: 2, B: 1 },
@@ -1106,7 +1106,7 @@ describe 'Porolog' do
         end
         
         it 'returns a solution and instantiates multiple variables in the other list' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([4,3,2,1], [:A,2,3,:B]), [
             { A: 1, B: 4 },
@@ -1114,7 +1114,7 @@ describe 'Porolog' do
         end
         
         it 'infers instantiations of variables in both arrays' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([4,3,:A,1], [1,2,:C,4]), [
             { A: 2, C: 3 }
@@ -1122,7 +1122,7 @@ describe 'Porolog' do
         end
         
         it 'infers instantiations of variables in both arrays when they represent the same value' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([:A,3,2,1], [1,:A,3,:C]), [
             { A: 2, C: 2 },
@@ -1130,7 +1130,7 @@ describe 'Porolog' do
         end
         
         it 'allows unbound variables' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([:A,3,2,1], :L), [
             { A: nil, L: [1,2,3,nil] },
@@ -1138,7 +1138,7 @@ describe 'Porolog' do
         end
         
         it 'instantiates a variable to the reversed array' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse([4,3,2,1], :L), [
             { L: [1, 2, 3, 4] },
@@ -1146,7 +1146,7 @@ describe 'Porolog' do
         end
         
         it 'instantiates a variable to the reversed array when arguments are swapped' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse(:L, [4,3,2,1]), [
             { L: [1, 2, 3, 4] },
@@ -1154,7 +1154,7 @@ describe 'Porolog' do
         end
         
         it 'returns no solutions for uninstantiated variables' do
-          builtin :reverse
+          Porolog::builtin :reverse
           
           assert_solutions  reverse(:X, :Y), [], goals: 1
         end
@@ -1164,14 +1164,14 @@ describe 'Porolog' do
       describe '#var' do
         
         it 'should be unsuccessful for an atom' do
-          builtin :var
+          Porolog::builtin :var
           
           assert_solutions  var('1234'), []
         end
         
         it 'should be successful for an uninstantiated variable' do
-          builtin :var, :is_eq
-          predicate :vartest
+          Porolog::builtin :var, :is_eq
+          Porolog::predicate :vartest
           
           vartest(:variable) << [
             var(:variable),
@@ -1182,8 +1182,8 @@ describe 'Porolog' do
         end
         
         it 'should be successful for an uninstantiated bound variable' do
-          builtin :var, :is_eq
-          predicate :vartest
+          Porolog::builtin :var, :is_eq
+          Porolog::predicate :vartest
           
           vartest(:variable) << [
             is_eq(:variable, :bound),
@@ -1195,8 +1195,8 @@ describe 'Porolog' do
         end
         
         it 'should be successful for an uninstantiated bound variable' do
-          builtin :var, :is_eq
-          predicate :vartest
+          Porolog::builtin :var, :is_eq
+          Porolog::predicate :vartest
           
           vartest(:variable) << [
             is_eq(:variable, 'instantiated'),
@@ -1211,14 +1211,14 @@ describe 'Porolog' do
       describe '#nonvar' do
         
         it 'should be successful for an atom' do
-          builtin :nonvar
+          Porolog::builtin :nonvar
           
           assert_solutions  nonvar('1234'), [{}]
         end
         
         it 'should be unsuccessful for an uninstantiated variable' do
-          builtin :nonvar, :is_eq
-          predicate :nonvartest
+          Porolog::builtin :nonvar, :is_eq
+          Porolog::predicate :nonvartest
           
           nonvartest(:variable) << [
             nonvar(:variable),
@@ -1229,8 +1229,8 @@ describe 'Porolog' do
         end
         
         it 'should be unsuccessful for an uninstantiated bound variable' do
-          builtin :nonvar, :is_eq
-          predicate :nonvartest
+          Porolog::builtin :nonvar, :is_eq
+          Porolog::predicate :nonvartest
           
           nonvartest(:variable) << [
             is_eq(:variable, :bound),
@@ -1242,8 +1242,8 @@ describe 'Porolog' do
         end
         
         it 'should be unsuccessful for an uninstantiated bound variable' do
-          builtin :nonvar, :is_eq
-          predicate :nonvartest
+          Porolog::builtin :nonvar, :is_eq
+          Porolog::predicate :nonvartest
           
           nonvartest(:variable) << [
             is_eq(:variable, 'instantiated'),
@@ -1258,19 +1258,19 @@ describe 'Porolog' do
       describe '#atom' do
         
         it 'should be satisfied with a String' do
-          builtin :atom
+          Porolog::builtin :atom
           
           assert_solutions  atom('banana'), [{}]
         end
         
         it 'should not be satisfied with an Integer' do
-          builtin :atom
+          Porolog::builtin :atom
           
           assert_solutions  atom(6), []
         end
         
         it 'should not be satisfied with an Array' do
-          builtin :atom
+          Porolog::builtin :atom
           
           assert_solutions  atom([]), []
         end
@@ -1280,25 +1280,25 @@ describe 'Porolog' do
       describe '#atomic' do
         
         it 'should be satisfied with a String' do
-          builtin :atomic
+          Porolog::builtin :atomic
           
           assert_solutions  atomic('banana'), [{}]
         end
         
         it 'should be satisfied with an Integer' do
-          builtin :atomic
+          Porolog::builtin :atomic
           
           assert_solutions  atomic(6), [{}]
         end
         
         it 'should not be satisfied with an Array' do
-          builtin :atomic
+          Porolog::builtin :atomic
           
           assert_solutions  atomic([]), []
         end
         
         it 'should not be satisfied with an uninstantiated variable' do
-          builtin :atomic
+          Porolog::builtin :atomic
           
           assert_solutions  atomic(:X), []
         end
@@ -1308,25 +1308,25 @@ describe 'Porolog' do
       describe '#integer' do
         
         it 'should not be satisfied with a String' do
-          builtin :integer
+          Porolog::builtin :integer
           
           assert_solutions  integer('banana'), []
         end
         
         it 'should be satisfied with an Integer' do
-          builtin :integer
+          Porolog::builtin :integer
           
           assert_solutions  integer(6), [{}]
         end
         
         it 'should not be satisfied with an Array' do
-          builtin :integer
+          Porolog::builtin :integer
           
           assert_solutions  integer([]), []
         end
         
         it 'should not be satisfied with an uninstantiated variable' do
-          builtin :integer
+          Porolog::builtin :integer
           
           assert_solutions  integer(:X), []
         end

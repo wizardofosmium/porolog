@@ -336,7 +336,7 @@ module Porolog
       variables.each do |variable|
         name = variable
         
-        unification = unify(name, name, other_goal, self)
+        unification = Porolog::unify(name, name, other_goal, self)
         unified   &&= !!unification
         if unified
           unifications += unification
@@ -347,7 +347,7 @@ module Porolog
           #:nocov:
         end
       end
-      unified &&= instantiate_unifications(unifications) if unified
+      unified &&= Porolog::instantiate_unifications(unifications) if unified
       
       unified
     end

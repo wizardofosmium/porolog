@@ -6,23 +6,24 @@
 #       created
 #
 
-require 'porolog'
-
-include Porolog
+begin
+  require 'porolog'
+rescue LoadError
+  require_relative '../lib/porolog'
+end
 
 class Numbers
 
-  Predicate.scope self
-  builtin   :gtr, :is, :noteq, :between,  class_base: self
-  predicate :prime, :search_prime,        class_base: self
+  Porolog::Predicate.scope self
+  Porolog::builtin   :gtr, :is, :noteq, :between,   class_base: self
+  Porolog::predicate :prime, :search_prime,         class_base: self
 
   prime(2).fact!
   prime(3).fact!
   prime(:X) << [
-    between(:X, 4, 100),
+    between(:X, 4, 370),
     is(:X_mod_2, :X) {|x| x % 2 },
     noteq(:X_mod_2, 0),
-    :CUT,
     search_prime(:X, 3),
   ]
 
@@ -40,7 +41,11 @@ class Numbers
     search_prime(:X, :M),
   ]
 
-  def show_primes
+  # Unexpose `search_prime`
+  private               :search_prime
+  private_class_method  :search_prime
+
+  def self.show_primes
     solutions = prime(:X).solve
 
     solutions.each do |solution|
@@ -67,11 +72,15 @@ class Numbers
 end
 
 
-numbers = Numbers.new 23
-numbers.show_primes
-puts numbers.primes.inspect
+Numbers.show_primes
+number = Numbers.new 23
+puts number.primes.inspect
 
+# `prime` predicate is exposed as a class method
 puts Numbers.prime(3).valid?.inspect
+
+# `prime` predicate is exposed as an instance method
+puts number.prime(3).valid?.inspect
 
 puts ARGV.inspect
 ARGV.map(&:to_i).each do |arg|

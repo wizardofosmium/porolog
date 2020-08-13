@@ -16,9 +16,9 @@ describe 'Porolog' do
 
   describe 'Goal' do
     
-    let(:pred) { Predicate.new :p }
+    let(:pred) { Porolog::Predicate.new :p }
     let(:args) { pred.(:x,:y) }
-    let(:goal) { Goal.new args }
+    let(:goal) { Porolog::Goal.new args }
     
     describe '.reset' do
       
@@ -27,26 +27,26 @@ describe 'Porolog' do
         new_goal :predicate2, :a, :b
         new_goal :predicate3, :a, :b, :c
         
-        assert_equal  3,  Goal.goals.size
+        assert_equal  3,  Porolog::Goal.goals.size
         
-        Goal.reset
+        Porolog::Goal.reset
         
-        assert_empty      Goal.goals
+        assert_empty      Porolog::Goal.goals
       end
       
       it 'should call check_deleted for each goal' do
-        Goal.any_instance.expects(:check_deleted).with().returns(false).times(5)
+        Porolog::Goal.any_instance.expects(:check_deleted).with().returns(false).times(5)
         
         new_goal :p, :x, :y
         new_goal :q, :a
         new_goal :r, :a, :b, :c
         
-        Goal.reset
+        Porolog::Goal.reset
         
         new_goal :j, 1
         new_goal :k, ['a', 'b', 'c']
         
-        Goal.reset
+        Porolog::Goal.reset
       end
       
     end
@@ -54,19 +54,19 @@ describe 'Porolog' do
     describe '.goals' do
       
       it 'should return all registered goals' do
-        assert_equal  0,  Goal.goals.size
+        assert_equal  0,  Porolog::Goal.goals.size
         
         goal1 = new_goal :predicate1, :a
         
-        assert_equal  [goal1],                Goal.goals
+        assert_equal  [goal1],                Porolog::Goal.goals
         
         goal2 = new_goal :predicate2, :a, :b
         
-        assert_equal  [goal1,goal2],          Goal.goals
+        assert_equal  [goal1,goal2],          Porolog::Goal.goals
         
         goal3 = new_goal :predicate3, :a, :b, :c
         
-        assert_equal  [goal1,goal2,goal3],    Goal.goals
+        assert_equal  [goal1,goal2,goal3],    Porolog::Goal.goals
       end
       
     end
@@ -74,9 +74,9 @@ describe 'Porolog' do
     describe '.new' do
       
       it 'should create a new Goal' do
-        goal = Goal.new nil
+        goal = Porolog::Goal.new nil
         
-        assert_instance_of  Goal,   goal
+        assert_instance_of  Porolog::Goal,   goal
       end
       
     end
@@ -84,8 +84,8 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize calling_goal' do
-        goal1 = Goal.new args
-        goal2 = Goal.new args, goal1
+        goal1 = Porolog::Goal.new args
+        goal2 = Porolog::Goal.new args, goal1
         
         assert_nil              goal1.calling_goal
         assert_equal  goal1,    goal2.calling_goal
@@ -95,19 +95,19 @@ describe 'Porolog' do
       end
       
       it 'should initialize arguments' do
-        goal = Goal.new args, nil
+        goal = Porolog::Goal.new args, nil
         
         assert_equal  goal.variablise(args),      goal.arguments
       end
       
       it 'should initialize terminate' do
-        goal = Goal.new args, nil
+        goal = Porolog::Goal.new args, nil
         
         assert_equal  false,                      goal.terminated?
       end
       
       it 'should initialize variables' do
-        goal = Goal.new args, nil
+        goal = Porolog::Goal.new args, nil
         
         assert_Goal_variables   goal, { x: nil, y: nil }, [
           'Goal1.:x',
@@ -116,10 +116,10 @@ describe 'Porolog' do
       end
       
       it 'should register the goal as undeleted' do
-        goal1 = Goal.new args, nil
-        goal2 = Goal.new args, goal1
+        goal1 = Porolog::Goal.new args, nil
+        goal2 = Porolog::Goal.new args, goal1
         
-        assert_equal  [goal1,goal2],              Goal.goals
+        assert_equal  [goal1,goal2],              Porolog::Goal.goals
       end
       
     end
@@ -127,8 +127,8 @@ describe 'Porolog' do
     describe '#myid' do
       
       it 'should return the pretty id of the goal' do
-        goal1 = Goal.new args, nil
-        goal2 = Goal.new args, goal1
+        goal1 = Porolog::Goal.new args, nil
+        goal2 = Porolog::Goal.new args, goal1
         
         assert_equal  'Goal1',          goal1.myid
         assert_equal  'Goal2',          goal2.myid
@@ -139,10 +139,10 @@ describe 'Porolog' do
     describe '#ancestors' do
       
       it 'should return an Array of the parent goals' do
-        goal1 = Goal.new args
-        goal2 = Goal.new args, goal1
-        goal3 = Goal.new args, goal2
-        goal4 = Goal.new args, goal3
+        goal1 = Porolog::Goal.new args
+        goal2 = Porolog::Goal.new args, goal1
+        goal3 = Porolog::Goal.new args, goal2
+        goal4 = Porolog::Goal.new args, goal3
         
         assert_equal  [goal1],                          goal1.ancestors
         assert_equal  [goal1, goal2],                   goal2.ancestors
@@ -155,10 +155,10 @@ describe 'Porolog' do
     describe '#ancestry' do
       
       it 'should return an Array of the parent goals' do
-        goal1 = Goal.new args
-        goal2 = Goal.new args, goal1
-        goal3 = Goal.new args, goal2
-        goal4 = Goal.new args, goal3
+        goal1 = Porolog::Goal.new args
+        goal2 = Porolog::Goal.new args, goal1
+        goal3 = Porolog::Goal.new args, goal2
+        goal4 = Porolog::Goal.new args, goal3
         
         ancestors = [
           'Goal1 -- Solve p(:x,:y)  {:x=>nil, :y=>nil}',
@@ -178,10 +178,10 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should show a description of the goal' do
-        goal1 = Goal.new args
-        goal2 = Goal.new pred.(1,:b,'word'), goal1
-        goal3 = Goal.new args, goal2
-        goal4 = Goal.new args, goal3
+        goal1 = Porolog::Goal.new args
+        goal2 = Porolog::Goal.new pred.(1,:b,'word'), goal1
+        goal3 = Porolog::Goal.new args, goal2
+        goal4 = Porolog::Goal.new args, goal3
         
         assert_equal  'Goal1 -- Solve p(:x,:y)',        goal1.inspect
         assert_equal  'Goal2 -- Solve p(1,:b,"word")',  goal2.inspect
@@ -194,25 +194,25 @@ describe 'Porolog' do
     describe '#delete!' do
       
       it 'should delete the goal' do
-        goal1 = Goal.new args
-        goal2 = Goal.new pred.(1,:b,'word'), goal1
-        goal3 = Goal.new args, goal2
-        goal4 = Goal.new args, goal3
+        goal1 = Porolog::Goal.new args
+        goal2 = Porolog::Goal.new pred.(1,:b,'word'), goal1
+        goal3 = Porolog::Goal.new args, goal2
+        goal4 = Porolog::Goal.new args, goal3
         
         assert                                          goal2.delete!, 'goal should delete'
-        assert_equal  [goal1, goal3, goal4],            Goal.goals
+        assert_equal  [goal1, goal3, goal4],            Porolog::Goal.goals
       end
       
     end
     
     describe '#myid' do
       
-      let(:pred) { Predicate.new :p }
+      let(:pred) { Porolog::Predicate.new :p }
       let(:args) { pred.(:x,:y) }
       
       it 'should return the pretty id of the goal' do
-        goal1 = Goal.new args, nil
-        goal2 = Goal.new args, goal1
+        goal1 = Porolog::Goal.new args, nil
+        goal2 = Porolog::Goal.new args, goal1
         
         assert_equal  'Goal1',          goal1.myid
         assert_equal  'Goal2',          goal2.myid
@@ -223,17 +223,17 @@ describe 'Porolog' do
     describe '#deleted?' do
       
       it 'should return the deleted state of a goal' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         
         refute    goal.deleted?, 'goal should not be deleted'
         
-        Goal.reset
+        Porolog::Goal.reset
         
         assert    goal.deleted?, 'goal should be deleted'
       end
       
       it 'should memoize the deleted state of a goal' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         
         check_deleted_spy = Spy.on(goal, :check_deleted).and_call_through
         
@@ -242,7 +242,7 @@ describe 'Porolog' do
         refute    goal.deleted?
         refute    goal.deleted?
         
-        Goal.reset
+        Porolog::Goal.reset
         
         assert    goal.deleted?
         assert    goal.deleted?
@@ -257,12 +257,12 @@ describe 'Porolog' do
     describe '#check_deleted' do
       
       it 'should return false when the goal is not deleted and keep variables intact' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         goal.variable(:x)
         goal.variable(:y)
         goal.variable(:z)
         
-        variable_remove_spy = Spy.on_instance_method(Variable, :remove)
+        variable_remove_spy = Spy.on_instance_method(Porolog::Variable, :remove)
         
         refute  goal.check_deleted, 'goal should not be deleted'
         
@@ -270,14 +270,14 @@ describe 'Porolog' do
       end
       
       it 'should return true when the goal is deleted and remove all variables' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         goal.variable(:x)
         goal.variable(:y)
         goal.variable(:z)
         
-        variable_remove_spy = Spy.on_instance_method(Variable, :remove)
+        variable_remove_spy = Spy.on_instance_method(Porolog::Variable, :remove)
         
-        Goal.reset
+        Porolog::Goal.reset
         
         assert  goal.check_deleted, 'goal should be deleted'
         
@@ -289,7 +289,7 @@ describe 'Porolog' do
     describe '#terminate!' do
       
       it 'should set the goal to terminate and log the event' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         
         assert          goal.terminate!,      'the goal should be set to terminate'
         assert_equal    ['terminating'],      goal.log
@@ -300,7 +300,7 @@ describe 'Porolog' do
     describe '#terminated?' do
       
       it 'should return whether the goal is set to terminate or not' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         
         refute          goal.terminated?,     'the goal should not be initialized to terminate'
         assert          goal.terminate!,      'the goal should be set to terminate'
@@ -316,7 +316,7 @@ describe 'Porolog' do
       end
       
       it 'should return a Variable as is' do
-        v = Variable.new :r, goal
+        v = Porolog::Variable.new :r, goal
         assert_equal      v,                goal.variablise(v)
       end
       
@@ -331,20 +331,20 @@ describe 'Porolog' do
       end
       
       it 'should convert a Tail into a Tail with a variablised value' do
-        assert_Tail       goal.variablise(Tail.new :m),  '*Goal1.:m'
+        assert_Tail       goal.variablise(Porolog::Tail.new :m),  '*Goal1.:m'
       end
       
       it 'should return a Value as is' do
-        v = Value.new(45, goal)
+        v = Porolog::Value.new(45, goal)
         assert_equal      v,                goal.variablise(v)
       end
       
       it 'should return an unknown array as is' do
-        assert_equal      UNKNOWN_ARRAY,    goal.variablise(UNKNOWN_ARRAY)
+        assert_equal      Porolog::UNKNOWN_ARRAY,    goal.variablise(Porolog::UNKNOWN_ARRAY)
       end
       
       it 'should return an unknown tail as is' do
-        assert_equal      UNKNOWN_TAIL,     goal.variablise(UNKNOWN_TAIL)
+        assert_equal      Porolog::UNKNOWN_TAIL,     goal.variablise(Porolog::UNKNOWN_TAIL)
       end
       
       it 'should convert any other Object into a Value' do
@@ -356,7 +356,7 @@ describe 'Porolog' do
     describe '#variables' do
       
       it 'should return a Hash of variables and their values' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         goal.variable(:x)
         goal.variable(:y)
         goal.variable(:z)
@@ -379,7 +379,7 @@ describe 'Porolog' do
       
       it 'should return a string showing the instantiations of the variables of the goal' do
         # -- Initial Goal --
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         
         x = goal.variable(:x)
         y = goal.variable(:y)
@@ -480,7 +480,7 @@ describe 'Porolog' do
     describe '#values' do
       
       it 'should return the values that have been associated with the goal' do
-        goal = Goal.new args
+        goal = Porolog::Goal.new args
         
         x = goal.variable(:x)
         y = goal.variable(:y)
@@ -609,7 +609,7 @@ describe 'Porolog' do
       end
       
       it 'should somehow splat when given a Tail' do
-        tail1 = Tail.new ['apples','oranges','bananas']
+        tail1 = Porolog::Tail.new ['apples','oranges','bananas']
         
         assert_equal    'apples',     goal.values_of(tail1)
       end
@@ -635,7 +635,7 @@ describe 'Porolog' do
       end
       
       it 'should solve a fact' do
-        predicate :fact
+        Porolog::predicate :fact
         
         fact(42).fact!
         
@@ -645,7 +645,7 @@ describe 'Porolog' do
       end
       
       it 'should not solve a fallacy' do
-        predicate :fact
+        Porolog::predicate :fact
         
         fact(42).fallacy!
         
@@ -655,7 +655,7 @@ describe 'Porolog' do
       end
       
       it 'should solve using head and tail with lists' do
-        predicate :head_tail
+        Porolog::predicate :head_tail
         
         head_tail([1,2,3,4,5,6,7]).fact!
         head_tail(['head','body','foot']).fact!
@@ -669,8 +669,8 @@ describe 'Porolog' do
       end
       
       it 'should solve a goal recursively' do
-        builtin :write
-        predicate :recursive
+        Porolog::builtin :write
+        Porolog::predicate :recursive
         
         recursive([]) << [:CUT, true]
         recursive(:head/:tail) << [
@@ -692,7 +692,7 @@ describe 'Porolog' do
       let(:block) { ->(subgoal){} }
       
       it 'should return false when the goal has no arguments' do
-        goal = Goal.new nil
+        goal = Porolog::Goal.new nil
         
         block.expects(:call).times(0)
         
@@ -760,8 +760,8 @@ describe 'Porolog' do
       end
       
       it 'creates variables from its contents with a goal' do
-        predicate :bravo
-        arguments = Predicate[:bravo].arguments(:x,:y,:z)
+        Porolog::predicate :bravo
+        arguments = Porolog::Predicate[:bravo].arguments(:x,:y,:z)
         goal      = arguments.goal
         
         head_tail = [:alpha,bravo(:a,:b,:c),[:carly]] / [:x,[:y],bravo(:p,:q/:r)]

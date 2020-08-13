@@ -11,7 +11,7 @@ describe 'Porolog' do
   
   describe 'Variable' do
     
-    let(:predicate1)  { Predicate.new :generic }
+    let(:predicate1)  { Porolog::Predicate.new :generic }
     let(:arguments1)  { predicate1.arguments(:m,:n) }
     let(:goal1)       { arguments1.goal }
     let(:goal2)       { arguments1.goal }
@@ -24,10 +24,10 @@ describe 'Porolog' do
     describe '.new' do
       
       it 'should create a new variable in a goal' do
-        variable = Variable.new :x, goal1
+        variable = Porolog::Variable.new :x, goal1
         
-        assert_instance_of      Variable,   variable
-        assert_Goal_variables   goal1,      { m: nil, n: nil, x: nil },  [
+        assert_instance_of      Porolog::Variable,    variable
+        assert_Goal_variables   goal1,                { m: nil, n: nil, x: nil },  [
           'Goal1.:m',
           'Goal1.:n',
           'Goal1.:x',
@@ -39,20 +39,20 @@ describe 'Porolog' do
     describe '#initialize' do
       
       it 'should initialize name, goal, instantiations, and values' do
-        variable = Variable.new :x, goal1
+        variable = Porolog::Variable.new :x, goal1
         
         assert_Variable     variable,   :x, goal1, [], []
       end
       
       it 'should convert a string name to a symbol name' do
-        variable = Variable.new 's', goal1
+        variable = Porolog::Variable.new 's', goal1
         
         assert_equal        :s,         variable.name
       end
       
       it 'should convert a variable name to its name' do
-        other    = Variable.new 'other',  goal1
-        variable = Variable.new other,    goal1
+        other    = Porolog::Variable.new 'other',  goal1
+        variable = Porolog::Variable.new other,    goal1
         
         assert_equal            :other,     variable.name
         assert_Goal_variables   goal1,     { m: nil, n: nil, other: nil },   [
@@ -63,8 +63,8 @@ describe 'Porolog' do
       end
       
       it 'should convert a value name to its name and initialize its values' do
-        value    = Value.new    'other',  goal1
-        variable = Variable.new value,    goal1
+        value    = Porolog::Value.new    'other',  goal1
+        variable = Porolog::Variable.new value,    goal1
         
         assert_equal        'other',    variable.name
         assert_equal        [value],    variable.values
@@ -74,7 +74,7 @@ describe 'Porolog' do
       
       it 'should convert other types as a name to its value' do
         # TECH-DEBT: Not super sure about this spec!
-        variable = Variable.new 0.875,    goal1
+        variable = Porolog::Variable.new 0.875,    goal1
         
         assert_equal        '0.875',    variable.name
         assert_instance_of  Array,      variable.values
@@ -85,13 +85,13 @@ describe 'Porolog' do
       end
       
       it 'should raise an error when a goal is not provided' do
-        assert_raises Variable::GoalError do
-          Variable.new :x, 'goal'
+        assert_raises Porolog::Variable::GoalError do
+          Porolog::Variable.new :x, 'goal'
         end
       end
       
       it 'should declare the variable in the goal' do
-        Variable.new :x, goal1
+        Porolog::Variable.new :x, goal1
         
         assert_Goal_variables     goal1,   { m: nil, n: nil, x: nil },   [
           'Goal1.:m',
@@ -105,7 +105,7 @@ describe 'Porolog' do
     describe '#to_sym' do
       
       it 'should convert a variable to a Symbol' do
-        variable = Variable.new 'v', goal1
+        variable = Porolog::Variable.new 'v', goal1
         
         assert_equal        :v,         variable.to_sym
       end
@@ -115,13 +115,13 @@ describe 'Porolog' do
     describe '#type' do
       
       it 'should return variable from uninstantiated variables' do
-        variable = Variable.new 'v', goal1
+        variable = Porolog::Variable.new 'v', goal1
         
         assert_equal        :variable,  variable.type
       end
       
       it 'should return variable from instantiated variables' do
-        variable = Variable.new 'v', goal1
+        variable = Porolog::Variable.new 'v', goal1
         variable.instantiate 'string value'
         
         assert_equal        :variable,  variable.type
@@ -132,7 +132,7 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should show the goal and name' do
-        variable = Variable.new 'v', goal1
+        variable = Porolog::Variable.new 'v', goal1
         
         assert_equal        'Goal1.:v', variable.inspect
       end
@@ -142,15 +142,15 @@ describe 'Porolog' do
     describe '#inspect_with_instantiations' do
       
       it 'should show a variable without instantiations as inspect does' do
-        variable = Variable.new :x, goal1
+        variable = Porolog::Variable.new :x, goal1
         
         assert_equal variable.inspect, variable.inspect_with_instantiations
       end
       
       it 'should return all instantiations of a variable with nested instantiations' do
-        variable1  = Variable.new :x, goal1
-        variable2  = Variable.new :y, goal1
-        variable3  = Variable.new :z, goal1
+        variable1  = Porolog::Variable.new :x, goal1
+        variable2  = Porolog::Variable.new :y, goal1
+        variable3  = Porolog::Variable.new :z, goal1
         
         variable1.instantiate variable2
         variable2.instantiate variable3
@@ -167,16 +167,16 @@ describe 'Porolog' do
         assert_equal        2,                        variable2.instantiations.size
         assert_equal        1,                        variable3.instantiations.size
         
-        assert_instance_of  Instantiation,            variable1.instantiations.first
+        assert_instance_of  Porolog::Instantiation,   variable1.instantiations.first
         assert_equal        'Goal1.:x = Goal1.:y',    variable1.instantiations.first.inspect
         
-        assert_instance_of  Instantiation,            variable2.instantiations[0]
+        assert_instance_of  Porolog::Instantiation,   variable2.instantiations[0]
         assert_equal        'Goal1.:x = Goal1.:y',    variable2.instantiations[0].inspect
         
-        assert_instance_of  Instantiation,            variable2.instantiations[1]
+        assert_instance_of  Porolog::Instantiation,   variable2.instantiations[1]
         assert_equal        'Goal1.:y = Goal1.:z',    variable2.instantiations[1].inspect
         
-        assert_instance_of  Instantiation,            variable3.instantiations.first
+        assert_instance_of  Porolog::Instantiation,   variable3.instantiations.first
         assert_equal        'Goal1.:y = Goal1.:z',    variable3.instantiations.first.inspect
         
         assert_equal        variable1.instantiations + variable3.instantiations,  variable2.instantiations
@@ -206,8 +206,8 @@ describe 'Porolog' do
     describe '#value' do
       
       it 'should return the variable when no value has been instantiated' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal1
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal1
         
         variable1.instantiate variable2
         
@@ -215,9 +215,9 @@ describe 'Porolog' do
       end
       
       it 'should return the indirect value through instantiations' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal1
-        value     = Value.new [1,2,3], goal1
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal1
+        value     = Porolog::Value.new [1,2,3], goal1
         
         variable1.instantiate variable2
         variable2.instantiate value
@@ -229,9 +229,9 @@ describe 'Porolog' do
         assert_Goal   goal1, :generic, [:m, :n]
         
         # -- Create Variables --
-        variable1     = Variable.new :x, goal1
-        variable2     = Variable.new :y, goal1
-        variable3     = Variable.new :z, goal1
+        variable1     = Porolog::Variable.new :x, goal1
+        variable2     = Porolog::Variable.new :y, goal1
+        variable3     = Porolog::Variable.new :z, goal1
         
         assert_Goal_variables   goal1, { m: nil, n: nil, x: nil, y: nil, z: nil }, [
           'Goal1.:m',
@@ -245,8 +245,8 @@ describe 'Porolog' do
         headtail      = goal1.variablise(:m/:n)
         assert_Array_with_Tail         headtail, [goal1.variable(:m)], '*Goal1.:n'
         
-        value1        = Value.new headtail, goal1
-        value2        = Value.new [1,2,3],  goal1
+        value1        = Porolog::Value.new headtail, goal1
+        value2        = Porolog::Value.new [1,2,3],  goal1
         
         assert_Value    value1, headtail,   goal1
         assert_Value    value2, [1,2,3],    goal1
@@ -314,9 +314,9 @@ describe 'Porolog' do
         assert_Goal_variables       goal1, {
           m: nil,
           n: nil,
-          x: [nil, UNKNOWN_TAIL],
-          y: [nil, UNKNOWN_TAIL],
-          z: [nil, UNKNOWN_TAIL]
+          x: [nil, Porolog::UNKNOWN_TAIL],
+          y: [nil, Porolog::UNKNOWN_TAIL],
+          z: [nil, Porolog::UNKNOWN_TAIL]
         }, [
           'Goal1.:m',
           '  Goal1.:y[:head]',
@@ -398,9 +398,9 @@ describe 'Porolog' do
       end
       
       it 'should not return the indirect value through instantiations after uninstantiating' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal1
-        value     = Value.new [1,2,3], goal1
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal1
+        value     = Porolog::Value.new [1,2,3], goal1
         
         variable1.instantiate variable2
         variable2.instantiate value
@@ -414,12 +414,12 @@ describe 'Porolog' do
       end
       
       it 'should not instantiate multiple unequal values' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        variable3 = Variable.new :z, goal3
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        variable3 = Porolog::Variable.new :z, goal3
         
-        value1    = Value.new [1,2,3], goal2
-        value2    = Value.new 'word',  goal3
+        value1    = Porolog::Value.new [1,2,3], goal2
+        value2    = Porolog::Value.new 'word',  goal3
         
         i1 = variable1.instantiate variable2
         i2 = variable1.instantiate variable3
@@ -458,12 +458,12 @@ describe 'Porolog' do
       end
       
       it 'should not raise an exception when multiple values are equal' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        variable3 = Variable.new :z, goal3
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        variable3 = Porolog::Variable.new :z, goal3
         
-        value1    = Value.new 'word', goal2
-        value2    = Value.new 'word', goal3
+        value1    = Porolog::Value.new 'word', goal2
+        value2    = Porolog::Value.new 'word', goal3
         
         variable1.instantiate variable2
         variable1.instantiate variable3
@@ -482,7 +482,7 @@ describe 'Porolog' do
       end
       
       it 'should raise an exception when the variable has multiple different non-array values' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
         variable1.values << 1
         variable1.values << 'one'
@@ -495,7 +495,7 @@ describe 'Porolog' do
       end
       
       it 'should prioritise non-variables over variables' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
         assert_equal    goal1[:x],     variable1.value
         
@@ -510,50 +510,50 @@ describe 'Porolog' do
       end
       
       it 'should prioritise variables over an unknown array' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
         assert_equal    goal1[:x],     variable1.value
         
-        variable1.values << UNKNOWN_ARRAY
+        variable1.values << Porolog::UNKNOWN_ARRAY
         
-        assert_equal    UNKNOWN_ARRAY,  variable1.value
+        assert_equal    Porolog::UNKNOWN_ARRAY,  variable1.value
         
         variable1.values << :variable1
         variable1.values << :variable2
-        variable1.values << UNKNOWN_ARRAY
+        variable1.values << Porolog::UNKNOWN_ARRAY
         
         assert_equal    :variable1,     variable1.value
       end
       
       it 'should unify a matching flathead and flattail pair' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
-        variable1.values << [1,2,UNKNOWN_TAIL]
-        variable1.values << [UNKNOWN_TAIL,3,4]
+        variable1.values << [1, 2, Porolog::UNKNOWN_TAIL]
+        variable1.values << [Porolog::UNKNOWN_TAIL, 3, 4]
         
         assert_equal    [1,2,3,4],     variable1.value
       end
       
       it 'should unify a matching flattail and flathead pair' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
-        variable1.values << [UNKNOWN_TAIL,3,4]
-        variable1.values << [1,2,UNKNOWN_TAIL]
+        variable1.values << [Porolog::UNKNOWN_TAIL, 3, 4]
+        variable1.values << [1, 2, Porolog::UNKNOWN_TAIL]
         
         assert_equal    [1,2,3,4],     variable1.value
       end
       
       it 'should return nil when the values are incompatible' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
-        variable1.values << [1,3,4]
-        variable1.values << [1,2,UNKNOWN_TAIL]
+        variable1.values << [1, 3, 4]
+        variable1.values << [1, 2, Porolog::UNKNOWN_TAIL]
         
         assert_nil                     variable1.value
       end
       
       it 'should unify a special case' do
-        variable1 = Variable.new :x, goal1
+        variable1 = Porolog::Variable.new :x, goal1
         
         variable1.values << [1,[3,4]]
         variable1.values << goal1[:h]/goal1[:t]
@@ -566,8 +566,8 @@ describe 'Porolog' do
     describe '#instantiate' do
       
       it 'should instantiate with another variable' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
         
         variable1.instantiate variable2
         
@@ -576,9 +576,9 @@ describe 'Porolog' do
       end
       
       it 'should instantiate with a value' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        value     = Value.new 'word', goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        value     = Porolog::Value.new 'word', goal2
         
         variable1.instantiate variable2
         variable2.instantiate value
@@ -590,9 +590,9 @@ describe 'Porolog' do
       
       it 'should instantiate with an indexed variable' do
         # -- Elements --
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        value     = Value.new [7,11,13,23,29], goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        value     = Porolog::Value.new [7,11,13,23,29], goal2
         
         # -- Make Instantiations --
         #
@@ -628,10 +628,10 @@ describe 'Porolog' do
       
       it 'should instantiate indexed with an indexed variable' do
         # -- Elements --
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        variable3 = Variable.new :z, goal2
-        value     = Value.new [[],[1,2,3],'word',[7,11,13,23,29]], goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        variable3 = Porolog::Variable.new :z, goal2
+        value     = Porolog::Value.new [[],[1,2,3],'word',[7,11,13,23,29]], goal2
         
         assert_Value    value,        [[],[1,2,3],'word',[7,11,13,23,29]], goal2
         
@@ -729,9 +729,9 @@ describe 'Porolog' do
       end
       
       it 'should instantiate with an indexed value' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        value     = Value.new [7,11,13,23,29], goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        value     = Porolog::Value.new [7,11,13,23,29], goal2
         
         variable1.instantiate variable2
         variable2.instantiate value, 3
@@ -741,9 +741,9 @@ describe 'Porolog' do
       end
       
       it 'should instantiate with an indexed variable' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        value     = Value.new [7,11,13,23,29], goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        value     = Porolog::Value.new [7,11,13,23,29], goal2
         
         variable1.instantiate variable2, 2
         variable2.instantiate value
@@ -754,9 +754,9 @@ describe 'Porolog' do
       end
       
       it 'should instantiate with an indexed value' do
-        variable1 = Variable.new :x, goal1
-        variable2 = Variable.new :y, goal2
-        value     = Value.new [7,11,13,23,29], goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        variable2 = Porolog::Variable.new :y, goal2
+        value     = Porolog::Value.new [7,11,13,23,29], goal2
         
         variable1.instantiate variable2
         variable2.instantiate value, 3
@@ -788,15 +788,15 @@ describe 'Porolog' do
         f = g6.variable :f
         g = g7.variable :g
         
-        assert_instance_of  Instantiation,    f.instantiate(g6.value(8))
-        assert_instance_of  Instantiation,    g.instantiate(g7.value(9))
+        assert_instance_of  Porolog::Instantiation,   f.instantiate(g6.value(8))
+        assert_instance_of  Porolog::Instantiation,   g.instantiate(g7.value(9))
         
-        assert_instance_of  Instantiation,    a.instantiate(b)
-        assert_instance_of  Instantiation,    a.instantiate(c)
-        assert_instance_of  Instantiation,    b.instantiate(d)
-        assert_instance_of  Instantiation,    d.instantiate(f)
-        assert_instance_of  Instantiation,    c.instantiate(e)
-        assert_nil                            e.instantiate(g)
+        assert_instance_of  Porolog::Instantiation,   a.instantiate(b)
+        assert_instance_of  Porolog::Instantiation,   a.instantiate(c)
+        assert_instance_of  Porolog::Instantiation,   b.instantiate(d)
+        assert_instance_of  Porolog::Instantiation,   d.instantiate(f)
+        assert_instance_of  Porolog::Instantiation,   c.instantiate(e)
+        assert_nil                                    e.instantiate(g)
         
         assert_Goal_variables g1, { m: nil, n: nil, a: 8 }, [
           'Goal1.:m',
@@ -873,8 +873,8 @@ describe 'Porolog' do
       end
       
       it 'should return nil when the there are multiple different values' do
-        variable1 = Variable.new :x, goal1
-        value     = Value.new 111, goal2
+        variable1 = Porolog::Variable.new :x, goal1
+        value     = Porolog::Value.new 111, goal2
         
         variable1.values << 112
         
@@ -887,11 +887,11 @@ describe 'Porolog' do
     
     describe '#remove' do
       
-      let(:variable1) { Variable.new :x,  goal1 }
-      let(:variable2) { Variable.new :y,  goal2 }
-      let(:variable3) { Variable.new :z,  goal3 }
-      let(:value1)    { Value.new 'word', goal2 }
-      let(:value2)    { Value.new 'word', goal3 }
+      let(:variable1) { Porolog::Variable.new :x,  goal1 }
+      let(:variable2) { Porolog::Variable.new :y,  goal2 }
+      let(:variable3) { Porolog::Variable.new :z,  goal3 }
+      let(:value1)    { Porolog::Value.new 'word', goal2 }
+      let(:value2)    { Porolog::Value.new 'word', goal3 }
       
       before do
         variable1.instantiate variable2
@@ -1073,11 +1073,11 @@ describe 'Porolog' do
     
     describe '#uninstantiate' do
       
-      let(:variable1) { Variable.new :x,  goal1 }
-      let(:variable2) { Variable.new :y,  goal2 }
-      let(:variable3) { Variable.new :z,  goal3 }
-      let(:value1)    { Value.new 'word', goal2 }
-      let(:value2)    { Value.new 'word', goal3 }
+      let(:variable1) { Porolog::Variable.new :x,  goal1 }
+      let(:variable2) { Porolog::Variable.new :y,  goal2 }
+      let(:variable3) { Porolog::Variable.new :z,  goal3 }
+      let(:value1)    { Porolog::Value.new 'word', goal2 }
+      let(:value2)    { Porolog::Value.new 'word', goal3 }
       
       before do
         variable1.instantiate variable2
@@ -1548,8 +1548,8 @@ describe 'Porolog' do
     describe '#[]' do
       
       it 'should return the element at the specified index' do
-        variable = Variable.new :x, goal1
-        value    = Value.new [3,5,7,11,13,17], goal2
+        variable = Porolog::Variable.new :x, goal1
+        value    = Porolog::Value.new [3,5,7,11,13,17], goal2
         
         variable.instantiate value
         
@@ -1558,8 +1558,8 @@ describe 'Porolog' do
       end
       
       it 'should return nil for an out of range index' do
-        variable = Variable.new :x, goal1
-        value    = Value.new [3,5,7,11,13,17], goal2
+        variable = Porolog::Variable.new :x, goal1
+        value    = Porolog::Value.new [3,5,7,11,13,17], goal2
         
         variable.instantiate value
         
@@ -1568,8 +1568,8 @@ describe 'Porolog' do
       end
       
       it 'should return nil when the value is not an array' do
-        variable = Variable.new :x, goal1
-        value    = Value.new 12, goal2
+        variable = Porolog::Variable.new :x, goal1
+        value    = Porolog::Value.new 12, goal2
         
         variable.instantiate value
         
@@ -1578,8 +1578,8 @@ describe 'Porolog' do
       end
       
       it 'should return the head' do
-        variable = Variable.new :x, goal1
-        value    = Value.new [3,5,7,11,13,17], goal2
+        variable = Porolog::Variable.new :x, goal1
+        value    = Porolog::Value.new [3,5,7,11,13,17], goal2
         
         variable.instantiate value
         
@@ -1588,8 +1588,8 @@ describe 'Porolog' do
       end
       
       it 'should return the tail' do
-        variable = Variable.new :x, goal1
-        value    = Value.new [3,5,7,11,13,17], goal2
+        variable = Porolog::Variable.new :x, goal1
+        value    = Porolog::Value.new [3,5,7,11,13,17], goal2
         
         variable.instantiate value
         
@@ -1602,7 +1602,7 @@ describe 'Porolog' do
     describe '#variables' do
       
       it 'should return an Array of itself' do
-        variable = Variable.new :x, goal1
+        variable = Porolog::Variable.new :x, goal1
         
         assert_equal    [variable],   variable.variables
       end

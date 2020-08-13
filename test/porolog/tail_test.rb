@@ -18,24 +18,24 @@ describe 'Porolog' do
     describe '.new' do
       
       it 'creates an unknown tail when no value is provided' do
-        tail = Tail.new
+        tail = Porolog::Tail.new
         
-        assert_Tail               tail,             '*...'
-        assert_equal              UNKNOWN_TAIL,     tail.value
+        assert_Tail       tail,                     '*...'
+        assert_equal      Porolog::UNKNOWN_TAIL,    tail.value
       end
       
       it 'creates a tail with a value' do
-        tail = Tail.new [2,3,5,7,11,13]
+        tail = Porolog::Tail.new [2,3,5,7,11,13]
         
-        assert_Tail               tail,             '*[2, 3, 5, 7, 11, 13]'
-        assert_equal              [2,3,5,7,11,13],  tail.value
+        assert_Tail       tail,                     '*[2, 3, 5, 7, 11, 13]'
+        assert_equal      [2,3,5,7,11,13],          tail.value
       end
       
       it 'creates a tail with a variable' do
-        tail = Tail.new :x
+        tail = Porolog::Tail.new :x
         
-        assert_Tail               tail,             '*:x'
-        assert_equal              :x,               tail.value
+        assert_Tail       tail,                     '*:x'
+        assert_equal      :x,                       tail.value
       end
       
     end
@@ -51,10 +51,10 @@ describe 'Porolog' do
       end
       
       it 'returns its value' do
-        tail = Tail.new object
+        tail = Porolog::Tail.new object
         
-        assert_Tail               tail,             '*#<Object:0xXXXXXX>'
-        assert_equal              object,           tail.value
+        assert_Tail       tail,                     '*#<Object:0xXXXXXX>'
+        assert_equal      object,                   tail.value
       end
       
     end
@@ -62,7 +62,7 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'returns a string showing a splat operation is implied' do
-        tail = Tail.new [2,3,5,7,11,13]
+        tail = Porolog::Tail.new [2,3,5,7,11,13]
         
         assert_equal      '*[2, 3, 5, 7, 11, 13]',  tail.inspect
       end
@@ -72,25 +72,25 @@ describe 'Porolog' do
     describe '#variables' do
       
       it 'returns an empty Array when it was created without arguments' do
-        tail = Tail.new
+        tail = Porolog::Tail.new
         
         assert_equal      [],                       tail.variables
       end
       
       it 'returns an empty Array when it was created with an Array of atomics' do
-        tail = Tail.new [2,3,5,7,11,13]
+        tail = Porolog::Tail.new [2,3,5,7,11,13]
         
         assert_equal      [],                       tail.variables
       end
       
       it 'returns an Array of Symbols when it was created with a Symbol' do
-        tail = Tail.new :t
+        tail = Porolog::Tail.new :t
         
         assert_equal      [:t],                     tail.variables
       end
       
       it 'returns an Array of Symbols when it was created with an Array with embedded Symbols' do
-        tail = Tail.new [2,3,:x,7,[:y,[:z]],13]
+        tail = Porolog::Tail.new [2,3,:x,7,[:y,[:z]],13]
         
         assert_equal      [:x,:y,:z],               tail.variables
       end
@@ -100,22 +100,22 @@ describe 'Porolog' do
     describe '#==' do
       
       it 'returns true for unknown tails' do
-        tail1 = Tail.new
-        tail2 = Tail.new
+        tail1 = Porolog::Tail.new
+        tail2 = Porolog::Tail.new
         
         assert            tail1 == tail2, name
       end
       
       it 'returns false for different symbols' do
-        tail1 = Tail.new :t
-        tail2 = Tail.new :x
+        tail1 = Porolog::Tail.new :t
+        tail2 = Porolog::Tail.new :x
         
         refute            tail1 == tail2, name
       end
       
       it 'returns true for equal values' do
-        tail1 = Tail.new 12.34
-        tail2 = Tail.new 12.34
+        tail1 = Porolog::Tail.new 12.34
+        tail2 = Porolog::Tail.new 12.34
         
         assert            tail1 == tail2, name
       end

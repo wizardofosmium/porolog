@@ -18,7 +18,7 @@ describe 'Porolog' do
     describe '#inspect' do
       
       it 'should return distinctive notation' do
-        assert_equal      '...',            UNKNOWN_TAIL.inspect
+        assert_equal      '...',                    Porolog::UNKNOWN_TAIL.inspect
       end
       
     end
@@ -26,9 +26,9 @@ describe 'Porolog' do
     describe '#tail' do
       
       it 'should return itself' do
-        assert_equal      UNKNOWN_TAIL,     UNKNOWN_TAIL.tail
-        assert_equal      UNKNOWN_TAIL,     UNKNOWN_TAIL.tail(1)
-        assert_equal      UNKNOWN_TAIL,     UNKNOWN_TAIL.tail(5)
+        assert_equal      Porolog::UNKNOWN_TAIL,    Porolog::UNKNOWN_TAIL.tail
+        assert_equal      Porolog::UNKNOWN_TAIL,    Porolog::UNKNOWN_TAIL.tail(1)
+        assert_equal      Porolog::UNKNOWN_TAIL,    Porolog::UNKNOWN_TAIL.tail(5)
       end
       
     end
@@ -39,35 +39,35 @@ describe 'Porolog' do
     
     it 'should create a Predicate' do
       # -- Precondition Baseline --
-      assert_equal      0,                Scope[:default].predicates.size
+      assert_equal      0,                Porolog::Scope[:default].predicates.size
       
       # -- Test --
-      single_predicate = predicate :single
+      single_predicate = Porolog::predicate :single
       
       # -- Compare Result Against Baseline --
-      assert_equal      1,                Scope[:default].predicates.size
-      assert_equal      :single,          Scope[:default].predicates.first.name
+      assert_equal      1,                Porolog::Scope[:default].predicates.size
+      assert_equal      :single,          Porolog::Scope[:default].predicates.first.name
       assert_Predicate  single_predicate, :single, []
     end
     
     it 'should define a method to create Arguments for solving' do
       refute                    respond_to?(:delta)
       
-      predicate :delta
+      Porolog::predicate :delta
       
       assert                    respond_to?(:delta)
       assert_Arguments          delta(1, :X, ['left','right']),   :delta, [1, :X, ['left','right']]
     end
     
     it 'should create multiple Predicates' do
-      assert_equal              0,        Scope[:default].predicates.size
+      assert_equal              0,        Porolog::Scope[:default].predicates.size
       
-      multiple_predicates = predicate :alpha, :beta, :gamma
+      multiple_predicates = Porolog::predicate :alpha, :beta, :gamma
       
-      assert_equal              3,        Scope[:default].predicates.size
-      assert_equal              :alpha,   Scope[:default].predicates[0].name
-      assert_equal              :beta,    Scope[:default].predicates[1].name
-      assert_equal              :gamma,   Scope[:default].predicates[2].name
+      assert_equal              3,        Porolog::Scope[:default].predicates.size
+      assert_equal              :alpha,   Porolog::Scope[:default].predicates[0].name
+      assert_equal              :beta,    Porolog::Scope[:default].predicates[1].name
+      assert_equal              :gamma,   Porolog::Scope[:default].predicates[2].name
       assert_instance_of        Array,    multiple_predicates
       assert_equal              3,        multiple_predicates.size
       assert_Predicate          multiple_predicates[0], :alpha, []
@@ -79,7 +79,7 @@ describe 'Porolog' do
       refute                    respond_to?(:epsilon)
       refute                    respond_to?(:upsilon)
       
-      predicate :epsilon, :upsilon
+      Porolog::predicate :epsilon, :upsilon
       
       assert                    respond_to?(:epsilon)
       assert                    respond_to?(:upsilon)
@@ -95,8 +95,8 @@ describe 'Porolog' do
       
       class Base1
         
-        builtin :between,                 class_base: self
-        predicate :localised_predicate,   class_base: self
+        Porolog::builtin :between,                 class_base: self
+        Porolog::predicate :localised_predicate,   class_base: self
         
         localised_predicate(:X) << [
           between(:X, 1, 5)
@@ -144,7 +144,7 @@ describe 'Porolog' do
       ].join("\n")
       
       # -- Test --
-      assert  unify_goals(goal1, goal2), name
+      assert  Porolog::unify_goals(goal1, goal2), name
       
       # -- Compare Result Against Baseline --
       assert_Goal_variables   goal1,    { m: nil, n: nil }, [
@@ -166,7 +166,7 @@ describe 'Porolog' do
       goal1 = new_goal :p, :x, :y
       goal2 = new_goal :q, :x, :y
       
-      refute  unify_goals(goal1, goal2), name
+      refute  Porolog::unify_goals(goal1, goal2), name
       
       assert_equal      ['Cannot unify goals because they are for different predicates: :p and :q'],    goal1.log
       assert_equal      ['Cannot unify goals because they are for different predicates: :p and :q'],    goal2.log
@@ -188,7 +188,7 @@ describe 'Porolog' do
         [:x, 37, goal1, goal3],
       ]
       
-      refute    instantiate_unifications(unifications), name
+      refute    Porolog::instantiate_unifications(unifications), name
     end
     
     it 'should create instantiations' do
@@ -216,7 +216,7 @@ describe 'Porolog' do
       ].join("\n")
       
       # -- Test --
-      assert    instantiate_unifications(unifications), name
+      assert    Porolog::instantiate_unifications(unifications), name
       
       # -- Compare Result Against Baseline --
       assert_Goal_variables     goal1, { x: 12, y: nil }, [
@@ -267,7 +267,7 @@ describe 'Porolog' do
         [:k, 37, goal2, goal3],
       ]
       
-      refute    instantiate_unifications(unifications), name
+      refute    Porolog::instantiate_unifications(unifications), name
       
       assert_Goal_variables     goal1, { x: nil, y: nil }, [
         'Goal1.:x',
@@ -295,11 +295,11 @@ describe 'Porolog' do
     describe 'when [:atomic,:atomic]' do
       
       it 'should unify equal atomic numbers' do
-        assert    unify(42, 42, goal),                    name
+        assert    Porolog::unify(42, 42, goal),                    name
       end
       
       it 'should not unify unequal atomic numbers' do
-        refute    unify(42, 99, goal),                    name
+        refute    Porolog::unify(42, 99, goal),                    name
         
         expected_log = [
           'Cannot unify because 42 != 99 (atomic != atomic)',
@@ -313,7 +313,7 @@ describe 'Porolog' do
     describe 'when [:array,:array]' do
       
       before do
-        @spy = Spy.on(self, :unify_arrays).and_call_through
+        @spy = Spy.on(Porolog, :unify_arrays).and_call_through
       end
       
       after do
@@ -321,15 +321,15 @@ describe 'Porolog' do
       end
       
       it 'should unify empty arrays' do
-        assert    unify([], [], goal),                    name
+        assert    Porolog::unify([], [], goal),                    name
       end
       
       it 'should unify equal arrays' do
-        assert    unify([7,11,13], [7,11,13], goal),      name
+        assert    Porolog::unify([7,11,13], [7,11,13], goal),      name
       end
       
       it 'should not unify unequal arrays' do
-        refute    unify([7,11,13], [7,11,14], goal),      name
+        refute    Porolog::unify([7,11,13], [7,11,14], goal),      name
         
         expected_log = [
           'Cannot unify incompatible values: 13 with 14',
@@ -340,7 +340,7 @@ describe 'Porolog' do
       end
       
       it 'should not unify arrays of different lengths' do
-        refute    unify([7,11,13], [7,11,13,13], goal),   name
+        refute    Porolog::unify([7,11,13], [7,11,13,13], goal),   name
         
         expected_log = [
           'Cannot unify arrays of different lengths: [7, 11, 13] with [7, 11, 13, 13]',
@@ -359,13 +359,13 @@ describe 'Porolog' do
       end
       
       it 'should return an instantiation' do
-        assert_equal    [[:word, 'word', goal, goal]],    unify(:word, 'word', goal),      name
+        assert_equal    [[:word, 'word', goal, goal]],    Porolog::unify(:word, 'word', goal),      name
       end
       
       it 'should not unify an instantiated variable with a different value' do
         goal.instantiate :word, 'other'
         
-        assert_nil                                        unify(:word, 'word', goal),      name
+        assert_nil                                        Porolog::unify(:word, 'word', goal),      name
         
         expected_log = [
           'Cannot unify because Goal1."other" != "word" (variable != atomic)',
@@ -383,13 +383,13 @@ describe 'Porolog' do
       end
       
       it 'should return an instantiation' do
-        assert_equal    [[:word, 'word', goal, goal]],    unify('word', :word, goal),      name
+        assert_equal    [[:word, 'word', goal, goal]],    Porolog::unify('word', :word, goal),      name
       end
       
       it 'should not unify instantiated variables with different values' do
         goal.instantiate :word, 'something'
         
-        assert_nil                                        unify('word', :word, goal),      name
+        assert_nil                                        Porolog::unify('word', :word, goal),      name
         
         expected_log = [
           'Cannot unify because "word" != Goal1."something" (atomic != variable)',
@@ -407,14 +407,14 @@ describe 'Porolog' do
       end
       
       it 'should return an instantiation' do
-        assert_equal    [[:x, :y, goal, goal2]],    unify(:x, :y, goal, goal2),      name
+        assert_equal    [[:x, :y, goal, goal2]],          Porolog::unify(:x, :y, goal, goal2),      name
       end
       
       it 'should not unify instantiated variables with different values' do
         goal.instantiate :word, 'something'
         goal.instantiate :draw, 'picturing'
         
-        assert_nil                                        unify(:draw, :word, goal),      name
+        assert_nil                                        Porolog::unify(:draw, :word, goal),      name
         
         expected_log = [
           'Cannot unify because "picturing" != "something" (variable != variable)'
@@ -424,10 +424,10 @@ describe 'Porolog' do
       end
       
       it 'should unify the unknown array with a variable' do
-        goal.instantiate :X, UNKNOWN_ARRAY
+        goal.instantiate :X, Porolog::UNKNOWN_ARRAY
         goal.instantiate :Y, [1,2,3,4]
         
-        unifications = unify(goal[:X], goal[:Y], goal)
+        unifications = Porolog::unify(goal[:X], goal[:Y], goal)
         
         expected_unifications = [
           [goal[:X], goal[:Y], goal, goal]
@@ -442,9 +442,9 @@ describe 'Porolog' do
       
       it 'should unify the unknown array with an array' do
         goal.instantiate :X, [1,2,3,4]
-        goal.instantiate :Y, UNKNOWN_ARRAY
+        goal.instantiate :Y, Porolog::UNKNOWN_ARRAY
         
-        unifications = unify(goal[:X], goal[:Y], goal)
+        unifications = Porolog::unify(goal[:X], goal[:Y], goal)
         
         expected_unifications = [
           [goal[:X], goal[:Y], goal, goal]
@@ -464,16 +464,17 @@ describe 'Porolog' do
       it 'should return an instantiation' do
         expects(:unify_arrays).times(0)
         
-        assert_equal    [[:list, [7,11,13], goal, goal]],     unify(:list, [7,11,13], goal),      name
+        assert_equal    [[:list, [7,11,13], goal, goal]],     Porolog::unify(:list, [7,11,13], goal),      name
       end
       
       it 'should not unify instantiated variables with different values' do
         goal.instantiate :word, [1,2,3,4]
-        expects(:unify_arrays).times(1)
+        Porolog::expects(:unify_arrays).times(1)
         
-        assert_nil                                            unify(:word, [1,2,3,5], goal),      name
+        assert_nil                                            Porolog::unify(:word, [1,2,3,5], goal),      name
         
         expected_log = [
+          #'Cannot unify incompatible values: 4 with 5',
           'Cannot unify because Goal1.[1, 2, 3, 4] != [1, 2, 3, 5] (variable/array != array)'
         ]
         
@@ -482,9 +483,9 @@ describe 'Porolog' do
       
       it 'should not unify instantiated variables with a non-array value' do
         goal.instantiate :word, 1234
-        expects(:unify_arrays).times(0)
+        Porolog::expects(:unify_arrays).times(0)
         
-        assert_nil                                            unify(:word, [1,2,3,5], goal),      name
+        assert_nil                                            Porolog::unify(:word, [1,2,3,5], goal),      name
         
         expected_log = [
           'Cannot unify because Goal1.1234 != [1, 2, 3, 5] (variable != array)'
@@ -500,7 +501,7 @@ describe 'Porolog' do
       it 'should not unify instantiated variables that are not instantiated with an array' do
         goal.instantiate :word, '1 2 3 4'
         
-        assert_nil                                            unify([1,2,3,4], :word, goal),      name
+        assert_nil                                            Porolog::unify([1,2,3,4], :word, goal),      name
         
         expected_log = [
           'Cannot unify because [1, 2, 3, 4] != Goal1."1 2 3 4" (array != variable)'
@@ -512,16 +513,17 @@ describe 'Porolog' do
       it 'should return an instantiation' do
         expects(:unify_arrays).times(0)
         
-        assert_equal    [[:list, [7,11,13], goal, goal]],     unify([7,11,13], :list, goal),      name
+        assert_equal    [[:list, [7,11,13], goal, goal]],     Porolog::unify([7,11,13], :list, goal),      name
       end
       
       it 'should not unify instantiated variables with different values' do
         goal.instantiate :word, [1,2,3,4]
-        expects(:unify_arrays).times(1)
+        Porolog::expects(:unify_arrays).times(1)
         
-        assert_nil                                            unify([1,2,3,5], :word, goal),      name
+        assert_nil                                            Porolog::unify([1,2,3,5], :word, goal),      name
         
         expected_log = [
+          #'Cannot unify incompatible values: 5 with 4',
           'Cannot unify because [1, 2, 3, 5] != Goal1.[1, 2, 3, 4] (variable/array != array)'
         ]
         
@@ -531,7 +533,7 @@ describe 'Porolog' do
       it 'should unify instantiated variables with unifiable values' do
         goal.instantiate :word, [1,2,3]/:w
         
-        instantiations = unify([nil,nil,3,4,5], :word, goal)
+        instantiations = Porolog::unify([nil,nil,3,4,5], :word, goal)
         
         expected_log            = []
         expected_instantiations = [
@@ -547,11 +549,11 @@ describe 'Porolog' do
     describe 'when [:array,:atomic], [:atomic,:array]' do
       
       before do
-        expects(:unify_arrays).times(0)
+        Porolog::expects(:unify_arrays).times(0)
       end
       
       it 'should return nil for unifying array and atomic' do
-        assert_nil                                           unify([7,11,13], 'word', goal),      name
+        assert_nil                                           Porolog::unify([7,11,13], 'word', goal),      name
         
         expected_log = [
           'Cannot unify [7, 11, 13] with "word" (array != atomic)',
@@ -561,7 +563,7 @@ describe 'Porolog' do
       end
       
       it 'should return nil for unifying atomic and array' do
-        assert_nil                                           unify('word', [7,11,13], goal),      name
+        assert_nil                                           Porolog::unify('word', [7,11,13], goal),      name
         
         expected_log = [
           'Cannot unify "word" with [7, 11, 13] (atomic != array)',
@@ -577,7 +579,7 @@ describe 'Porolog' do
       let(:goal)  { new_goal :p, :x, :y }
       
       it 'should unify an array and a tail' do
-        assert    unify([7,11,13], Tail.new([[7,11,goal[:P]]]), goal),      name
+        assert    Porolog::unify([7,11,13], Porolog::Tail.new([[7,11,goal[:P]]]), goal),      name
         
         expected_log = []
         
@@ -585,7 +587,7 @@ describe 'Porolog' do
       end
       
       it 'should not unify an array and tail when they cannot be unified' do
-        refute    unify([7,11,13], Tail.new([[7,11,14]]), goal),      name
+        refute    Porolog::unify([7,11,13], Porolog::Tail.new([[7,11,14]]), goal),      name
         
         expected_log = [
           'Cannot unify incompatible values: 13 with 14',
@@ -603,7 +605,7 @@ describe 'Porolog' do
       let(:goal)  { new_goal :p, :x, :y }
       
       it 'should unify a tail and an array' do
-        assert    unify(Tail.new([[7,11,13]]), [7,11,goal[:P]], goal),      name
+        assert    Porolog::unify(Porolog::Tail.new([[7,11,13]]), [7,11,goal[:P]], goal),      name
         
         expected_log = []
         
@@ -611,7 +613,7 @@ describe 'Porolog' do
       end
       
       it 'should not unify a tail and an array when they cannot be unified' do
-        refute    unify(Tail.new([[7,11,13]]), [7,11,14], goal),      name
+        refute    Porolog::unify(Porolog::Tail.new([[7,11,13]]), [7,11,14], goal),      name
         
         expected_log = [
           'Cannot unify incompatible values: 13 with 14',
@@ -631,7 +633,7 @@ describe 'Porolog' do
           [goal[:B], [goal[:H]]/:T,  goal, goal],
           [goal[:C], [goal[:H]]/:NT, goal, goal]
         ]
-        assert_equal    expected_unifications, unify(
+        assert_equal    expected_unifications, Porolog::unify(
           [:A, :B,      :C],
           [:A, [:H]/:T, [:H]/:NT],
           goal
@@ -667,19 +669,19 @@ describe 'Porolog' do
     it 'should unify but without unifications when left is the unknown array' do
       expect_unify_arrays_with_calls 0, 0, 0
       
-      assert_Unify_arrays [UNKNOWN_ARRAY, [:a,:b,:c]], goals, [g2[:a], g2[:b], g2[:c]]
+      assert_Unify_arrays [Porolog::UNKNOWN_ARRAY, [:a,:b,:c]], goals, [g2[:a], g2[:b], g2[:c]]
     end
     
     it 'should unify but without unifications when right is the unknown array' do
       expect_unify_arrays_with_calls 0, 0, 0
       
-      assert_Unify_arrays [[:x,:y,:z], UNKNOWN_ARRAY], goals, [g1[:x], g1[:y], g1[:z]]
+      assert_Unify_arrays [[:x,:y,:z], Porolog::UNKNOWN_ARRAY], goals, [g1[:x], g1[:y], g1[:z]]
     end
     
     it 'should unify but without unifications when left and right are the unknown array' do
       expect_unify_arrays_with_calls 0, 0, 0
       
-      assert_Unify_arrays [[UNKNOWN_TAIL], UNKNOWN_ARRAY], goals, UNKNOWN_ARRAY
+      assert_Unify_arrays [[Porolog::UNKNOWN_TAIL], Porolog::UNKNOWN_ARRAY], goals, Porolog::UNKNOWN_ARRAY
     end
     
     arrays_without_tails = [
@@ -694,10 +696,10 @@ describe 'Porolog' do
       []/:t,
       [1]/:z,
       [1, 2]/:s,
-      [1, UNKNOWN_TAIL],
-      [1, 2, 3, UNKNOWN_TAIL],
-      [1, 2, 3, 4, UNKNOWN_TAIL],
-      [:x, :y, :z, UNKNOWN_TAIL],
+      [1, Porolog::UNKNOWN_TAIL],
+      [1, 2, 3, Porolog::UNKNOWN_TAIL],
+      [1, 2, 3, 4, Porolog::UNKNOWN_TAIL],
+      [:x, :y, :z, Porolog::UNKNOWN_TAIL],
       [['one'], ['word'], ['sentences']]/:tail,
     ]
     
@@ -705,7 +707,7 @@ describe 'Porolog' do
       it "should call unify_arrays_with_no_tails when there are no tails: #{arrays.map(&:inspect).join(' and ')}" do
         expect_unify_arrays_with_calls 1, 0, 0
         
-        unify_arrays(*arrays, *goals)
+        Porolog::unify_arrays(*arrays, *goals)
       end
     end
     
@@ -713,7 +715,7 @@ describe 'Porolog' do
       it "should call unify_arrays_with_all_tails when all arrays have tails: #{arrays.map(&:inspect).join(' and ')}" do
         expect_unify_arrays_with_calls 0, 0, 1
         
-        unify_arrays(*arrays, *goals)
+        Porolog::unify_arrays(*arrays, *goals)
       end
     end
     
@@ -724,7 +726,7 @@ describe 'Porolog' do
       it "should call unify_arrays_with_some_tails when one array has a tail and the other does not: #{arrays.map(&:inspect).join(' and ')}" do
         expect_unify_arrays_with_calls 0, 1, 0
         
-        unify_arrays(*arrays, *goals)
+        Porolog::unify_arrays(*arrays, *goals)
       end
     end
     
@@ -764,15 +766,15 @@ describe 'Porolog' do
     end
     
     it 'should unify a fixed array with the unknown array' do
-      assert_Unify_arrays [[1,2,3], UNKNOWN_ARRAY], goals, [1,2,3]
+      assert_Unify_arrays [[1,2,3], Porolog::UNKNOWN_ARRAY], goals, [1,2,3]
     end
     
     it 'should unify the unknown array with the unknown array' do
-      assert_Unify_arrays [UNKNOWN_ARRAY, UNKNOWN_ARRAY], goals, UNKNOWN_ARRAY
+      assert_Unify_arrays [Porolog::UNKNOWN_ARRAY, Porolog::UNKNOWN_ARRAY], goals, Porolog::UNKNOWN_ARRAY
     end
     
     it 'should unify arrays with variable tails' do
-      assert_Unify_arrays [[:a, :b]/:c, [:x, :y]/:z], goals, [nil,nil,UNKNOWN_TAIL], [
+      assert_Unify_arrays [[:a, :b]/:c, [:x, :y]/:z], goals, [nil, nil, Porolog::UNKNOWN_TAIL], [
         [:a, :x, g1, g2],
         [:b, :y, g1, g2],
         [:c, :z, g1, g2],
@@ -780,7 +782,7 @@ describe 'Porolog' do
     end
     
     it 'should unify arrays with variable tails of different lenths' do
-      assert_Unify_arrays [[:a, :b]/:c, [:x]/:z], goals, [nil,nil,UNKNOWN_TAIL], [
+      assert_Unify_arrays [[:a, :b]/:c, [:x]/:z], goals, [nil, nil, Porolog::UNKNOWN_TAIL], [
         [g2[:x], g1[:a],            g2, g1],
         [g2[:z], [g1[:b]]/g1[:c],   g2, g1],
       ]
@@ -817,7 +819,7 @@ describe 'Porolog' do
         :x,
       ]
       
-      assert_nil      unify_many_arrays(arrays, [goal] * arrays.size),      name
+      assert_nil      Porolog::unify_many_arrays(arrays, [goal] * arrays.size),      name
       
       expected_log = [
         'Cannot unify: [1, 2, 3] with 123 with :x',
@@ -829,11 +831,11 @@ describe 'Porolog' do
     it 'should not return nil when all arrays are Arrays or variables' do
       arrays = [
         [1,2,3],
-        UNKNOWN_ARRAY,
+        Porolog::UNKNOWN_ARRAY,
         :x,
       ]
       
-      result = unify_many_arrays(arrays, [goal] * arrays.size)
+      result = Porolog::unify_many_arrays(arrays, [goal] * arrays.size)
       refute_nil      result,      name
       
       merged, unifications = result
@@ -849,10 +851,10 @@ describe 'Porolog' do
     it 'should automatically merge unknown arrays' do
       arrays = [
         [1,2,3],
-        UNKNOWN_ARRAY,
+        Porolog::UNKNOWN_ARRAY,
       ]
       
-      assert_equal    [[1,2,3], []],        unify_many_arrays(arrays, [goal] * arrays.size),      name
+      assert_equal    [[1,2,3], []],        Porolog::unify_many_arrays(arrays, [goal] * arrays.size),      name
     end
     
     it 'should call unify_arrays_with_no_tails when there are no Arrays with Tails' do
@@ -864,30 +866,30 @@ describe 'Porolog' do
         [nil, 2,    3,  nil],
       ]
       
-      unify_many_arrays(arrays, [goal] * arrays.size)
+      Porolog::unify_many_arrays(arrays, [goal] * arrays.size)
     end
     
     it 'should call unify_arrays_with_all_tails when all Arrays have Tails' do
       expect_unify_arrays_with_calls 0, 0, 1
       
       arrays = [
-        [1,   2,    3,  UNKNOWN_TAIL],
+        [1,   2,    3,  Porolog::UNKNOWN_TAIL],
         [1,   nil,  3,  ]/:x,
       ]
       
-      unify_many_arrays(arrays, [goal] * arrays.size)
+      Porolog::unify_many_arrays(arrays, [goal] * arrays.size)
     end
     
     it 'should call unify_arrays_with_some_tails when there is a combination of Arrays with and without Tails' do
       expect_unify_arrays_with_calls 0, 1, 0
       
       arrays = [
-        [1,   2,    3,  UNKNOWN_TAIL],
+        [1,   2,    3,  Porolog::UNKNOWN_TAIL],
         [1,   nil,  3,  4],
         [nil, 2,    3,  nil],
       ]
       
-      unify_many_arrays(arrays, [goal] * arrays.size)
+      Porolog::unify_many_arrays(arrays, [goal] * arrays.size)
     end
     
   end
@@ -904,26 +906,26 @@ describe 'Porolog' do
     # -- Arrays --
     let(:empty_array)               { [] }
     let(:finite_array)              { [1,2,3,4,5] }
-    let(:array_with_unknown_tail)   { [1,2,3,4,5,UNKNOWN_TAIL] }
+    let(:array_with_unknown_tail)   { [1,2,3,4,5, Porolog::UNKNOWN_TAIL] }
     let(:array_with_variable_tail)  { [1,2,3,4,5]/:tail }
-    let(:unknown_array)             { UNKNOWN_ARRAY }
+    let(:unknown_array)             { Porolog::UNKNOWN_ARRAY }
     
     describe 'when not given an Array' do
       
       it 'should return false when given an uninstantiated variable' do
-        refute  has_tail?(variable), name
+        refute  Porolog::has_tail?(variable), name
       end
       
       it 'should return false when given an Object' do
-        refute  has_tail?(object), name
+        refute  Porolog::has_tail?(object), name
       end
       
       it 'should return false when given a Symbol' do
-        refute  has_tail?(symbol), name
+        refute  Porolog::has_tail?(symbol), name
       end
       
       it 'should return false when given an Integer' do
-        refute  has_tail?(integer), name
+        refute  Porolog::has_tail?(integer), name
       end
       
     end
@@ -931,23 +933,23 @@ describe 'Porolog' do
     describe 'when given an Array' do
       
       it 'should return false when the Array is empty' do
-        refute  has_tail?(empty_array), name
+        refute  Porolog::has_tail?(empty_array), name
       end
       
       it 'should return false when the last element is atomic' do
-        refute  has_tail?(finite_array), name
+        refute  Porolog::has_tail?(finite_array), name
       end
       
       it 'should return true when the last element is unknown' do
-        assert  has_tail?(array_with_unknown_tail), name
+        assert  Porolog::has_tail?(array_with_unknown_tail), name
       end
       
       it 'should return true when the last element is a Tail' do
-        assert  has_tail?(array_with_variable_tail), name
+        assert  Porolog::has_tail?(array_with_variable_tail), name
       end
       
       it 'should return true when given an unknown array' do
-        assert  has_tail?(unknown_array), name
+        assert  Porolog::has_tail?(unknown_array), name
       end
       
       describe 'and the array has an instantiated tail' do
@@ -965,7 +967,7 @@ describe 'Porolog' do
           it 'should return false' do
             array = goal.variablise([:a, :b, :c, :d]/:e)
             
-            refute  has_tail?(array, true), name
+            refute  Porolog::has_tail?(array, true), name
           end
           
         end
@@ -975,7 +977,7 @@ describe 'Porolog' do
           it 'should return true' do
             array = goal.variablise([:a, :b, :c, :d]/:e)
             
-            assert  has_tail?(array, false), name
+            assert  Porolog::has_tail?(array, false), name
           end
           
         end
@@ -989,27 +991,27 @@ describe 'Porolog' do
   describe '#expand_splat' do
     
     it 'should return an empty array as is' do
-      assert_equal    [],     expand_splat([])
+      assert_equal    [],     Porolog::expand_splat([])
     end
     
     it 'should return non-arrays as is' do
-      assert_equal    5,      expand_splat(5)
+      assert_equal    5,      Porolog::expand_splat(5)
     end
     
     it 'should expand an array of just a Tail' do
-      assert_equal    :t,     expand_splat([]/:t)
+      assert_equal    :t,     Porolog::expand_splat([]/:t)
     end
     
     it 'should not expand an array with a Tail' do
-      assert_equal    [1,2,3]/:t,     expand_splat([1,2,3]/:t)
+      assert_equal    [1,2,3]/:t,     Porolog::expand_splat([1,2,3]/:t)
     end
     
     it 'should expand a tail' do
-      assert_equal    [1,2,3,4,5],    expand_splat([1,2,3,Tail.new([4,5])])
+      assert_equal    [1,2,3,4,5],    Porolog::expand_splat([1, 2, 3, Porolog::Tail.new([4,5])])
     end
     
     it 'should expand nested arrays' do
-      assert_equal    [99, [1,2,3,4], 99],    expand_splat([99,[1,2,3,Tail.new([4])],99])
+      assert_equal    [99, [1,2,3,4], 99],    Porolog::expand_splat([99,[1, 2, 3, Porolog::Tail.new([4])],99])
     end
     
   end
@@ -1030,7 +1032,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0..arrays.size]
       
-      assert_nil      unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Wrong unification method called: no_tails but one or more of [[1, 2, 3, 4], [1, 2, 3, *:tail], [:w, :x, :y, :z]] has a tail',
@@ -1049,7 +1051,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
 
-      assert_nil                        unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       # -- First = Last --
       arrays = [
@@ -1061,7 +1063,7 @@ describe 'Porolog' do
       expected_merged       = [1,2,3]
       expected_unifications = []
 
-      merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
       assert_equal    expected_merged,          merged
       assert_equal    expected_unifications,    unifications
@@ -1073,7 +1075,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
 
-      assert_nil                        unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       # -- Check Log --
       expected_log = [
@@ -1094,7 +1096,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1, 2, 3, 4, 5]
       expected_unifications = []
@@ -1111,7 +1113,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil                        unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify arrays of different lengths: [nil] with [nil, nil, nil, nil] with [nil, nil, nil, nil, nil, nil]',
@@ -1130,7 +1132,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil                        unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify incompatible values: 1 with 8',
@@ -1149,7 +1151,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1, 2, nil, 4, nil]
       expected_unifications = [
@@ -1173,7 +1175,7 @@ describe 'Porolog' do
       ]
       missing_goals = [nil, nil, nil]
       
-      merged, unifications = unify_arrays_with_no_tails(arrays, missing_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, missing_goals, [])
       
       expected_merged       = [1, 2, 3, 4, 5]
       expected_unifications = [
@@ -1196,7 +1198,7 @@ describe 'Porolog' do
       
       arrays_goals = [g1, nil, nil]
       
-      merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1, 2, 3, [90, 91, 92, 93], 5]
       expected_unifications = [
@@ -1220,7 +1222,7 @@ describe 'Porolog' do
       
       arrays_goals = [g1, nil, nil]
       
-      assert_nil      unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify incompatible values: 92.1 with 92',
@@ -1234,7 +1236,7 @@ describe 'Porolog' do
     
     it 'should not expand variables when they are instantiated to the unknown array' do
       arrays_goals = goals[0...4]
-      g4.instantiate :z, UNKNOWN_ARRAY
+      g4.instantiate :z, Porolog::UNKNOWN_ARRAY
       arrays = [
         [1,   2,   nil, nil, nil],
         [:j,  :n,  :n,  4,   nil],
@@ -1242,9 +1244,9 @@ describe 'Porolog' do
         :z
       ]
       
-      assert_equal    UNKNOWN_ARRAY,      g4[:z].value
+      assert_equal    Porolog::UNKNOWN_ARRAY,       g4[:z].value
       
-      merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1, 2, nil, 4, g3[:z]]
       expected_unifications = [
@@ -1265,7 +1267,7 @@ describe 'Porolog' do
     
     it 'should not expand variables when they are instantiated to the unknown tail' do
       arrays_goals = goals[0...4]
-      g4.instantiate :z, UNKNOWN_TAIL
+      g4.instantiate :z, Porolog::UNKNOWN_TAIL
       arrays = [
         [1,   2,   nil, nil, nil],
         [:j,  :n,  :n,  4,   nil],
@@ -1275,7 +1277,7 @@ describe 'Porolog' do
       
       assert_equal    g4[:z],             g4[:z].value
       
-      merged, unifications = unify_arrays_with_no_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1, 2, nil, 4, nil]
       expected_unifications = [
@@ -1301,12 +1303,12 @@ describe 'Porolog' do
       arrays = [
         [         nil, 2,    nil,  :gi,                   nil],
         g2.value([1,   nil,  3,    [90,  nil, nil, nil],  nil]),
-        g3.value([nil, :x,   nil,  [nil, nil, UNKNOWN_ARRAY,  :gy],  5]),
+        g3.value([nil, :x,   nil,  [nil, nil, Porolog::UNKNOWN_ARRAY,  :gy],  5]),
       ]
       
       arrays_goals = [g1, nil, nil]
       
-      assert_nil      unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify incompatible values: 92.1 with [...]',
@@ -1330,7 +1332,7 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil      unify_arrays_with_no_tails(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_arrays_with_no_tails(arrays, arrays_goals, []), name
       
       assert_equal [
         'Cannot unify: [Goal1.:a] with [Goal2.2] with [Goal3.3]',
@@ -1360,12 +1362,12 @@ describe 'Porolog' do
     
     it 'should not unify a finite array with an array with a tail that has more finite elements' do
       arrays = [
-        [nil, nil, nil, nil, UNKNOWN_TAIL],
+        [nil, nil, nil, nil, Porolog::UNKNOWN_TAIL],
         [1,   2,   3]
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil                        unify_arrays_with_some_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify enough elements: [nil, nil, nil, nil, ...] with [Goal2.1, Goal2.2, Goal2.3]',
@@ -1377,34 +1379,34 @@ describe 'Porolog' do
     
     it 'should unify a finite array with an array with a tail that has less finite elements' do
       arrays = [
-        [nil, nil, UNKNOWN_TAIL],
+        [nil, nil, Porolog::UNKNOWN_TAIL],
         [1,   2,   3]
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_equal  [[1,2,3],[]],       unify_arrays_with_some_tails(arrays, arrays_goals, []), name
+      assert_equal  [[1,2,3],[]],       Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, []), name
     end
     
     it 'should merge values with an unknown tail' do
       arrays = [
-        [1,   2,   3,   UNKNOWN_TAIL],
+        [1,   2,   3,   Porolog::UNKNOWN_TAIL],
         [nil, nil, nil, 4,   nil],
         [nil, nil, nil, nil, 5],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_equal  [[1,2,3,4,5],[]],   unify_arrays_with_some_tails(arrays, arrays_goals, []), name
+      assert_equal  [[1,2,3,4,5],[]],   Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, []), name
     end
     
     it 'should return nil when the finite arrays have different sizes' do
       arrays = [
-        [nil, UNKNOWN_TAIL],
+        [nil, Porolog::UNKNOWN_TAIL],
         [nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil                        unify_arrays_with_some_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify different sizes of arrays: [nil, ...] with [nil, nil, nil, nil] with [nil, nil, nil, nil, nil, nil]',
@@ -1417,13 +1419,13 @@ describe 'Porolog' do
     
     it 'should return nil when the arrays have incompatible values' do
       arrays = [
-        [1, 2, 3, UNKNOWN_TAIL],
+        [1, 2, 3, Porolog::UNKNOWN_TAIL],
         [nil, nil, nil, 4, nil],
         [5,   nil, nil, nil, 5],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil                        unify_arrays_with_some_tails(arrays, arrays_goals, []), name
+      assert_nil                        Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify enough elements: Goal1.1 with Goal3.5',
@@ -1436,13 +1438,13 @@ describe 'Porolog' do
     
     it 'should return necessary unification to unify variables' do
       arrays = [
-        [1,   2,   nil, UNKNOWN_TAIL],
+        [1,   2,   nil, Porolog::UNKNOWN_TAIL],
         [:j,  :n,  :n,  4,  nil],
         [:x,  nil, :m,  :y, :z],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      merged, unifications = unify_arrays_with_some_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1, 2, nil, 4, g3[:z]]
       expected_unifications = [
@@ -1459,16 +1461,16 @@ describe 'Porolog' do
     
     it 'should handle a range of cases' do
       [
-        [[[],                        [1,UNKNOWN_TAIL]      ],   nil, ['Cannot unify enough elements: [] with [Goal2.1, ...]']],
-        [[[]/:t,                     [1]                   ],   [[1], [[g1.variable(:t), [1], g1, g2]]]],
-        [[[],                        [1,2]/:s              ],   nil, ['Cannot unify enough elements: [] with [Goal2.1, Goal2.2, *Goal2.:s]']],
-        [[[]/:t,                     [1,2]                 ],   [[1,2], [[g1.variable(:t), [1,2], g1, g2]]]],
-        [[[1,2,3],                   [1,UNKNOWN_TAIL]      ],   [[1,2,3],[]]],
-        [[[1,2,3,UNKNOWN_TAIL],      [1]                   ],   nil, ['Cannot unify enough elements: [Goal1.1, Goal1.2, Goal1.3, ...] with [Goal2.1]']],
-        [[[1],                       [1,2,3,UNKNOWN_TAIL]  ],   nil, ['Cannot unify enough elements: [Goal1.1] with [Goal2.1, Goal2.2, Goal2.3, ...]']],
-        [[[1]/:z,                    [1,2,3]               ],   [[1,2,3], [[g1.variable(:z), [2, 3], g1, g2]]]],
-        [[[:x,:y,:z],                [1,2,3,4,UNKNOWN_TAIL]],   nil, ['Cannot unify enough elements: [Goal1.:x, Goal1.:y, Goal1.:z] with [Goal2.1, Goal2.2, Goal2.3, Goal2.4, ...]']],
-        [[[:x,:y,:z,UNKNOWN_TAIL],   [1,2,3,4]             ],   [
+        [[[],                        [1,Porolog::UNKNOWN_TAIL]      ],   nil, ['Cannot unify enough elements: [] with [Goal2.1, ...]']],
+        [[[]/:t,                     [1]                            ],   [[1], [[g1.variable(:t), [1], g1, g2]]]],
+        [[[],                        [1,2]/:s                       ],   nil, ['Cannot unify enough elements: [] with [Goal2.1, Goal2.2, *Goal2.:s]']],
+        [[[]/:t,                     [1,2]                          ],   [[1,2], [[g1.variable(:t), [1,2], g1, g2]]]],
+        [[[1,2,3],                   [1,Porolog::UNKNOWN_TAIL]      ],   [[1,2,3],[]]],
+        [[[1,2,3,Porolog::UNKNOWN_TAIL],      [1]                   ],   nil, ['Cannot unify enough elements: [Goal1.1, Goal1.2, Goal1.3, ...] with [Goal2.1]']],
+        [[[1],                       [1,2,3,Porolog::UNKNOWN_TAIL]  ],   nil, ['Cannot unify enough elements: [Goal1.1] with [Goal2.1, Goal2.2, Goal2.3, ...]']],
+        [[[1]/:z,                    [1,2,3]                        ],   [[1,2,3], [[g1.variable(:z), [2, 3], g1, g2]]]],
+        [[[:x,:y,:z],                [1,2,3,4,Porolog::UNKNOWN_TAIL]],   nil, ['Cannot unify enough elements: [Goal1.:x, Goal1.:y, Goal1.:z] with [Goal2.1, Goal2.2, Goal2.3, Goal2.4, ...]']],
+        [[[:x,:y,:z,Porolog::UNKNOWN_TAIL],   [1,2,3,4]             ],   [
           [1,2,3,4],
           [
             [g1.variable(:x), g2.value(1), g1, g2],
@@ -1479,7 +1481,7 @@ describe 'Porolog' do
       ].each do |arrays, expected, expected_log|
         arrays_goals = goals[0...arrays.size]
         
-        result = unify_arrays_with_some_tails(arrays, arrays_goals, [])
+        result = Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, [])
         
         if expected.nil?
           assert_nil                  result
@@ -1496,13 +1498,13 @@ describe 'Porolog' do
     
     it 'should raise a no goal error when no goals are supplied and the arrays have no embedded goals' do
       arrays = [
-        [nil, nil, nil, nil, UNKNOWN_TAIL],
+        [nil, nil, nil, nil, Porolog::UNKNOWN_TAIL],
         [1,   2,   3]
       ]
       arrays_goals = [nil] * arrays.size
       
       error = assert_raises Porolog::NoGoalError do
-        unify_arrays_with_some_tails(arrays, arrays_goals, [])
+        Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, [])
       end
       
       assert_equal '[nil, nil, nil, nil, ...] has no associated goal!  Cannot variablise!', error.message
@@ -1511,14 +1513,14 @@ describe 'Porolog' do
     it 'should derive goals from embedded goals when the goals are not supplied' do
       arrays_goals = [g1, nil]
       arrays = [
-        [nil, nil, nil,   nil, UNKNOWN_TAIL],
+        [nil, nil, nil,   nil, Porolog::UNKNOWN_TAIL],
         [1,   2,   g2[3], 4]
       ]
       
-      refute              arrays.all?{|array| has_tail?(array, false)  },  "not all arrays should have a tail"
-      refute              arrays.all?{|array| !has_tail?(array, false) },  "not all arrays should not have a tail"
+      refute          arrays.all?{|array| Porolog::has_tail?(array, false)  },  "not all arrays should have a tail"
+      refute          arrays.all?{|array| !Porolog::has_tail?(array, false) },  "not all arrays should not have a tail"
       
-      merged, unifications = unify_arrays_with_some_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1,2,3,4]
       expected_unifications = [
@@ -1535,10 +1537,10 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      refute              arrays.all?{|array| has_tail?(array, false)  },  "not all arrays should have a tail"
-      refute              arrays.all?{|array| !has_tail?(array, false) },  "not all arrays should not have a tail"
+      refute          arrays.all?{|array| Porolog::has_tail?(array, false)  },  "not all arrays should have a tail"
+      refute          arrays.all?{|array| !Porolog::has_tail?(array, false) },  "not all arrays should not have a tail"
       
-      merged, unifications = unify_arrays_with_some_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1,2,3,4,5]
       expected_unifications = [
@@ -1558,10 +1560,10 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      refute          arrays.all?{|array| has_tail?(array, false)  },  "not all arrays should have a tail"
-      refute          arrays.all?{|array| !has_tail?(array, false) },  "not all arrays should not have a tail"
+      refute          arrays.all?{|array| Porolog::has_tail?(array, false)  },  "not all arrays should have a tail"
+      refute          arrays.all?{|array| !Porolog::has_tail?(array, false) },  "not all arrays should not have a tail"
       
-      merged, unifications = unify_arrays_with_some_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1,2,3,4,5,6,7]
       expected_unifications = [
@@ -1583,10 +1585,10 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      refute          arrays.all?{|array| has_tail?(array, false)  },  "not all arrays should have a tail"
-      refute          arrays.all?{|array| !has_tail?(array, false) },  "not all arrays should not have a tail"
+      refute          arrays.all?{|array| Porolog::has_tail?(array, false)  },  "not all arrays should have a tail"
+      refute          arrays.all?{|array| !Porolog::has_tail?(array, false) },  "not all arrays should not have a tail"
       
-      assert_nil      unify_arrays_with_some_tails(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_arrays_with_some_tails(arrays, arrays_goals, []), name
       
       assert_equal [
         'Cannot unify non-variables: 2 with 3'
@@ -1610,17 +1612,17 @@ describe 'Porolog' do
     let(:g3)    { new_goal(:r, :s, :t) }
     let(:goals) { [g1, g2, g3]         }
     
-    let(:array_with_tail_1) { [1,  2,  Tail.new(:h)] }
+    let(:array_with_tail_1) { [1,  2,  Porolog::Tail.new(:h)] }
     let(:array_with_tail_2) { [:h, :b]/:t }
-    let(:array_with_tail_3) { [:x, :y, UNKNOWN_TAIL] }
-    let(:head_and_tail_1)   { [1,  Tail.new([2,3])] }
+    let(:array_with_tail_3) { [:x, :y, Porolog::UNKNOWN_TAIL] }
+    let(:head_and_tail_1)   { [1,  Porolog::Tail.new([2,3])] }
     let(:head_and_tail_2)   { [:h]/:t }
-    let(:head_and_tail_3)   { [:x, UNKNOWN_TAIL] }
+    let(:head_and_tail_3)   { [:x, Porolog::UNKNOWN_TAIL] }
     
     it 'should call unify_tail_with_tail when no array is headtail' do
-      expects(:unify_tail_with_tail).times(1)
-      expects(:unify_headtail_with_tail).times(0)
-      expects(:unify_headtail_with_headtail).times(0)
+      Porolog::expects(:unify_tail_with_tail).times(1)
+      Porolog::expects(:unify_headtail_with_tail).times(0)
+      Porolog::expects(:unify_headtail_with_headtail).times(0)
       
       arrays = [
         array_with_tail_1,
@@ -1629,13 +1631,13 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      unify_arrays_with_all_tails(arrays, arrays_goals, [])
+      Porolog::unify_arrays_with_all_tails(arrays, arrays_goals, [])
     end
     
     it 'should call unify_headtail_with_tail when all arrays but one are headtail' do
-      expects(:unify_tail_with_tail).times(0)
-      expects(:unify_headtail_with_tail).times(1)
-      expects(:unify_headtail_with_headtail).times(0)
+      Porolog::expects(:unify_tail_with_tail).times(0)
+      Porolog::expects(:unify_headtail_with_tail).times(1)
+      Porolog::expects(:unify_headtail_with_headtail).times(0)
       
       arrays = [
         array_with_tail_1,
@@ -1644,20 +1646,20 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      unify_arrays_with_all_tails(arrays, arrays_goals, [])
+      Porolog::unify_arrays_with_all_tails(arrays, arrays_goals, [])
     end
     
     it 'should include unifications of variables in a tail' do
       arrays = [
         [nil, nil, nil]/:list,
-        [1,   2,   3,   nil, :y, UNKNOWN_TAIL],
-        [nil, :x,  nil, 4,   Tail.new([nil,6])],
+        [1,   2,   3,   nil, :y, Porolog::UNKNOWN_TAIL],
+        [nil, :x,  nil, 4,   Porolog::Tail.new([nil,6])],
       ]
       arrays_goals = goals[0...arrays.size]
       
       g1.instantiate :list, [4,5,:z]
       
-      merged, unifications = unify_arrays_with_all_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_all_tails(arrays, arrays_goals, [])
       
       expected_merged       = [1,2,3,4,5,6]
       expected_unifications = [
@@ -1672,18 +1674,18 @@ describe 'Porolog' do
     end
     
     it 'should not unify arrays where one embedded variable cannot be unified' do
-      g1.instantiate(:a, [g1.value(1), g1.value(2), g1.value(3), UNKNOWN_TAIL])
+      g1.instantiate(:a, [g1.value(1), g1.value(2), g1.value(3), Porolog::UNKNOWN_TAIL])
       g2.instantiate(:a, :b)
       g3.instantiate(:a, :b)
       
       arrays = [
         :a,
-        [:a,Tail.new([1])],
-        [:a, UNKNOWN_TAIL],
+        [:a, Porolog::Tail.new([1])],
+        [:a, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert_nil      unify_arrays_with_all_tails(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_arrays_with_all_tails(arrays, arrays_goals, []), name
       
       assert_equal [
         'Cannot unify enough elements: Goal1.[Goal1.1, Goal1.2, Goal1.3, ...] with [Goal2.:a, Goal2.1]',
@@ -1705,8 +1707,8 @@ describe 'Porolog' do
     it 'should unify arrays where all embedded variables can be unified' do
       arrays = [
         [g1.variable(:a), g1.value(2), g1.variable(:c), g1.value(4)],
-        [g2.value(1), g1.variable(:b), g2.value(3), UNKNOWN_TAIL],
-        [:a, :b, Tail.new([3,:d])],
+        [g2.value(1), g1.variable(:b), g2.value(3), Porolog::UNKNOWN_TAIL],
+        [:a, :b, Porolog::Tail.new([3,:d])],
       ]
       arrays_goals = goals[0...arrays.size]
       
@@ -1724,7 +1726,7 @@ describe 'Porolog' do
         [g1.variable(:c), g3.value(3),      g1, g3],
         [g3.variable(:d), g1.value(4),      g3, g1]
       ]
-      merged, unifications = unify_arrays_with_all_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_all_tails(arrays, arrays_goals, [])
       
       assert_equal [], g1.log
       assert_equal [], g2.log
@@ -1748,7 +1750,7 @@ describe 'Porolog' do
       expected_unifications = [
         [:e, [[1], [2], [3], [4]], g1, g2]
       ]
-      merged, unifications = unify_arrays_with_all_tails(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_arrays_with_all_tails(arrays, arrays_goals, [])
       
       assert_equal [], g1.log
       assert_equal [], g2.log
@@ -1770,15 +1772,15 @@ describe 'Porolog' do
     
     it 'should reject a non-headtail array' do
       arrays = [
-        [1,Tail.new([2,3])],
+        [1, Porolog::Tail.new([2,3])],
         [4],
-        [7,UNKNOWN_TAIL],
+        [7, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
       refute              arrays.all?(&:headtail?)
       
-      assert_nil          unify_tail_with_tail(arrays, arrays_goals, [])
+      assert_nil          Porolog::unify_tail_with_tail(arrays, arrays_goals, [])
       
       msg = 'Wrong method called to unify [[1, *[2, 3]], [4], [7, ...]]'
       
@@ -1789,16 +1791,16 @@ describe 'Porolog' do
     
     it 'should process more than two arrays that are a non-headtail' do
       arrays = [
-        [1, 2, Tail.new([3,4])],
+        [1, 2, Porolog::Tail.new([3,4])],
         [:a, :b]/:c,
-        [:d, :e, UNKNOWN_TAIL],
+        [:d, :e, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert        arrays.all?{|array| has_tail?(array, false) }
+      assert        arrays.all?{|array| Porolog::has_tail?(array, false) }
       assert        arrays.map(&:headtail?).map(&:!).all?
       
-      merged, unifications = unify_tail_with_tail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_tail_with_tail(arrays, arrays_goals, [])
       
       expected_merged = [1,2,3,4]
       
@@ -1818,16 +1820,16 @@ describe 'Porolog' do
     
     it 'should unify arrays of different lengths' do
       arrays = [
-        [1,   2,   UNKNOWN_TAIL],
-        [nil, nil, 3,   4,   UNKNOWN_TAIL],
-        [nil, nil, nil, nil, 5, 6, UNKNOWN_TAIL],
+        [1,   2,   Porolog::UNKNOWN_TAIL],
+        [nil, nil, 3,   4,   Porolog::UNKNOWN_TAIL],
+        [nil, nil, nil, nil, 5, 6, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert        arrays.all?{|array| has_tail?(array) }
+      assert        arrays.all?{|array| Porolog::has_tail?(array) }
       assert        arrays.map(&:headtail?).map(&:!).all?
       
-      merged, unifications = unify_tail_with_tail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_tail_with_tail(arrays, arrays_goals, [])
       
       expected_merged = [
         g1.value(1),
@@ -1836,7 +1838,7 @@ describe 'Porolog' do
         g2.value(4),
         g3.value(5),
         g3.value(6),
-        UNKNOWN_TAIL,
+        Porolog::UNKNOWN_TAIL,
       ]
       
       expected_unifications = [
@@ -1855,12 +1857,12 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert        arrays.all?{|array| has_tail?(array) }
+      assert        arrays.all?{|array| Porolog::has_tail?(array) }
       assert        arrays.map(&:headtail?).map(&:!).all?
       
-      merged, unifications = unify_tail_with_tail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_tail_with_tail(arrays, arrays_goals, [])
       
-      expected_merged = [nil, nil, UNKNOWN_TAIL]
+      expected_merged = [nil, nil, Porolog::UNKNOWN_TAIL]
       
       expected_unifications = [
         [g1[:a], g2[:d], g1, g2],
@@ -1889,15 +1891,15 @@ describe 'Porolog' do
     
     it 'should not unify ununifiable arrays' do
       arrays = [
-        [1,2,3,4,UNKNOWN_TAIL],
-        [1,4,3,2,UNKNOWN_TAIL],
+        [1, 2, 3, 4, Porolog::UNKNOWN_TAIL],
+        [1, 4, 3, 2, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert        arrays.all?{|array| has_tail?(array) }
+      assert        arrays.all?{|array| Porolog::has_tail?(array) }
       assert        arrays.map(&:headtail?).map(&:!).all?
       
-      assert_nil    unify_tail_with_tail(arrays, arrays_goals, []), name
+      assert_nil    Porolog::unify_tail_with_tail(arrays, arrays_goals, []), name
       
       expected_log = [
         'Cannot unify incompatible values: 2 with 4',
@@ -1921,15 +1923,15 @@ describe 'Porolog' do
     
     it 'should reject a non-tail array' do
       arrays = [
-        [1,Tail.new([2,3])],
+        [1, Porolog::Tail.new([2,3])],
         [4],
-        [1,2,3,7,UNKNOWN_TAIL],
+        [1, 2, 3, 7, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
-      refute              arrays.all?{|array| has_tail?(array) }
+      refute              arrays.all?{|array| Porolog::has_tail?(array) }
       
-      assert_nil          unify_headtail_with_tail(arrays, arrays_goals, [])
+      assert_nil          Porolog::unify_headtail_with_tail(arrays, arrays_goals, [])
       
       msg = 'Wrong method called to unify [[1, *[2, 3]], [4], [1, 2, 3, 7, ...]]'
       
@@ -1940,16 +1942,16 @@ describe 'Porolog' do
     
     it 'should unify more than two arrays that have a tail' do
       arrays = [
-        [1,  Tail.new([2,3])],
+        [1,  Porolog::Tail.new([2,3])],
         [:a, :b]/:f,
-        [:c, UNKNOWN_TAIL],
-        [:d, :e, UNKNOWN_TAIL]
+        [:c, Porolog::UNKNOWN_TAIL],
+        [:d, :e, Porolog::UNKNOWN_TAIL]
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) }
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) }
       
-      merged, unifications = unify_headtail_with_tail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_headtail_with_tail(arrays, arrays_goals, [])
       
       expected_merged = [1,2,3]
       
@@ -1972,18 +1974,18 @@ describe 'Porolog' do
     
     it 'should unify unifiable arrays with different length tails' do
       arrays = [
-        [1,  UNKNOWN_TAIL],
+        [1,  Porolog::UNKNOWN_TAIL],
         [:a, :b, :c, :d]/:f,
-        [:c, UNKNOWN_TAIL],
-        [:d, 2, UNKNOWN_TAIL]
+        [:c, Porolog::UNKNOWN_TAIL],
+        [:d, 2, Porolog::UNKNOWN_TAIL]
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) }
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) }
       
-      merged, unifications = unify_headtail_with_tail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_headtail_with_tail(arrays, arrays_goals, [])
       
-      expected_merged = [1,2,nil,nil,UNKNOWN_TAIL]
+      expected_merged = [1, 2, nil, nil, Porolog::UNKNOWN_TAIL]
       
       expected_unifications = [
         [g3[:c], g1[1],   g3, g1],
@@ -2010,11 +2012,11 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) },  'all arrays should have a tail'
-      refute              arrays.map(&:headtail?).all?,                   'not all arrays should be a headtail array'
-      refute              arrays.map(&:headtail?).map(&:!).all?,          'not all arrays should be an array with a tail'
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) },   'all arrays should have a tail'
+      refute              arrays.map(&:headtail?).all?,                             'not all arrays should be a headtail array'
+      refute              arrays.map(&:headtail?).map(&:!).all?,                    'not all arrays should be an array with a tail'
       
-      assert_nil          unify_headtail_with_tail(arrays, arrays_goals, []), name
+      assert_nil          Porolog::unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
         'Cannot unify because 1 != 2 (variable != variable)',
@@ -2042,11 +2044,11 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) },  'all arrays should have a tail'
-      refute              arrays.map(&:headtail?).all?,                   'not all arrays should be a headtail array'
-      refute              arrays.map(&:headtail?).map(&:!).all?,          'not all arrays should be an array with a tail'
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) },   'all arrays should have a tail'
+      refute              arrays.map(&:headtail?).all?,                             'not all arrays should be a headtail array'
+      refute              arrays.map(&:headtail?).map(&:!).all?,                    'not all arrays should be an array with a tail'
       
-      assert_nil          unify_headtail_with_tail(arrays, arrays_goals, []), name
+      assert_nil          Porolog::unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
         'Cannot unify because [2, 3] != [2, 4] (variable != variable)',
@@ -2077,11 +2079,11 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) },  'all arrays should have a tail'
-      refute              arrays.map(&:headtail?).all?,                   'not all arrays should be a headtail array'
-      refute              arrays.map(&:headtail?).map(&:!).all?,          'not all arrays should be an array with a tail'
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) },   'all arrays should have a tail'
+      refute              arrays.map(&:headtail?).all?,                             'not all arrays should be a headtail array'
+      refute              arrays.map(&:headtail?).map(&:!).all?,                    'not all arrays should be an array with a tail'
       
-      assert_nil      unify_headtail_with_tail(arrays, arrays_goals, []), name
+      assert_nil      Porolog::unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
       ], g1.log
@@ -2107,11 +2109,11 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) },  'all arrays should have a tail'
-      refute              arrays.map(&:headtail?).all?,                   'not all arrays should be a headtail array'
-      refute              arrays.map(&:headtail?).map(&:!).all?,          'not all arrays should be an array with a tail'
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) },   'all arrays should have a tail'
+      refute              arrays.map(&:headtail?).all?,                             'not all arrays should be a headtail array'
+      refute              arrays.map(&:headtail?).map(&:!).all?,                    'not all arrays should be an array with a tail'
       
-      assert_nil    unify_headtail_with_tail(arrays, arrays_goals, []), name
+      assert_nil    Porolog::unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
       ], g1.log
@@ -2139,11 +2141,11 @@ describe 'Porolog' do
       ]
       arrays_goals = goals[0...arrays.size]
       
-      assert              arrays.all?{|array| has_tail?(array, false) },  'all arrays should have a tail'
-      refute              arrays.map(&:headtail?).all?,                   'not all arrays should be a headtail array'
-      refute              arrays.map(&:headtail?).map(&:!).all?,          'not all arrays should be an array with a tail'
+      assert              arrays.all?{|array| Porolog::has_tail?(array, false) },   'all arrays should have a tail'
+      refute              arrays.map(&:headtail?).all?,                             'not all arrays should be a headtail array'
+      refute              arrays.map(&:headtail?).map(&:!).all?,                    'not all arrays should be an array with a tail'
       
-      assert_nil        unify_headtail_with_tail(arrays, arrays_goals, []), name
+      assert_nil          Porolog::unify_headtail_with_tail(arrays, arrays_goals, []), name
       
       assert_equal [
         'Cannot unify incompatible values: 3 with 2',
@@ -2173,11 +2175,11 @@ describe 'Porolog' do
       g1.instantiate :t, [1,2,3]
       arrays = [
         :h/:t,
-        UNKNOWN_ARRAY,
+        Porolog::UNKNOWN_ARRAY,
       ]
       arrays_goals = goals[0...arrays.size]
       
-      merged, unifications = unify_headtail_with_tail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_headtail_with_tail(arrays, arrays_goals, [])
       
       expected_merged       = [nil, 1, 2, 3]
       expected_unifications = []
@@ -2198,15 +2200,15 @@ describe 'Porolog' do
     
     it 'should reject a non-headtail array' do
       arrays = [
-        [1,Tail.new([2,3])],
+        [1, Porolog::Tail.new([2,3])],
         [4],
-        [7,UNKNOWN_TAIL],
+        [7, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
       refute              arrays.all?(&:headtail?)
       
-      assert_nil          unify_headtail_with_headtail(arrays, arrays_goals, [])
+      assert_nil          Porolog::unify_headtail_with_headtail(arrays, arrays_goals, [])
       
       msg = 'Wrong method called to unify [[1, *[2, 3]], [4], [7, ...]]'
       
@@ -2217,15 +2219,15 @@ describe 'Porolog' do
     
     it 'should not unify unequal heads' do
       arrays = [
-        [1,Tail.new([2,3])],
+        [1, Porolog::Tail.new([2,3])],
         [4]/:y,
-        [7,UNKNOWN_TAIL],
+        [7, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
       assert              arrays.all?(&:headtail?), "arrays should all be headtails: #{arrays.reject(&:headtail?).map(&:inspect).join(' and ')}"
       
-      assert_nil          unify_headtail_with_headtail(arrays, arrays_goals, [])
+      assert_nil          Porolog::unify_headtail_with_headtail(arrays, arrays_goals, [])
       
       assert_equal [
         'Cannot unify because 1 != 4 (atomic != atomic)',
@@ -2241,24 +2243,24 @@ describe 'Porolog' do
     
     it 'should process more than two arrays that are a headtail' do
       arrays = [
-        [1, Tail.new([2,3])],
+        [1, Porolog::Tail.new([2,3])],
         [:a]/:f,
-        [:c, UNKNOWN_TAIL],
+        [:c, Porolog::UNKNOWN_TAIL],
       ]
       arrays_goals = goals[0...arrays.size]
       
       assert              arrays.all?(&:headtail?)
       
-      merged, unifications = unify_headtail_with_headtail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_headtail_with_headtail(arrays, arrays_goals, [])
       
       expected_merged = [1,2,3]
       
       expected_unifications = [
-        [:a, 1,             g2, g1],
-        [:f, [2,3],         g2, g1],
-        [:c, 1,             g3, g1],
-        [:a, :c,            g2, g3],
-        [:f, UNKNOWN_TAIL,  g2, g3],
+        [:a, 1,                       g2, g1],
+        [:f, [2,3],                   g2, g1],
+        [:c, 1,                       g3, g1],
+        [:a, :c,                      g2, g3],
+        [:f, Porolog::UNKNOWN_TAIL,   g2, g3],
       ]
       
       assert_equal expected_merged,       merged
@@ -2280,9 +2282,9 @@ describe 'Porolog' do
       
       assert              arrays.all?(&:headtail?)
       
-      merged, unifications = unify_headtail_with_headtail(arrays, arrays_goals, [])
+      merged, unifications = Porolog::unify_headtail_with_headtail(arrays, arrays_goals, [])
       
-      expected_merged = [nil, UNKNOWN_TAIL]
+      expected_merged = [nil, Porolog::UNKNOWN_TAIL]
       
       expected_unifications = [
         [:a, :c, g1, g2],
@@ -2313,14 +2315,14 @@ describe 'Porolog' do
     
     it 'should create a Predicate' do
       # -- Precondition Baseline --
-      assert_equal      0,                Scope[:default].predicates.size
+      assert_equal      0,                Porolog::Scope[:default].predicates.size
       
       # -- Test --
-      single_predicate = builtin :member
+      single_predicate = Porolog::builtin :member
       
       # -- Compare Result Against Baseline --
-      assert_equal      1,                Scope[:default].predicates.size
-      assert_equal      :member,          Scope[:default].predicates.first.name
+      assert_equal      1,                Porolog::Scope[:default].predicates.size
+      assert_equal      :member,          Porolog::Scope[:default].predicates.first.name
       assert_Predicate  single_predicate, :member, []
     end
     
@@ -2331,7 +2333,7 @@ describe 'Porolog' do
       
       refute                    respond_to?(:member)
       
-      builtin :member
+      Porolog::builtin :member
       
       assert                    respond_to?(:member)
       assert_Arguments          member(:X, ['left','right']),   :member, [:X, ['left','right']]
@@ -2340,14 +2342,14 @@ describe 'Porolog' do
     end
     
     it 'should create multiple Predicates' do
-      assert_equal              0,        Scope[:default].predicates.size
+      assert_equal              0,        Porolog::Scope[:default].predicates.size
       
-      multiple_predicates = builtin :member, :append, :is
+      multiple_predicates = Porolog::builtin :member, :append, :is
       
-      assert_equal              3,        Scope[:default].predicates.size
-      assert_equal              :member,  Scope[:default].predicates[0].name
-      assert_equal              :append,  Scope[:default].predicates[1].name
-      assert_equal              :is,      Scope[:default].predicates[2].name
+      assert_equal              3,        Porolog::Scope[:default].predicates.size
+      assert_equal              :member,  Porolog::Scope[:default].predicates[0].name
+      assert_equal              :append,  Porolog::Scope[:default].predicates[1].name
+      assert_equal              :is,      Porolog::Scope[:default].predicates[2].name
       assert_instance_of        Array,    multiple_predicates
       assert_equal              3,        multiple_predicates.size
       assert_Predicate          multiple_predicates[0], :member,  []
@@ -2364,7 +2366,7 @@ describe 'Porolog' do
       refute                    respond_to?(:member)
       refute                    respond_to?(:append)
       
-      builtin :member, :append
+      Porolog::builtin :member, :append
       
       assert                    respond_to?(:member)
       assert                    respond_to?(:append)
@@ -2382,7 +2384,7 @@ describe 'Porolog' do
       refute_includes   Base2.methods,            :member
       refute_includes   Base2.instance_methods,   :member
       
-      builtin :member, class_base: Base2
+      Porolog::builtin :member, class_base: Base2
       
       assert_includes   Base2.methods,            :member
       assert_includes   Base2.instance_methods,   :member
@@ -2412,9 +2414,9 @@ describe 'Porolog' do
     
     it 'should return a different variable on each call' do
       # _ is overridden by MiniTest
-      variable1 = Porolog._
-      variable2 = Porolog._
-      variable3 = Porolog._
+      variable1 = Porolog::_
+      variable2 = Porolog::_
+      variable3 = Porolog::_
       
       assert_equal    :_a,            variable1
       assert_equal    :_b,            variable2

@@ -10,10 +10,12 @@
 #
 module Porolog
 
+  extend self
+
   # The most recent version of the Porolog gem.
-  VERSION      = '1.0.2'.freeze
+  VERSION      = '1.0.3'.freeze
   # The most recent date of when the VERSION changed.
-  VERSION_DATE = '2020-08-08'.freeze
+  VERSION_DATE = '2020-08-13'.freeze
   
   # Represents an unknown tail of a list.
   UNKNOWN_TAIL = Object.new

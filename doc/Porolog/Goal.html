@@ -1738,7 +1738,7 @@
     <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
       
-      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
         <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -1749,7 +1749,7 @@
         <span class='comment'>#:nocov:
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
     
     <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
@@ -2451,7 +2451,7 @@
     <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
       
-      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
         <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -2462,7 +2462,7 @@
         <span class='comment'>#:nocov:
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
     
     <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
@@ -3164,7 +3164,7 @@
     <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
       
-      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
         <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -3175,7 +3175,7 @@
         <span class='comment'>#:nocov:
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
     
     <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
@@ -3877,7 +3877,7 @@
     <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
       
-      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
         <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -3888,7 +3888,7 @@
         <span class='comment'>#:nocov:
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
     
     <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
@@ -4590,7 +4590,7 @@
     <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
       
-      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
         <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -4601,7 +4601,7 @@
         <span class='comment'>#:nocov:
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
     
     <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
@@ -5303,7 +5303,7 @@
     <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
       <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
       
-      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
         <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -5314,7 +5314,7 @@
         <span class='comment'>#:nocov:
 </span>      <span class='kw'>end</span>
     <span class='kw'>end</span>
-    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+    <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
     
     <span class='id identifier rubyid_unified'>unified</span>
   <span class='kw'>end</span>
@@ -5980,7 +5980,7 @@
   <span class='id identifier rubyid_variables'>variables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_variable'>variable</span><span class='op'>|</span>
     <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='id identifier rubyid_variable'>variable</span>
     
-    <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='id identifier rubyid_unify'>unify</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_unification'>unification</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_unify'><span class='object_link'><a href="../Porolog.html#unify-instance_method" title="Porolog#unify (method)">unify</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_other_goal'>other_goal</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_unified'>unified</span>   <span class='op'>&amp;&amp;=</span> <span class='op'>!</span><span class='op'>!</span><span class='id identifier rubyid_unification'>unification</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
       <span class='id identifier rubyid_unifications'>unifications</span> <span class='op'>+=</span> <span class='id identifier rubyid_unification'>unification</span>
@@ -5991,7 +5991,7 @@
       <span class='comment'>#:nocov:
 </span>    <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='id identifier rubyid_instantiate_unifications'>instantiate_unifications</span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
+  <span class='id identifier rubyid_unified'>unified</span> <span class='op'>&amp;&amp;=</span> <span class='const'><span class='object_link'><a href="../Porolog.html" title="Porolog (module)">Porolog</a></span></span><span class='op'>::</span><span class='id identifier rubyid_instantiate_unifications'><span class='object_link'><a href="../Porolog.html#instantiate_unifications-instance_method" title="Porolog#instantiate_unifications (method)">instantiate_unifications</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_unifications'>unifications</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_unified'>unified</span>
   
   <span class='id identifier rubyid_unified'>unified</span>
 <span class='kw'>end</span></pre>
@@ -7283,7 +7283,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Aug  8 08:28:24 2020 by
+  Generated on Thu Aug 13 22:35:32 2020 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.6.5).
 </div>

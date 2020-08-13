@@ -93,15 +93,15 @@ class Array
     return self if visited.include?(self)
     visited = visited + [self]
     flat_map{|element|
-      if element.is_a?(Tail)
+      if element.is_a?(Porolog::Tail)
         tail = element.value(visited)
         if tail.is_a?(Array)
           tail
-        elsif tail.is_a?(Variable) || tail.is_a?(Value)
+        elsif tail.is_a?(Porolog::Variable) || tail.is_a?(Porolog::Value)
           tail = tail.value(visited)
           if tail.is_a?(Array)
             tail
-          elsif tail.is_a?(Variable) || tail.is_a?(Value)
+          elsif tail.is_a?(Porolog::Variable) || tail.is_a?(Porolog::Value)
             tail = tail.goal.variablise(tail.value(visited))
             if tail.is_a?(Array)
               tail
@@ -126,9 +126,9 @@ class Array
     value.map{|element|
       if element.is_a?(Array)
         element.clean
-      elsif element.is_a?(Tail)
-        UNKNOWN_TAIL
-      elsif element.is_a?(Variable)
+      elsif element.is_a?(Porolog::Tail)
+        Porolog::UNKNOWN_TAIL
+      elsif element.is_a?(Porolog::Variable)
         nil
       else
         element.value
@@ -145,7 +145,7 @@ class Array
   # @return [Array] an Array with the Object being the head and the other Object being the tail.
   def /(other)
     if other.is_a?(Porolog::Variable) || other.is_a?(Symbol)
-      self + [Tail.new(other)]
+      self + [Porolog::Tail.new(other)]
     else
       self + [*other]
     end
@@ -177,7 +177,7 @@ class Array
   
   # @return [Boolean] whether the Object is an Array with a head and a tail.
   def headtail?
-    length == 2 && (last.is_a?(Tail) || last == UNKNOWN_TAIL)
+    length == 2 && (last.is_a?(Porolog::Tail) || last == Porolog::UNKNOWN_TAIL)
   end
   
   # @return [Porolog::Goal] the goal that is most likely to be the goal for this array.

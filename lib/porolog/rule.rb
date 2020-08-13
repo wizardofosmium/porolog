@@ -61,7 +61,7 @@ module Porolog
     def satisfy(goal, &block)
       subgoal = Goal.new self.arguments, goal
       
-      unified_goals = unify_goals(goal, subgoal)
+      unified_goals = Porolog::unify_goals(goal, subgoal)
       if unified_goals
         satisfy_definition(goal, subgoal) do |solution_goal|
           block.call(solution_goal)

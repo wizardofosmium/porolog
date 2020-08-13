@@ -14,7 +14,7 @@ describe 'Porolog' do
   end
   
   it 'implements delete first predicate' do
-    predicate :delete
+    Porolog::predicate :delete
     
     delete(:X, [:X]/:T, :T).fact!
 
@@ -33,8 +33,8 @@ describe 'Porolog' do
   end
   
   it 'implements the delete predicate' do
-    builtin :write
-    predicate :delete
+    Porolog::builtin :write
+    Porolog::predicate :delete
     
     delete(:X, [:X]/:T, :T).fact!
     delete(:X, [:H]/:T, [:H]/:NT) << [
@@ -78,7 +78,7 @@ describe 'Porolog' do
   
   it 'implements the permutation predicate' do
     warn name
-    predicate :delete, :permutation
+    Porolog::predicate :delete, :permutation
     
     permutation([],[]).fact!
     permutation(:List, [:H]/:Permutation) << [
@@ -115,8 +115,8 @@ describe 'Porolog' do
   
   it 'solves the Einstein / Zebra riddle' do
     warn name
-    builtin :is, :member, :is_noteq
-    predicate :same, :not_same, :left, :beside, :houses
+    Porolog::builtin :is, :member, :is_noteq
+    Porolog::predicate :same, :not_same, :left, :beside, :houses
 
     same(:X,:X).fact!
 
@@ -209,8 +209,8 @@ describe 'Porolog' do
   end
   
   it 'instantiates lists using member and length builtin predicates' do
-    builtin :member, :length
-    predicate :lists
+    Porolog::builtin :member, :length
+    Porolog::predicate :lists
 
     lists(:L) << [
       member(:N,[1,2,3,4,5]),
@@ -238,8 +238,8 @@ describe 'Porolog' do
   end
   
   it 'implements a prime number search' do
-    builtin   :gtr, :is, :noteq, :between
-    predicate :prime, :search_prime
+    Porolog::builtin   :gtr, :is, :noteq, :between
+    Porolog::predicate :prime, :search_prime
 
     prime(2).fact!
     prime(3).fact!
@@ -271,7 +271,7 @@ describe 'Porolog' do
     ]
     
     assert_equal    known_primes,     prime(:number).solve_for(:number, max_solutions: 50)
-    assert_equal    3016,             Goal.goal_count
+    assert_equal    3016,             Porolog::Goal.goal_count
   end
     
 end
